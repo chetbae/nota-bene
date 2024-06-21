@@ -4,6 +4,11 @@
   "description": "Note well, just a new tab away.",
   "version": "0.1",
   "incognito": "not_allowed",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
   "chrome_url_overrides": {
     "newtab": "app.html"
   },
