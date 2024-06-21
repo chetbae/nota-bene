@@ -1,0 +1,26 @@
+.body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+#app-header {
+  color: black;
+  display: flex;
+  justify-content: center;
+}
+
+#app-title {
+  padding: 0 5px;
+}
+
+#app-content {
+  color: black;
+
+  margin-left: 100px;
+  margin-right: 100px;
+  padding: 20px;
+
+  font-size: 20px;
+}

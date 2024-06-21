@@ -1,7 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "markdown notes",
-  "description": "Handy notes in markdown format on new tabs for Chrome",
+  "name": "Nota Bene",
+  "description": "Note well, just a new tab away.",
   "version": "0.1",
-  "action": {}
+  "incognito": "not_allowed",
+  "chrome_url_overrides": {
+    "newtab": "app.html"
+  },
+  "permissions": ["storage"]
 }
