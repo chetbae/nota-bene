@@ -7,8 +7,8 @@ Chrome extension allows users to take notes in a new tab. Notion-like functional
 ## Development
 
 - [x] Edit text in a contenteditable div
-- [ ] Save text to storage
-- [ ] Load text from storage
+- [x] Save text to storage
+- [x] Load text from storage
 - [ ] Convert text to markdown
 - [ ] Convert markdown to text
 - [ ] Add setTimeout to save text to storage
