@@ -1,39 +1,56 @@
 /**
  * Persistance module to save and load content from chrome storage
  *
- * @param {HTMLElement} htmlElement - The element to persist
+ * @param {HTMLElement} container - The element to persist
  * @param {string} CHROME_KEY - The key to use in chrome storage
  */
-export function persistChrome(htmlElement, CHROME_KEY) {
-  htmlElement.innerHTML = `<h1>Loading...</h1>`;
+export function persistChrome(container, CHROME_KEY) {
+  container.innerHTML = "Loading...";
 
   // Initial load
   document.addEventListener("DOMContentLoaded", async () => {
     const content = await loadContent(CHROME_KEY);
-    htmlElement.innerHTML = content;
+
+    container.innerHTML =
+      content !== undefined
+        ? content
+        : `<div id="0" class="note-row" contenteditable="true">Write here...</div>`;
   });
 
   // Save when user navigates away from page
-  window.addEventListener("visibilitychange", () => saveContent(CHROME_KEY, htmlElement.innerHTML));
+  window.addEventListener("visibilitychange", () => saveContent(CHROME_KEY, container.innerHTML));
 
   // Save after 2s of inactivity
   let timeoutId;
-  htmlElement.addEventListener("input", () => {
+  container.addEventListener("input", () => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(saveContent, 2000, CHROME_KEY, htmlElement.innerHTML);
+    timeoutId = setTimeout(saveContent, 2000, CHROME_KEY, container.innerHTML);
   });
 }
 
+/**
+ * Saves the content of content container to chrome storage
+ * @param {string} CHROME_KEY
+ * @param {string} content
+ */
 function saveContent(CHROME_KEY, content) {
   chrome.storage.local.set({ [CHROME_KEY]: content }).catch((error) => {
     console.error(error);
   });
 }
 
+/**
+ * Loads content from chrome storage if it exists
+ * @param {string} CHROME_KEY
+ * @returns {Promise<string>}
+ */
 async function loadContent(CHROME_KEY) {
   return await chrome.storage.local
     .get([CHROME_KEY])
-    .then((result) => result[CHROME_KEY])
+    .then((result) => {
+      console.log("result is " + result[CHROME_KEY]);
+      return result[CHROME_KEY];
+    })
     .catch((error) => {
       console.error(error);
     });

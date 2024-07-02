@@ -32,19 +32,43 @@ body {
   font-weight: bold;
 }
 
+/* Sidebar */
+
+#app-sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+
+  width: 150px;
+  height: calc(100vh - 50px);
+
+  display: flex;
+  flex-direction: column;
+
+  /* background-color: green; */
+}
+
 /* Content Area */
 
 #app-content-container {
   position: absolute;
   top: 50px;
-  width: 100vw;
+  left: 150px;
+
+  padding: 20px;
+  width: calc(100% - 150px - 40px);
+  min-height: calc(100% - 50px - 40px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /* background-color: aqua; */
 }
 
-#app-content {
-  padding-left: 150px;
-  padding-right: 150px;
-
+.note-row {
   font-size: 18px;
+  line-height: 1.5;
 
-  outline: 0px solid transparent;
+  outline: 1px dashed red;
 }
