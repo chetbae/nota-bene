@@ -6,49 +6,55 @@ const contentContainer = document.getElementById("note-page");
 // Save and load content area to/from chrome storage
 persistChrome(contentContainer, CHROME_CONTENT_KEY);
 
-document.addEventListener("keyup", (event) => {
+contentContainer.addEventListener("keyup", (event) => {
   // Spacebar executes command if there is one
   if (event.key === " ") {
-    console.log("Execute command");
+    const selection = document.getSelection();
 
-    const focusNode = document.getSelection().focusNode;
-    if (!focusNode) {
-      window.alert("No Focus Node (app.js)"); // PUTTING THIS HERE FOR TESTING
+    // Markdown commands are at most 6 characters long, so we only need to check the first 6 characters
+    const cursorIndex = selection.focusOffset;
+    if (cursorIndex > 7) return;
+
+    // PUTTING THIS HERE FOR TESTING PURPOSES
+    if (!selection.focusNode) {
+      window.alert("No Focus Node", console.trace());
       return;
     }
 
+    const focusNode = selection.focusNode;
+    const textContent = focusNode.textContent;
+
+    const command = textContent ? textContent.slice(0, cursorIndex - 1) : "";
+    const text = textContent ? textContent.slice(cursorIndex) : "";
+
     let parent = focusNode.parentElement;
-    const text = focusNode.textContent;
-    const command = text ? text.slice(0, -1) : "";
 
-    // Puts focusNode into <div> if it is exposed in #note-page (1)
-    if (parent.id === "note-page") {
-      const div = document.createElement("div");
-      div.innerHTML = focusNode.textContent;
-      focusNode.replaceWith(div);
-      parent = div;
-    }
-
-    // Transform container element based on command (e.g. #, ##, ### -> h1, h2, h3)
+    // Transform parent element based on command (e.g. #, ##, ### -> h1, h2, h3)
     if (commandMap[command]) {
-      const element = document.createElement(commandMap[command]);
-      element.appendChild(document.createElement("br"));
-      parent.replaceWith(element);
+      // Wrap focusNode into <div> if it's exposed in note-page (1)
+      if (parent.id === "note-page") {
+        const div = document.createElement("div");
+        div.innerHTML = textContent;
+        focusNode.replaceWith(div);
+        parent = div;
+      }
+
+      commandMap[command](parent, text);
     }
   }
-
-  if (!(event.shiftKey || event.metaKey || event.ctrlKey || event.altKey)) return;
 });
 
-contentContainer.addEventListener("click", (event) => {});
-
-// helper print function
-const foo = (...item) => console.log(...item);
+// Transforms parent element into new type {h1, h2, h3}
+function transformParent(parent, newType, existingText = "") {
+  const element = document.createElement(newType);
+  element.innerHTML = existingText === "" ? "<br>" : existingText;
+  parent.replaceWith(element);
+}
 
 const commandMap = {
-  "#": "h1",
-  "##": "h2",
-  "###": "h3",
+  "#": (parent, text) => transformParent(parent, "h1", text),
+  "##": (parent, text) => transformParent(parent, "h2", text),
+  "###": (parent, text) => transformParent(parent, "h3", text),
   // "-": "li",
   // "1.": "li",
   // "*": "li",
