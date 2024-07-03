@@ -41,7 +41,6 @@ export function persistChrome(container, CHROME_KEY) {
  * @param {string} content
  */
 function saveContent(CHROME_KEY, content) {
-  console.log("saving");
   chrome.storage.local.set({ [CHROME_KEY]: content }).catch((error) => {
     console.error(error);
   });

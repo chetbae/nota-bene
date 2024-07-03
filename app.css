@@ -66,10 +66,9 @@ body {
   /* background-color: aqua; */
 }
 
-.note-row {
+#note-page {
   font-size: 18px;
   line-height: 1.5;
 
-  /* outline: 1px dashed red; */
-  outline: 0;
+  /* outline: 0; */
 }
