@@ -5,8 +5,7 @@
  * @param {string} CHROME_KEY - The key to use in chrome storage
  */
 export function persistChrome(container, CHROME_KEY) {
-  // Initial load
-  document.addEventListener("DOMContentLoaded", async () => {
+  window.addEventListener("DOMContentLoaded", async () => {
     const content = await loadContent(CHROME_KEY);
 
     if (content !== undefined) container.innerHTML = content;
@@ -15,11 +14,24 @@ export function persistChrome(container, CHROME_KEY) {
   // Save when user navigates away from page
   window.addEventListener("visibilitychange", () => saveContent(CHROME_KEY, container.innerHTML));
 
-  // Save after 2s of inactivity
-  let timeoutId;
+  // Save based on user activity
+  let lastTimeoutId = 0;
+  let timeoutId = 0;
   container.addEventListener("input", () => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(saveContent, 2000, CHROME_KEY, container.innerHTML);
+
+    // Save if 10 inputs have passed since last save
+    if (timeoutId > lastTimeoutId + 10) {
+      saveContent(CHROME_KEY, container.innerHTML);
+      lastTimeoutId = timeoutId;
+      return;
+    }
+
+    // Otherwise save after 2 seconds of inactivity
+    timeoutId = setTimeout(() => {
+      saveContent(CHROME_KEY, container.innerHTML);
+      lastTimeoutId = timeoutId;
+    }, 2000);
   });
 }
 
@@ -29,6 +41,7 @@ export function persistChrome(container, CHROME_KEY) {
  * @param {string} content
  */
 function saveContent(CHROME_KEY, content) {
+  console.log("saving");
   chrome.storage.local.set({ [CHROME_KEY]: content }).catch((error) => {
     console.error(error);
   });
