@@ -7,17 +7,17 @@ const contentContainer = document.getElementById("app-content-container");
 persistChrome(contentContainer, CHROME_CONTENT_KEY);
 
 // Monitor user cursor and keypress states
-let keyId;
-let target;
+let keyPressed;
+let focusRow;
+let selectionStart;
+let selectionEnd;
 
-// contentElement.addEventListener("keyup", (e) => {
-//   keyId = e.key;
-//   const foo = document.activeElement;
-//   console.log("foo", foo);
-//   console.log("keyup", e.target);
-// });
+// Manage user selection of rows and cursor position
 
-// contentElement.addEventListener("click", (e) => {
-//   target = e.target;
-//   console.log("click", e.target);
-// });
+function makeRow(content) {
+  const row = document.createElement("div");
+  row.classList.add("note-row");
+  row.contentEditable = true;
+  row.innerHTML = content;
+  return row;
+}

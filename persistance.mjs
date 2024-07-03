@@ -5,16 +5,11 @@
  * @param {string} CHROME_KEY - The key to use in chrome storage
  */
 export function persistChrome(container, CHROME_KEY) {
-  container.innerHTML = "Loading...";
-
   // Initial load
   document.addEventListener("DOMContentLoaded", async () => {
     const content = await loadContent(CHROME_KEY);
 
-    container.innerHTML =
-      content !== undefined
-        ? content
-        : `<div id="0" class="note-row" contenteditable="true">Write here...</div>`;
+    if (content !== undefined) container.innerHTML = content;
   });
 
   // Save when user navigates away from page
@@ -42,13 +37,14 @@ function saveContent(CHROME_KEY, content) {
 /**
  * Loads content from chrome storage if it exists
  * @param {string} CHROME_KEY
- * @returns {Promise<string>}
+ * @returns {Promise<string>} undefined or saved content
  */
 async function loadContent(CHROME_KEY) {
   return await chrome.storage.local
     .get([CHROME_KEY])
     .then((result) => {
-      console.log("result is " + result[CHROME_KEY]);
+      console.log('Loaded from chrome.storage.local["' + CHROME_KEY + '"]:\n' + result[CHROME_KEY]);
+
       return result[CHROME_KEY];
     })
     .catch((error) => {

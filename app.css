@@ -70,5 +70,6 @@ body {
   font-size: 18px;
   line-height: 1.5;
 
-  outline: 1px dashed red;
+  /* outline: 1px dashed red; */
+  outline: 0;
 }
