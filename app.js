@@ -39,7 +39,7 @@ contentContainer.addEventListener("keyup", (event) => {
       parent = commandMap[command](parent, text);
 
       // Set cursor to end of element
-      setCursorToOffset(parent, 1);
+      setCursorToOffset(parent, 0);
     }
   }
 });
