@@ -46,16 +46,62 @@ contentContainer.addEventListener("keyup", (event) => {
 
 /**
  * Transforms element into new type, keeping the same text content
- * @param {HTMLElement} parent
+ * @param {HTMLElement} element
  * @param {string} newType
  * @param {string} existingText
- * @returns New parent element
+ * @returns New element
  */
-function transformElement(parent, newType, existingText) {
-  const element = document.createElement(newType);
-  element.innerHTML = existingText ? existingText : "<br>";
-  parent.replaceWith(element);
-  return element;
+function transformElement(element, newType, existingText) {
+  const newElement = document.createElement(newType);
+  newElement.innerHTML = existingText ? existingText : "<br>";
+  element.replaceWith(newElement);
+  return newElement;
+}
+
+/**
+ * Create a nested list element from a given element
+ * @param {HTMLElement} element
+ * @param {string} type
+ * @param {string} text
+ * @returns New list element
+ */
+function createList(element, type, text) {
+  const list = document.createElement(type);
+  list.innerHTML = `<li>${text}</li>`;
+  element.replaceWith(list);
+  return list;
+}
+
+/**
+ * Create a checkbox element from a given element
+ * @param {HTMLElement} element
+ * @param {string} text
+ * @returns New checkbox element
+ * @todo Add checkbox functionality
+ * @todo Add checkbox styling
+ * @todo Add checkbox persistence
+ * @todo Add checkbox functionality
+ */
+
+function createCheckbox(element, text) {
+  const div = document.createElement("div");
+  const checkbox = document.createElement("input");
+  const span = document.createElement("span");
+
+  div.appendChild(checkbox);
+  checkbox.type = "checkbox";
+  checkbox.checked = true;
+  span.innerHTML = text;
+
+  // Add event listener to checkbox to toggle checked attribute in html
+  checkbox.addEventListener("change", (event) => {
+    console.log("Checkbox changed");
+    console.log(checkbox.checked);
+    checkbox.checked = !checkbox.checked;
+  });
+
+  element.replaceWith(div);
+  return div;
 }
 
 /**
@@ -76,10 +122,10 @@ const commandMap = {
   "#": (parent, text) => transformElement(parent, "h1", text),
   "##": (parent, text) => transformElement(parent, "h2", text),
   "###": (parent, text) => transformElement(parent, "h3", text),
-  // "-": "li",
-  // "1.": "li",
-  // "*": "li",
-  // "[]": "li",
+  "-": (parent, text) => createList(parent, "ul", text),
+  "1.": (parent, text) => createList(parent, "ol", text),
+  "*": (parent, text) => createList(parent, "ul", text),
+  // "[]": (parent, text) => createCheckbox(parent, text),
   // "```": "code",
 };
 
