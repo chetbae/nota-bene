@@ -4,17 +4,10 @@
  * @returns Checkbox list element
  */
 export function createCheckboxList(text) {
-  const list = document.createElement("div");
+  const list = document.createElement("ul");
   list.classList.add("checkbox-list");
 
-  const checkboxRow = document.createElement("div");
-  checkboxRow.classList.add("checkbox-row");
-
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-
-  checkboxRow.appendChild(checkbox);
-  checkboxRow.innerHTML += text;
+  const checkboxRow = createCheckboxRow(text);
 
   list.appendChild(checkboxRow);
   applyCheckboxListener(checkboxRow);
@@ -22,11 +15,26 @@ export function createCheckboxList(text) {
   return list;
 }
 
+function createCheckboxRow(text) {
+  const checkboxRow = document.createElement("div");
+  checkboxRow.classList.add("checkbox-row");
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.classList.add("checkbox");
+
+  checkboxRow.appendChild(checkbox);
+  checkboxRow.innerHTML += text;
+
+  return checkboxRow;
+}
+
 /**
  * Applies a checkbox toggle listener to checkbox div row
  * @param {HTMLElement} checkboxRow
  */
 function applyCheckboxListener(checkboxRow) {
+  // Apply checkbox toggle listener
   checkboxRow.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "INPUT")

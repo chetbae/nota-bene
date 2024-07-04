@@ -71,7 +71,17 @@ body {
   /* outline: 0; */
 }
 
+/* Checkboxes */
+
+ul.checkbox-list {
+  padding-left: 18px;
+}
+
 input[type="checkbox"] {
-  margin-left: 20px;
-  margin-right: 7px;
+  margin-right: 5px;
+}
+
+.checkbox-row:has(input[type="checkbox"]:checked.checkbox) {
+  text-decoration: line-through;
+  color: silver;
 }
