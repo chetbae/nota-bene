@@ -5,26 +5,33 @@
  * @param {string} CHROME_KEY - The key to use in chrome storage
  */
 export function persistChrome(container, CHROME_KEY) {
-  container.innerHTML = "Loading...";
-
-  // Initial load
-  document.addEventListener("DOMContentLoaded", async () => {
+  window.addEventListener("DOMContentLoaded", async () => {
     const content = await loadContent(CHROME_KEY);
 
-    container.innerHTML =
-      content !== undefined
-        ? content
-        : `<div id="0" class="note-row" contenteditable="true">Write here...</div>`;
+    if (content !== undefined) container.innerHTML = content;
   });
 
   // Save when user navigates away from page
   window.addEventListener("visibilitychange", () => saveContent(CHROME_KEY, container.innerHTML));
 
-  // Save after 2s of inactivity
-  let timeoutId;
+  // Save based on user activity
+  let lastTimeoutId = 0;
+  let timeoutId = 0;
   container.addEventListener("input", () => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(saveContent, 2000, CHROME_KEY, container.innerHTML);
+
+    // Save if 10 inputs have passed since last save
+    if (timeoutId > lastTimeoutId + 10) {
+      saveContent(CHROME_KEY, container.innerHTML);
+      lastTimeoutId = timeoutId;
+      return;
+    }
+
+    // Otherwise save after 2 seconds of inactivity
+    timeoutId = setTimeout(() => {
+      saveContent(CHROME_KEY, container.innerHTML);
+      lastTimeoutId = timeoutId;
+    }, 2000);
   });
 }
 
@@ -42,13 +49,14 @@ function saveContent(CHROME_KEY, content) {
 /**
  * Loads content from chrome storage if it exists
  * @param {string} CHROME_KEY
- * @returns {Promise<string>}
+ * @returns {Promise<string>} undefined or saved content
  */
 async function loadContent(CHROME_KEY) {
   return await chrome.storage.local
     .get([CHROME_KEY])
     .then((result) => {
-      console.log("result is " + result[CHROME_KEY]);
+      console.log('Loaded from chrome.storage.local["' + CHROME_KEY + '"]:\n' + result[CHROME_KEY]);
+
       return result[CHROME_KEY];
     })
     .catch((error) => {
