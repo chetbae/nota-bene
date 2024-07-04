@@ -38,26 +38,9 @@ contentContainer.addEventListener("keyup", (event) => {
 
       // Apply command function
       parent = commandMap[command](parent, text);
-
-      // Set cursor to end of element
-      setCursorToOffset(parent, 0);
     }
   }
 });
-
-/**
- * Set cursor to an offset within the specific element
- * @param {HTMLElement} element
- * @param {number} offset
- */
-function setCursorToOffset(element, offset) {
-  const range = document.createRange();
-  const sel = window.getSelection();
-  range.setStart(element, offset);
-  range.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(range);
-}
 
 /**
  * (1) If contenteditable only has one line, the text content is not wrapped in a div. For our purposes, we need a div wrapper to apply the command.
