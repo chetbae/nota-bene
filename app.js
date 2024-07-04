@@ -15,22 +15,18 @@ contentContainer.addEventListener("keyup", (event) => {
     const cursorIndex = selection.focusOffset;
     if (cursorIndex > 7) return;
 
-    // PUTTING THIS HERE FOR TESTING PURPOSES
-    if (!selection.focusNode) {
-      window.alert("No Focus Node", console.trace());
-      return;
-    }
+    // PUTTING THIS HERE FOR TESTING
+    if (!selection.focusNode) window.alert("No Focus Node", console.trace());
 
     const focusNode = selection.focusNode;
     const textContent = focusNode.textContent;
-
     const command = textContent ? textContent.slice(0, cursorIndex - 1) : "";
-    const text = textContent ? textContent.slice(cursorIndex) : "";
 
-    let parent = focusNode.parentElement;
-
-    // Transform parent element based on command (e.g. #, ##, ### -> h1, h2, h3)
+    // Apply action if command exists
     if (commandMap[command]) {
+      let parent = focusNode.parentElement;
+      const text = textContent ? textContent.slice(cursorIndex) : "";
+
       // Wrap focusNode into <div> if it's exposed in note-page (1)
       if (parent.id === "note-page") {
         const div = document.createElement("div");
@@ -39,22 +35,47 @@ contentContainer.addEventListener("keyup", (event) => {
         parent = div;
       }
 
-      commandMap[command](parent, text);
+      // Apply command function
+      parent = commandMap[command](parent, text);
+
+      // Set cursor to end of element
+      setCursorToOffset(parent, 1);
     }
   }
 });
 
-// Transforms parent element into new type {h1, h2, h3}
-function transformParent(parent, newType, existingText = "") {
+/**
+ * Transforms element into new type, keeping the same text content
+ * @param {HTMLElement} parent
+ * @param {string} newType
+ * @param {string} existingText
+ * @returns New parent element
+ */
+function transformElement(parent, newType, existingText) {
   const element = document.createElement(newType);
-  element.innerHTML = existingText === "" ? "<br>" : existingText;
+  element.innerHTML = existingText ? existingText : "<br>";
   parent.replaceWith(element);
+  return element;
+}
+
+/**
+ * Set cursor to an offset within the specific element
+ * @param {HTMLElement} element
+ * @param {number} offset
+ */
+function setCursorToOffset(element, offset) {
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.setStart(element, offset);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
 }
 
 const commandMap = {
-  "#": (parent, text) => transformParent(parent, "h1", text),
-  "##": (parent, text) => transformParent(parent, "h2", text),
-  "###": (parent, text) => transformParent(parent, "h3", text),
+  "#": (parent, text) => transformElement(parent, "h1", text),
+  "##": (parent, text) => transformElement(parent, "h2", text),
+  "###": (parent, text) => transformElement(parent, "h3", text),
   // "-": "li",
   // "1.": "li",
   // "*": "li",
