@@ -3,7 +3,7 @@
  * @param {string} text
  * @returns Checkbox list element
  */
-function createCheckboxList(text) {
+export function createCheckboxList(text) {
   const list = document.createElement("div");
   list.classList.add("checkbox-list");
 
@@ -48,6 +48,8 @@ export function applyAllCheckboxListeners() {
 
 const checkboxes = {
   createCheckboxList,
+  applyCheckboxListener,
+  applyAllCheckboxListeners,
 };
 
 export default checkboxes;
