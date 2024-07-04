@@ -67,7 +67,11 @@ body {
 
 #note-page {
   font-size: 18px;
-  /* line-height: 1.5; */
-
+  margin-bottom: 40px;
   /* outline: 0; */
+}
+
+input[type="checkbox"] {
+  margin-left: 20px;
+  margin-right: 7px;
 }

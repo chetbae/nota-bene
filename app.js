@@ -4,7 +4,7 @@ const CHROME_CONTENT_KEY = "nota-bene-content";
 const contentContainer = document.getElementById("note-page");
 
 // Save and load content area to/from chrome storage
-persistChrome(contentContainer, CHROME_CONTENT_KEY);
+persistChrome(contentContainer, CHROME_CONTENT_KEY, applyAllCheckboxListeners);
 
 contentContainer.addEventListener("keyup", (event) => {
   // Spacebar executes command if there is one
@@ -67,13 +67,16 @@ function transformElement(element, newType, existingText) {
  */
 function createList(element, type, text) {
   const list = document.createElement(type);
-  list.innerHTML = `<li>${text}</li>`;
+  const li = document.createElement("li");
+  li.innerHTML = text;
+  list.appendChild(li);
+
   element.replaceWith(list);
   return list;
 }
 
 /**
- * Create a checkbox element from a given element
+ * Create a checkbox element list from a given element
  * @param {HTMLElement} element
  * @param {string} text
  * @returns New checkbox element
@@ -83,25 +86,52 @@ function createList(element, type, text) {
  * @todo Add checkbox functionality
  */
 
-function createCheckbox(element, text) {
-  const div = document.createElement("div");
-  const checkbox = document.createElement("input");
-  const span = document.createElement("span");
+function createCheckboxList(element, text) {
+  const checkboxList = new CheckboxList(text);
+  element.replaceWith(checkboxList.getList());
+  return checkboxList;
+}
 
-  div.appendChild(checkbox);
-  checkbox.type = "checkbox";
-  checkbox.checked = true;
-  span.innerHTML = text;
+class CheckboxList {
+  constructor(text) {
+    this.list = document.createElement("div");
+    this.list.classList.add("checkbox-list");
+    this.addCheckboxRow(text);
+  }
 
-  // Add event listener to checkbox to toggle checked attribute in html
-  checkbox.addEventListener("change", (event) => {
-    console.log("Checkbox changed");
-    console.log(checkbox.checked);
-    checkbox.checked = !checkbox.checked;
+  addCheckboxRow(text) {
+    const row = document.createElement("div");
+    row.classList.add("checkbox-row");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    row.appendChild(checkbox);
+    row.innerHTML += text;
+    this.list.appendChild(row);
+    applyCheckboxListener(row);
+  }
+
+  getList() {
+    return this.list;
+  }
+}
+
+function applyCheckboxListener(checkboxRow) {
+  checkboxRow.addEventListener("click", (event) => {
+    const target = event.target;
+    if (target.tagName === "INPUT")
+      !target.checked
+        ? target.removeAttribute("checked")
+        : target.setAttribute("checked", "checked");
   });
+}
 
-  element.replaceWith(div);
-  return div;
+function applyAllCheckboxListeners() {
+  const checkboxes = document.querySelectorAll(".checkbox-row input");
+  checkboxes.forEach((checkbox) => {
+    applyCheckboxListener(checkbox);
+  });
 }
 
 /**
@@ -125,7 +155,7 @@ const commandMap = {
   "-": (parent, text) => createList(parent, "ul", text),
   "1.": (parent, text) => createList(parent, "ol", text),
   "*": (parent, text) => createList(parent, "ul", text),
-  // "[]": (parent, text) => createCheckbox(parent, text),
+  "[]": (parent, text) => createCheckboxList(parent, text),
   // "```": "code",
 };
 

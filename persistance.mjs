@@ -3,12 +3,16 @@
  *
  * @param {HTMLElement} container - The element to persist
  * @param {string} CHROME_KEY - The key to use in chrome storage
+ * @param {function[]} applyListener - List of functions to apply event listeners to static elements
  */
-export function persistChrome(container, CHROME_KEY) {
+export function persistChrome(container, CHROME_KEY, ...applyListener) {
   window.addEventListener("DOMContentLoaded", async () => {
     const content = await loadContent(CHROME_KEY);
 
     if (content !== undefined) container.innerHTML = content;
+
+    // Apply listners to static elements (checkboxes)
+    applyListener.forEach((listener) => listener());
   });
 
   // Save when user navigates away from page
