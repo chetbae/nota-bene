@@ -1,3 +1,5 @@
+import { applyAllCheckboxListeners } from "./checkboxes.mjs";
+
 /**
  * Persistance module to save and load content from chrome storage
  *
@@ -5,14 +7,14 @@
  * @param {string} CHROME_KEY - The key to use in chrome storage
  * @param {function[]} applyListener - List of functions to apply event listeners to static elements
  */
-export function persistChrome(container, CHROME_KEY, ...applyListener) {
+export function persistChrome(container, CHROME_KEY) {
   window.addEventListener("DOMContentLoaded", async () => {
     const content = await loadContent(CHROME_KEY);
 
     if (content !== undefined) container.innerHTML = content;
 
-    // Apply listners to static elements (checkboxes)
-    applyListener.forEach((listener) => listener());
+    // Apply listeners to checkboxes
+    applyAllCheckboxListeners();
   });
 
   // Save when user navigates away from page

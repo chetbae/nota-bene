@@ -1,10 +1,11 @@
 import { persistChrome } from "./persistance.mjs";
+import checkboxes from "./checkboxes.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 const contentContainer = document.getElementById("note-page");
 
 // Save and load content area to/from chrome storage
-persistChrome(contentContainer, CHROME_CONTENT_KEY, applyAllCheckboxListeners);
+persistChrome(contentContainer, CHROME_CONTENT_KEY);
 
 contentContainer.addEventListener("keyup", (event) => {
   // Spacebar executes command if there is one
@@ -45,7 +46,7 @@ contentContainer.addEventListener("keyup", (event) => {
 });
 
 /**
- * Transforms element into new type, keeping the same text content
+ * Transforms an element to a new type
  * @param {HTMLElement} element
  * @param {string} newType
  * @param {string} existingText
@@ -59,13 +60,13 @@ function transformElement(element, newType, existingText) {
 }
 
 /**
- * Create a nested list element from a given element
+ * Transforms an element into a list element
  * @param {HTMLElement} element
  * @param {string} type
  * @param {string} text
  * @returns New list element
  */
-function createList(element, type, text) {
+function transformList(element, type, text) {
   const list = document.createElement(type);
   const li = document.createElement("li");
   li.innerHTML = text;
@@ -76,62 +77,15 @@ function createList(element, type, text) {
 }
 
 /**
- * Create a checkbox element list from a given element
+ * Transforms an element into a checkbox list element
  * @param {HTMLElement} element
  * @param {string} text
- * @returns New checkbox element
- * @todo Add checkbox functionality
- * @todo Add checkbox styling
- * @todo Add checkbox persistence
- * @todo Add checkbox functionality
+ * @returns New checkbox list element
  */
-
-function createCheckboxList(element, text) {
-  const checkboxList = new CheckboxList(text);
-  element.replaceWith(checkboxList.getList());
+function transformCheckboxList(element, text) {
+  const checkboxList = checkboxes.createCheckboxList(text);
+  element.replaceWith(checkboxList);
   return checkboxList;
-}
-
-class CheckboxList {
-  constructor(text) {
-    this.list = document.createElement("div");
-    this.list.classList.add("checkbox-list");
-    this.addCheckboxRow(text);
-  }
-
-  addCheckboxRow(text) {
-    const row = document.createElement("div");
-    row.classList.add("checkbox-row");
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-
-    row.appendChild(checkbox);
-    row.innerHTML += text;
-    this.list.appendChild(row);
-    applyCheckboxListener(row);
-  }
-
-  getList() {
-    return this.list;
-  }
-}
-
-function applyCheckboxListener(checkboxRow) {
-  checkboxRow.addEventListener("click", (event) => {
-    const target = event.target;
-    if (target.tagName === "INPUT")
-      !target.checked
-        ? target.removeAttribute("checked")
-        : target.setAttribute("checked", "checked");
-  });
-}
-
-function applyAllCheckboxListeners() {
-  const checkboxes = document.querySelectorAll(".checkbox-row input");
-  checkboxes.forEach((checkbox) => {
-    applyCheckboxListener(checkbox);
-  });
 }
 
 /**
@@ -152,10 +106,10 @@ const commandMap = {
   "#": (parent, text) => transformElement(parent, "h1", text),
   "##": (parent, text) => transformElement(parent, "h2", text),
   "###": (parent, text) => transformElement(parent, "h3", text),
-  "-": (parent, text) => createList(parent, "ul", text),
-  "1.": (parent, text) => createList(parent, "ol", text),
-  "*": (parent, text) => createList(parent, "ul", text),
-  "[]": (parent, text) => createCheckboxList(parent, text),
+  "-": (parent, text) => transformList(parent, "ul", text),
+  "1.": (parent, text) => transformList(parent, "ol", text),
+  "*": (parent, text) => transformList(parent, "ul", text),
+  "[]": (parent, text) => transformCheckboxList(parent, text),
   // "```": "code",
 };
 
