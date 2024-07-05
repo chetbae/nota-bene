@@ -1,7 +1,5 @@
 import { persistChrome } from "./persistance.mjs";
 import commandMap from "./commands.mjs";
-import { createCheckboxRow } from "./checkboxes.mjs";
-import { setCursorToOffset } from "./utils.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 const contentContainer = document.getElementById("note-page");
@@ -9,55 +7,9 @@ const contentContainer = document.getElementById("note-page");
 // Save and load content area to/from chrome storage
 persistChrome(contentContainer, CHROME_CONTENT_KEY);
 
-contentContainer.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    checkForCheckboxRow();
-  }
-});
-
 contentContainer.addEventListener("keyup", (event) => {
   if (event.key === " ") onSpacebar();
-  else if (event.key === "Enter") onEnterKeyup();
 });
-
-function checkForCheckboxRow() {
-  const selection = document.getSelection();
-  const focusNode = selection.focusNode;
-  const parent = focusNode.parentElement;
-
-  if (focusNode.classList) {
-    // If focusNode is checkbox-list or checkbox-row -> empty line
-    if (focusNode.classList.contains("checkbox-list")) {
-      console.log("empty, focusNode is checkbox-list");
-    } else if (focusNode.classList.contains("checkbox-row")) {
-      console.log("empty, focusNode is checkbox-row");
-    }
-  }
-
-  if (parent.classList) {
-    // If textContent is whitespace and parent is checkbox-row -> empty line
-    if (focusNode.textContent.trim() === "" && parent.classList.contains("checkbox-row")) {
-      console.log("empty, textContent is whitespace and parent is checkbox-row");
-    }
-    // If textContent is not whitespace and parent is checkbox-row -> non-empty line
-    else if (focusNode.textContent.trim() !== "" && parent.classList.contains("checkbox-row")) {
-      console.log("not empty, textContent not whitespace and parent is checkbox-row");
-    }
-  }
-}
-
-function onCheckboxNewline(checkboxRow) {
-  const text = checkboxRow.textContent;
-  const newCheckboxRow = createCheckboxRow(text);
-  checkboxRow.replaceWith(newCheckboxRow);
-  setCursorToOffset(newCheckboxRow, 1);
-}
-
-function onEnterKeyup() {
-  // const selection = document.getSelection();
-  // if (selection.focusNode.classList.contains("checkbox-row"))
-  //   onCheckboxNewline(selection.focusNode);
-}
 
 function onSpacebar() {
   const selection = document.getSelection();
@@ -76,7 +28,7 @@ function onSpacebar() {
   // Apply action if command exists
   if (commandMap[command]) {
     let parent = focusNode.parentElement;
-    const text = textContent ? textContent.slice(cursorIndex) : "";
+    const textPart = textContent ? textContent.slice(cursorIndex) : "";
 
     // Wrap focusNode into <div> if it's exposed in note-page (1)
     if (parent.id === "note-page") {
@@ -87,7 +39,7 @@ function onSpacebar() {
     }
 
     // Apply command function
-    parent = commandMap[command](parent, text);
+    parent = commandMap[command](parent, textPart);
   }
 }
 

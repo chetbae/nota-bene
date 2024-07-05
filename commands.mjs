@@ -19,9 +19,9 @@ const commandMap = {
  * @param {string} existingText
  * @returns New element
  */
-function transformElement(element, newType, existingText) {
+function transformElement(element, newType, text) {
   const newElement = document.createElement(newType);
-  newElement.innerHTML = existingText ? existingText : "<br>";
+  newElement.innerHTML = text ? text : "<br>";
   element.replaceWith(newElement);
 
   // Set cursor to end of element
@@ -39,7 +39,7 @@ function transformElement(element, newType, existingText) {
 function transformList(element, type, text) {
   const list = document.createElement(type);
   const li = document.createElement("li");
-  li.innerHTML = text;
+  li.innerHTML = text ? text : "<br>";
   list.appendChild(li);
   element.replaceWith(list);
 
