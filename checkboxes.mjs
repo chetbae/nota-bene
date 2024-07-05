@@ -4,52 +4,48 @@
  * @returns Checkbox list element
  */
 export function createCheckboxList(text) {
-  const list = document.createElement("ul");
-  list.classList.add("checkbox-list");
+  const checkboxUl = document.createElement("ul");
+  checkboxUl.classList.add("checkbox");
 
-  const checkboxRow = createCheckboxRow(text);
-  list.appendChild(checkboxRow);
+  const checkboxLi = document.createElement("li");
+  checkboxLi.classList.add("checkbox");
 
-  return list;
-}
+  const div = document.createElement("div");
+  div.classList.add("checkbox");
+  div.innerHTML = text ? text : "<br>";
 
-export function createCheckboxRow(text) {
-  const checkboxRow = document.createElement("div");
-  checkboxRow.classList.add("checkbox-row");
+  checkboxLi.appendChild(div);
+  checkboxUl.appendChild(checkboxLi);
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.classList.add("checkbox");
+  // Apply checkbox toggle listener
+  applyCheckboxListener(checkboxUl);
 
-  checkboxRow.appendChild(checkbox);
-  checkboxRow.innerHTML += text;
-
-  applyCheckboxListener(checkboxRow);
-  return checkboxRow;
+  return checkboxUl;
 }
 
 /**
  * Applies a checkbox toggle listener to checkbox div row
  * @param {HTMLElement} checkboxRow
  */
-function applyCheckboxListener(checkboxRow) {
+function applyCheckboxListener(checkboxUl) {
   // Apply checkbox toggle listener
-  checkboxRow.addEventListener("click", (event) => {
+  checkboxUl.addEventListener("click", (event) => {
     const target = event.target;
-    if (target.tagName === "INPUT")
-      !target.checked
-        ? target.removeAttribute("checked")
-        : target.setAttribute("checked", "checked");
+
+    // Only targets <li> ::marker, not <div> text, or after thanks to css for li.checkbox width = fit-content
+    if (target.tagName === "LI") {
+      target.classList.toggle("checked");
+    }
   });
 }
 
 /**
- * Applies checkbox toggle listeners to all checkbox rows
+ * Applies checkbox toggle listeners to all checkbox <ul> elements
  */
 export function applyAllCheckboxListeners() {
-  const checkboxes = document.querySelectorAll(".checkbox-row input");
-  checkboxes.forEach((checkbox) => {
-    applyCheckboxListener(checkbox);
+  const checkboxes = document.querySelectorAll("ul.checkbox");
+  checkboxes.forEach((ul) => {
+    applyCheckboxListener(ul);
   });
 }
 

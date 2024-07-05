@@ -73,15 +73,34 @@ body {
 
 /* Checkboxes */
 
-ul.checkbox-list {
-  padding-left: 18px;
+ul.checkbox {
+  padding-left: 20px;
 }
 
-input[type="checkbox"] {
-  margin-right: 5px;
+li.checkbox {
+  list-style-type: none;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 20px;
 }
 
-.checkbox-row:has(input[type="checkbox"]:checked.checkbox) {
+li.checkbox:before {
+  content: "\2610";
+  padding-right: 5px;
+  font-size: 24px;
+}
+
+li.checkbox.checked:before {
+  content: "\2611";
+  padding-right: 7px;
+  padding-left: 1px;
+  font-size: 19px;
+}
+
+li.checkbox.checked div.checkbox {
   text-decoration: line-through;
   color: silver;
 }
