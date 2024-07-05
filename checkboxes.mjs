@@ -8,14 +8,12 @@ export function createCheckboxList(text) {
   list.classList.add("checkbox-list");
 
   const checkboxRow = createCheckboxRow(text);
-
   list.appendChild(checkboxRow);
-  applyCheckboxListener(checkboxRow);
 
   return list;
 }
 
-function createCheckboxRow(text) {
+export function createCheckboxRow(text) {
   const checkboxRow = document.createElement("div");
   checkboxRow.classList.add("checkbox-row");
 
@@ -26,6 +24,7 @@ function createCheckboxRow(text) {
   checkboxRow.appendChild(checkbox);
   checkboxRow.innerHTML += text;
 
+  applyCheckboxListener(checkboxRow);
   return checkboxRow;
 }
 

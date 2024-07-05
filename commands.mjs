@@ -1,4 +1,5 @@
 import { createCheckboxList } from "./checkboxes.mjs";
+import { setCursorToOffset } from "./utils.mjs";
 
 const commandMap = {
   "#": (parent, text) => transformElement(parent, "h1", text),
@@ -57,27 +58,9 @@ function transformCheckboxList(element, text) {
   const checkboxList = createCheckboxList(text);
   element.replaceWith(checkboxList);
 
-  // Set cursor after checkbox
-  const selection = document.getSelection();
-  console.log(selection);
-
   // Set cursor to end of element
   setCursorToOffset(checkboxList, 1);
   return checkboxList;
-}
-
-/**
- * Set cursor to an offset within the specific element
- * @param {Element} element
- * @param {number} offset
- */
-function setCursorToOffset(element, offset) {
-  const range = document.createRange();
-  const sel = window.getSelection();
-  range.setStart(element, offset);
-  range.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(range);
 }
 
 export default commandMap;
