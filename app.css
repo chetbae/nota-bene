@@ -25,16 +25,17 @@ body {
 }
 
 /* App Container */
-#app-body {
-  /* background-color: blueviolet; */
 
+#app-body {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
 
-  transition: all 0.5s ease;
+  transition: all 0.5s ease-in-out;
+
+  /* background-color: blueviolet; */
 }
 
 #app-body.info-open {
@@ -42,8 +43,6 @@ body {
 }
 
 #app-content-container {
-  /* background-color: aqua; */
-
   position: absolute;
   top: 50px;
   left: 150px;
@@ -53,6 +52,8 @@ body {
   height: calc(100% - 50px - 40px);
 
   overflow: scroll;
+
+  /* background-color: aqua; */
 }
 
 #app-sidebar {
@@ -104,18 +105,21 @@ body {
 
 /* Footer */
 #app-footer {
-  display: none;
   position: absolute;
   bottom: 0;
 
   width: 100vw;
   height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
 
-  /* background-color: green; */
+  display: flex;
+
+  background-color: black;
+  color: white;
 }
 
 #app-footer.info-open {
-  display: flex;
   height: 10vh;
 }
 

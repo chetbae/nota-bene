@@ -2,12 +2,12 @@ import { persistChrome } from "./persistance.mjs";
 import commandMap from "./commands.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
-const contentContainer = document.getElementById("note-page");
+const notePage = document.getElementById("note-page");
 
 // Save and load content area to/from chrome storage
 persistChrome(CHROME_CONTENT_KEY);
 
-contentContainer.addEventListener("keyup", (event) => {
+notePage.addEventListener("keyup", (event) => {
   if (event.key === " ") onSpacebar();
 });
 
@@ -42,6 +42,15 @@ function onSpacebar() {
     parent = commandMap[command](parent, textPart);
   }
 }
+
+const appBody = document.getElementById("app-body");
+const infoButton = document.getElementById("info-button");
+const appFooter = document.getElementById("app-footer");
+
+infoButton.addEventListener("click", () => {
+  appBody.classList.toggle("info-open");
+  appFooter.classList.toggle("info-open");
+});
 
 /**
  * (1) If contenteditable only has one line, the text content is not wrapped in a div. For our purposes, we need a div wrapper to apply the command.
