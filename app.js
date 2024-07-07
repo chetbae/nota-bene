@@ -5,7 +5,7 @@ const CHROME_CONTENT_KEY = "nota-bene-content";
 const contentContainer = document.getElementById("note-page");
 
 // Save and load content area to/from chrome storage
-persistChrome(contentContainer, CHROME_CONTENT_KEY);
+persistChrome(CHROME_CONTENT_KEY);
 
 contentContainer.addEventListener("keyup", (event) => {
   if (event.key === " ") onSpacebar();

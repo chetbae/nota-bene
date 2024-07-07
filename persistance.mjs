@@ -7,18 +7,23 @@ import { applyAllCheckboxListeners } from "./checkboxes.mjs";
  * @param {string} CHROME_KEY - The key to use in chrome storage
  * @param {function[]} applyListener - List of functions to apply event listeners to static elements
  */
-export function persistChrome(container, CHROME_KEY) {
+export function persistChrome(CHROME_KEY) {
+  const container = document.getElementById("note-page");
+
   window.addEventListener("DOMContentLoaded", async () => {
     const content = await loadContent(CHROME_KEY);
 
+    // Load content if user has previously saved
     if (content !== undefined) container.innerHTML = content;
+    // If first time use, add prompt text and apply listener that wipes it on first click
+    else {
+      container.innerHTML = "Write Here...";
+      container.addEventListener("click", onFirstClick, { once: true });
+    }
 
     // Apply listeners to checkboxes
     applyAllCheckboxListeners();
   });
-
-  // Save when user navigates away from page
-  window.addEventListener("visibilitychange", () => saveContent(CHROME_KEY, container.innerHTML));
 
   // Save based on user activity
   let lastTimeoutId = 0;
@@ -39,6 +44,9 @@ export function persistChrome(container, CHROME_KEY) {
       lastTimeoutId = timeoutId;
     }, 2000);
   });
+
+  // Save when user navigates away from page
+  window.addEventListener("visibilitychange", () => saveContent(CHROME_KEY, container.innerHTML));
 }
 
 /**
@@ -68,4 +76,13 @@ async function loadContent(CHROME_KEY) {
     .catch((error) => {
       console.error(error);
     });
+}
+
+/**
+ * If user has not clicked before, clear initial "Write Here..." text
+ */
+function onFirstClick() {
+  const container = document.getElementById("note-page");
+  container.innerHTML = "";
+  container.removeEventListener("click", () => onFirstClick(container));
 }

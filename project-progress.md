@@ -9,19 +9,19 @@ Chrome extension allows users to take notes in a new tab. Notion-like functional
 - [x] Edit text in a contenteditable div
 - [x] Save text to storage
 - [x] Load text from storage
-- [ ] Track cursor and selection
-- [ ] Convert row type by commands
+- [x] Track cursor and selection
+- [x] Convert row type by commands
 - [ ] Convert text to markdown
 - [ ] Convert markdown to text
-- [ ] Add setTimeout to save text to storage
+- [x] Add setTimeout to save text to storage
 
 ## Commands
 
-- [ ] Heading for 1-3 (#, ##, ###)
-- [ ] Bullet points
-- [ ] Numbered lists
-- [ ] Checkboxes
-<!-- - [ ] Code blocks -->
+- [x] Heading for 1-3 (#, ##, ###)
+- [x] Bullet points
+- [x] Numbered lists
+- [x] Checkboxes
+- [ ] Code blocks
 
 ## Line Parse
 
@@ -30,7 +30,7 @@ Chrome extension allows users to take notes in a new tab. Notion-like functional
 ## Features
 
 - [ ] keyboard shortcuts: underline, link, image
-- [ ] Save to storage
+- [x] Save to storage
 - [ ] Import/export markdown files
 - [ ] Customizable themes
 - [ ] multiple note tabs
