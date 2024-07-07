@@ -1,9 +1,3 @@
-#app-container {
-  height: 100vh;
-  width: 100vw;
-  background-color: #ffffff;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -12,63 +6,117 @@ body {
 /* Header */
 
 #app-header {
-  position: fixed;
+  position: absolute;
   top: 0;
+  z-index: 3;
 
   height: 30px;
-  width: 100%;
-  padding: 10px 16px;
-
-  display: flex;
-  background-color: white;
-}
-
-#app-header span {
-  align-self: flex-end;
-}
-
-#app-title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* Sidebar */
-
-#app-sidebar {
-  position: fixed;
-  top: 50px;
-  left: 0;
-
-  width: 150px;
-  height: calc(100vh - 50px);
-
-  display: flex;
-  flex-direction: column;
+  width: 100vw;
 
   /* background-color: green; */
 }
 
-/* Content Area */
+#app-title {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* App Container */
+#app-body {
+  /* background-color: blueviolet; */
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  transition: all 0.5s ease;
+}
+
+#app-body.info-open {
+  height: 90vh;
+}
 
 #app-content-container {
+  /* background-color: aqua; */
+
   position: absolute;
   top: 50px;
   left: 150px;
 
   padding: 20px;
   width: calc(100% - 150px - 40px);
-  min-height: calc(100% - 50px - 40px);
+  height: calc(100% - 50px - 40px);
+
+  overflow: scroll;
+}
+
+#app-sidebar {
+  position: absolute;
+  top: 50px;
+  left: 0;
+
+  width: 150px;
+  height: calc(100% - 50px);
 
   display: flex;
   flex-direction: column;
 
-  /* background-color: aqua; */
+  /* background-color: aquamarine; */
+}
+
+#info-button-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 50px;
+}
+
+#info-button {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 3px solid #000000;
+  border-radius: 100px;
+
+  cursor: pointer;
 }
 
 #note-page {
   font-size: 18px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   outline: 0;
+}
+
+/* Footer */
+#app-footer {
+  display: none;
+  position: absolute;
+  bottom: 0;
+
+  width: 100vw;
+  height: 0;
+
+  /* background-color: green; */
+}
+
+#app-footer.info-open {
+  display: flex;
+  height: 10vh;
 }
 
 /* Checkboxes */

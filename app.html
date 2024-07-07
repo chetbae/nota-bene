@@ -4,15 +4,30 @@
     <link rel="stylesheet" href="app.css" />
   </head>
   <body>
-    <div id="app-content-container">
-      <div id="note-page" contenteditable="true">
-        <div>Write here...</div>
+    <!-- top header -->
+    <div id="app-header">
+      <div id="app-title">Nota Bene</div>
+    </div>
+
+    <!-- main content -->
+    <div id="app-body">
+      <!-- sidebar -->
+      <div id="app-sidebar">
+        <div id="info-button-container">
+          <div id="info-button">i</div>
+        </div>
+      </div>
+
+      <!-- content container -->
+      <div id="app-content-container">
+        <div id="note-page" contenteditable="true">
+          <div>Write here...</div>
+        </div>
       </div>
     </div>
-    <div id="app-sidebar"></div>
-    <div id="app-header">
-      <span id="app-title">Nota Bene</span>
-    </div>
+
+    <!-- bottom header -->
+    <div id="app-footer">hello</div>
     <script type="module" src="app.js"></script>
   </body>
 </html>
