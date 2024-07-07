@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Nota Bene",
-  "description": "Note well, just a new tab away.",
-  "version": "0.1",
+  "description": "Note well. WYSIWYG note taking just a tab away.",
+  "version": "1.0",
   "incognito": "not_allowed",
   "icons": {
     "16": "assets/icon16.png",

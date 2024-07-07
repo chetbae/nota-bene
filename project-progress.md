@@ -4,6 +4,10 @@
 
 Chrome extension allows users to take notes in a new tab. Notion-like functionality (wysiwyg), github-flavoured markdown. Data is persisted.
 
+### Sprint 1
+
+20-ish hours, June 20 to Jul 7 2024
+
 ## Development
 
 - [x] Edit text in a contenteditable div
@@ -23,14 +27,25 @@ Chrome extension allows users to take notes in a new tab. Notion-like functional
 - [x] Checkboxes
 - [ ] Code blocks
 
-## Line Parse
+## Features
 
-- [ ] Bold, italic, strikethrough, code
+- [x] Save to storage
+- [x] Disappearing prompt text for first time users
+
+# Sprint 2
+
+July 7 to ...
+
+## Commands
+
+- [ ] Code blocks
+- [ ] keyboard shortcuts: bold, italic, underline, link, image
 
 ## Features
 
-- [ ] keyboard shortcuts: underline, link, image
-- [x] Save to storage
-- [ ] Import/export markdown files
-- [ ] Customizable themes
+- [ ] Information popup for commands and about
+- [ ] Different themes (dark, light, secret one)
 - [ ] multiple note tabs
+- [ ] Convert text to markdown
+- [ ] Convert markdown to text
+- [ ] Click on extension to open a new tab
