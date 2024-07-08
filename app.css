@@ -38,10 +38,6 @@ body {
   /* background-color: blueviolet; */
 }
 
-#app-body.info-open {
-  height: 90vh;
-}
-
 #app-content-container {
   position: absolute;
   top: 50px;
@@ -54,6 +50,12 @@ body {
   overflow: scroll;
 
   /* background-color: aqua; */
+}
+
+#note-page {
+  font-size: 18px;
+  margin-bottom: 20px;
+  outline: 0;
 }
 
 #app-sidebar {
@@ -95,15 +97,14 @@ body {
   border-radius: 100px;
 
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-#note-page {
-  font-size: 18px;
-  margin-bottom: 20px;
-  outline: 0;
+#info-button:hover {
+  background-color: black;
+  color: white;
 }
 
-/* Footer */
 #app-footer {
   position: absolute;
   bottom: 0;
@@ -119,8 +120,13 @@ body {
   color: white;
 }
 
+/* Info Footer Open */
+#app-body.info-open {
+  height: 85vh;
+}
+
 #app-footer.info-open {
-  height: 10vh;
+  height: 15vh;
 }
 
 /* Checkboxes */
@@ -152,7 +158,22 @@ li.checkbox.checked:before {
   font-size: 19px;
 }
 
-li.checkbox.checked div.checkbox {
+li.checkbox.checked > div.checkbox {
   text-decoration: line-through;
   color: silver;
+}
+
+/* Footer Content */
+#footer-content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 20px;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+#footer-content .column {
+  border: 1px solid white;
+  border-radius: 5px;
 }
