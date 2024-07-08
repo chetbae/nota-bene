@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+
+#app-header {
+  position: absolute;
+  top: 0;
+  z-index: 3;
+
+  height: 50px;
+  width: 100vw;
+
+  /* background-color: green; */
+}
+
+#app-title {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* App Container */
+
+#app-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  transition: all 0.5s ease-in-out;
+
+  display: flex;
+  flex-direction: row;
+
+  /* background-color: blueviolet; */
+}
+
+#app-body.info-open {
+  height: 85vh;
+}
+
+#app-content-container {
+  margin-top: 50px;
+  padding: 20px;
+  height: calc(100% - 50px - 40px);
+
+  overflow: scroll;
+
+  /* background-color: aqua; */
+}
+
+#note-page {
+  font-size: 16px;
+  margin-bottom: 20px;
+  outline: 0;
+}
+
+/* General responsive classes */
+
+.responsive-left {
+  width: 20vw;
+  min-width: 100px;
+  max-width: 300px;
+}
+
+.responsive-right {
+  width: 100%;
+  min-width: 300px;
+}

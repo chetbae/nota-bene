@@ -1,0 +1,40 @@
+#app-footer {
+  position: absolute;
+  bottom: 0;
+
+  width: 100vw;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+
+  display: flex;
+
+  background-color: black;
+  color: white;
+}
+
+#app-footer.info-open {
+  height: 15vh;
+}
+
+/* Footer Content */
+
+#footer-section-1 {
+  width: 20vw;
+  min-width: 100px;
+
+  /* background-color: red; */
+}
+
+#footer-section-2 {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 20px;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+#footer-section-2 .column {
+  /* background-color: blue; */
+}
