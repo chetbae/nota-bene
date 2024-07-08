@@ -1,14 +1,15 @@
 #app-footer {
   position: absolute;
   bottom: 0;
-
   width: 100vw;
   height: 0;
-  overflow: hidden;
-  transition: all 0.5s ease-in-out;
 
   display: flex;
+  flex-direction: row;
 
+  transition: all 0.5s ease-in-out;
+
+  overflow: scroll;
   background-color: black;
   color: white;
 }
@@ -17,7 +18,7 @@
   height: 15vh;
 }
 
-/* Footer Content */
+/* Footer Left Content */
 
 #footer-section-1 {
   width: 20vw;
@@ -25,6 +26,39 @@
 
   /* background-color: red; */
 }
+
+#footer-left-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 10px;
+  height: calc(100% - 20px);
+}
+
+#footer-heading {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#footer-credits {
+  color: gray;
+  font-weight: 100;
+}
+
+#github-link {
+  color: gray;
+  font-weight: 800;
+  text-decoration: none;
+
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: white;
+    text-decoration: underline;
+  }
+}
+/* Footer Right Content */
 
 #footer-section-2 {
   display: flex;
@@ -36,5 +70,5 @@
 }
 
 #footer-section-2 .column {
-  /* background-color: blue; */
+  background-color: blue;
 }
