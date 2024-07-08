@@ -8,8 +8,21 @@ const notePage = document.getElementById("note-page");
 persistChrome(CHROME_CONTENT_KEY);
 
 notePage.addEventListener("keyup", (event) => {
-  if (event.key === " ") onSpacebar();
+  if (event.key === "Enter") onEnter();
+  else if (event.key === " ") onSpacebar();
 });
+
+function onEnter() {
+  const focusNode = document.getSelection().focusNode;
+  if (!focusNode) return;
+
+  // If Enter key is pressed for checkbox newline, make sure the new line is not checked
+  if (focusNode.classList.contains("checkbox")) {
+    if (focusNode.parentElement.classList.contains("checked")) {
+      focusNode.parentElement.classList.remove("checked");
+    }
+  }
+}
 
 function onSpacebar() {
   const selection = document.getSelection();
