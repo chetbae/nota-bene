@@ -10,7 +10,7 @@ body {
   top: 0;
   z-index: 3;
 
-  height: 30px;
+  height: 50px;
   width: 100vw;
 
   /* background-color: green; */
@@ -35,16 +35,25 @@ body {
 
   transition: all 0.5s ease-in-out;
 
+  display: flex;
+  flex-direction: row;
+
   /* background-color: blueviolet; */
 }
 
-#app-content-container {
-  position: absolute;
-  top: 50px;
-  left: 150px;
+#app-sidebar {
+  display: flex;
+  flex-direction: column;
 
+  margin-top: 50px;
+  height: calc(100% - 50px);
+
+  /* background-color: aquamarine; */
+}
+
+#app-content-container {
+  margin-top: 50px;
   padding: 20px;
-  width: calc(100% - 150px - 40px);
   height: calc(100% - 50px - 40px);
 
   overflow: scroll;
@@ -53,23 +62,9 @@ body {
 }
 
 #note-page {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 20px;
   outline: 0;
-}
-
-#app-sidebar {
-  position: absolute;
-  top: 50px;
-  left: 0;
-
-  width: 150px;
-  height: calc(100% - 50px);
-
-  display: flex;
-  flex-direction: column;
-
-  /* background-color: aquamarine; */
 }
 
 #info-button-container {
@@ -182,7 +177,14 @@ li.checkbox.checked > div.checkbox {
 }
 
 /* Footer Content */
-#footer-content {
+#footer-section-1 {
+  width: 20vw;
+  min-width: 100px;
+
+  /* background-color: red; */
+}
+
+#footer-section-2 {
   display: flex;
   justify-content: space-around;
   width: 100%;
@@ -191,7 +193,19 @@ li.checkbox.checked > div.checkbox {
   flex-direction: row;
 }
 
-#footer-content .column {
-  border: 1px solid white;
-  border-radius: 5px;
+#footer-section-2 .column {
+  /* background-color: blue; */
+}
+
+/* General responsive classes */
+
+.responsive-left {
+  width: 20vw;
+  min-width: 100px;
+  max-width: 300px;
+}
+
+.responsive-right {
+  width: 100%;
+  min-width: 300px;
 }
