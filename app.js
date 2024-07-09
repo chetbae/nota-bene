@@ -22,6 +22,13 @@ function onEnter() {
       focusNode.parentElement.classList.remove("checked");
     }
   }
+
+  // If no carryover text and not a list item, add newline stripped of previous styling
+  if (!focusNode.textContent && focusNode.tagName !== "LI") {
+    const div = document.createElement("div");
+    div.innerHTML = "<br>";
+    focusNode.replaceWith(div);
+  }
 }
 
 function onSpacebar() {
