@@ -53,6 +53,7 @@ body {
 
 #app-content-container {
   margin-top: 50px;
+  margin-left: 20px;
   height: calc(100% - 50px);
   overflow: scroll;
 
@@ -60,9 +61,12 @@ body {
 }
 
 #note-page {
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+
   font-size: 16px;
   outline: 0;
-  margin: 10px 20px 20px 20px;
 
   /* background-color: red; */
 }

@@ -65,6 +65,7 @@ function onSpacebar() {
   }
 }
 
+// Apply listener to info button to toggle footer
 const appBody = document.getElementById("app-body");
 const infoButton = document.getElementById("info-button");
 const appFooter = document.getElementById("app-footer");
@@ -74,6 +75,15 @@ infoButton.addEventListener("click", () => {
   appFooter.classList.toggle("info-open");
 });
 
+// Apply listener to focus on note-page end if clicked on content container empty space
+const appContentContainer = document.getElementById("app-content-container");
+appContentContainer.addEventListener("click", (event) => {
+  // Don't set cursor if clicking on note-page and not container
+  if (event.target === appContentContainer) {
+    const notePage = document.getElementById("note-page");
+    setCursorToOffset(notePage, notePage.childElementCount);
+  }
+});
 /**
  * (1) If contenteditable only has one line, the text content is not wrapped in a div. For our purposes, we need a div wrapper to apply the command.
  */
