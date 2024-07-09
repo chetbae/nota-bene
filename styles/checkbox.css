@@ -25,7 +25,7 @@ li.checkbox.checked:before {
   font-size: 19px;
 }
 
-li.checkbox.checked > div.checkbox {
+li.checkbox.checked > div {
   text-decoration: line-through;
   color: silver;
 }
