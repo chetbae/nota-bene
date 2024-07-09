@@ -1,5 +1,6 @@
 import { persistChrome } from "./persistance.mjs";
 import commandMap from "./commands.mjs";
+import { setCursorToOffset } from "./utils.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 const notePage = document.getElementById("note-page");
@@ -14,7 +15,7 @@ notePage.addEventListener("keyup", (event) => {
 
 function onEnter() {
   const focusNode = document.getSelection().focusNode;
-  if (!focusNode) return;
+  if (!focusNode.classlist) return;
 
   // If Enter key is pressed for checkbox newline, make sure the new line is not checked
   if (focusNode.classList.contains("checkbox")) {
@@ -28,6 +29,7 @@ function onEnter() {
     const div = document.createElement("div");
     div.innerHTML = "<br>";
     focusNode.replaceWith(div);
+    setCursorToOffset(div, 0);
   }
 }
 
