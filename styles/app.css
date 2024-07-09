@@ -8,7 +8,6 @@ body {
 #app-header {
   position: absolute;
   top: 0;
-  z-index: 3;
 
   height: 50px;
   width: 100vw;
@@ -42,14 +41,12 @@ body {
 }
 
 #app-body.info-open {
-  height: 85vh;
+  height: 80vh;
 }
 
 #app-content-container {
   margin-top: 50px;
-  padding: 20px;
-  height: calc(100% - 50px - 40px);
-
+  height: calc(100% - 50px);
   overflow: scroll;
 
   /* background-color: aqua; */
@@ -57,8 +54,8 @@ body {
 
 #note-page {
   font-size: 16px;
-  margin-bottom: 20px;
   outline: 0;
+  margin: 0 20px 20px 20px;
 }
 
 /* General responsive classes */
@@ -72,4 +69,11 @@ body {
 .responsive-right {
   width: 100%;
   min-width: 300px;
+}
+
+/* Code */
+.code {
+  background-color: darkslategrey;
+  color: orange;
+  border-radius: 5px;
 }

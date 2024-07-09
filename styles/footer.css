@@ -15,34 +15,49 @@
 }
 
 #app-footer.info-open {
-  height: 15vh;
+  height: 20vh;
 }
 
-/* Footer Left Content */
+/* Subsections */
 
-#footer-section-1 {
-  width: 20vw;
-  min-width: 100px;
+#footer-left,
+#footer-right {
+  margin: 20px 15px;
+}
+
+#footer-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 70px;
+
+  text-align: right;
+
+  /* background-color: blue; */
+}
+
+#footer-right {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  font-size: 12px;
+  font-weight: 200;
 
   /* background-color: red; */
 }
 
-#footer-left-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* Footer Left Content */
 
-  padding: 10px;
-  height: calc(100% - 20px);
-}
-
-#footer-heading {
+#footer-title {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 200;
 }
 
 #footer-credits {
   color: gray;
+  font-size: 12px;
   font-weight: 100;
 }
 
@@ -58,17 +73,76 @@
     text-decoration: underline;
   }
 }
+
 /* Footer Right Content */
 
-#footer-section-2 {
+#footer-right > .column {
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  padding: 20px;
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 12px;
+  width: 25%;
+
+  /* background-color: blue; */
+
+  & > .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    /* background-color: red; */
+
+    & > .name {
+      /* background-color: green; */
+    }
+
+    & > .description {
+      display: flex;
+      flex-direction: row;
+      /* background-color: purple; */
+    }
+  }
 }
 
-#footer-section-2 .column {
-  background-color: blue;
+/* Keyboard key styling */
+
+key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  border: 0.8px solid white;
+  border-radius: 2px;
+}
+
+/* Typewriter-esque styling */
+
+typewriter {
+  position: relative;
+  border: none;
+  text-align: center;
+
+  padding: 0 3px 3px;
+  border-bottom: 0.8px solid white;
+}
+
+typewriter::before,
+typewriter::after {
+  position: absolute;
+  content: "";
+  height: 2.5px;
+}
+
+typewriter::before {
+  left: 0;
+  bottom: 0;
+  border-left: 0.8px solid white;
+}
+
+typewriter::after {
+  right: 0;
+  bottom: 0;
+  border-right: 0.8px solid white;
 }
