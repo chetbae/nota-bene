@@ -12,6 +12,7 @@
 
 #info-button-container {
   position: absolute;
+  left: 0;
   bottom: 0;
 
   display: flex;
@@ -19,13 +20,12 @@
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  height: 50px;
+  height: 65px;
 }
 
 #info-button {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   left: 20px;
 
   display: flex;
@@ -45,8 +45,8 @@
 #info-button-tooltip {
   display: none;
   position: absolute;
-  top: -25px;
-  left: 22px;
+  top: 0;
+  left: 20px;
   width: 110px;
 
   font-size: 11px;
