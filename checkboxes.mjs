@@ -17,7 +17,7 @@ export function createCheckboxList(text) {
   checkboxUl.appendChild(checkboxLi);
 
   // Apply checkbox toggle listener
-  applyCheckboxListener(checkboxUl);
+  addCheckboxListener(checkboxUl);
 
   return checkboxUl;
 }
@@ -26,7 +26,7 @@ export function createCheckboxList(text) {
  * Applies a checkbox toggle listener to checkbox div row
  * @param {HTMLElement} checkboxRow
  */
-function applyCheckboxListener(checkboxUl) {
+function addCheckboxListener(checkboxUl) {
   // Apply checkbox toggle listener
   checkboxUl.addEventListener("click", (event) => {
     const target = event.target;
@@ -41,17 +41,9 @@ function applyCheckboxListener(checkboxUl) {
 /**
  * Applies checkbox toggle listeners to all checkbox <ul> elements
  */
-export function applyAllCheckboxListeners() {
+export function addAllCheckboxListeners() {
   const checkboxes = document.querySelectorAll("ul.checkbox");
   checkboxes.forEach((ul) => {
-    applyCheckboxListener(ul);
+    addCheckboxListener(ul);
   });
 }
-
-const checkboxes = {
-  createCheckboxList,
-  applyCheckboxListener,
-  applyAllCheckboxListeners,
-};
-
-export default checkboxes;
