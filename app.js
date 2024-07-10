@@ -1,6 +1,6 @@
 import { persistChrome } from "./persistance.mjs";
 import commandMap from "./commands.mjs";
-import { setCursorToOffset, addLink } from "./utils.mjs";
+import { setCursorToOffset, createLink } from "./utils.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 
@@ -25,6 +25,15 @@ appContentContainer.addEventListener("click", (event) => {
   if (event.target === appContentContainer) {
     const notePage = document.getElementById("note-page");
     setCursorToOffset(notePage, notePage.childElementCount);
+  }
+});
+
+// Apply listener to note-page for keyboard shortcuts
+notePage.addEventListener("keydown", (event) => {
+  // If Shift + Command + u is pressed, add link to selection
+  if (event.shiftKey && event.metaKey && event.key === "u") {
+    event.preventDefault();
+    createLink();
   }
 });
 

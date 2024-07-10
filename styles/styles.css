@@ -1,0 +1,12 @@
+/* Code */
+.code {
+  background-color: darkslategrey;
+  color: orange;
+  border-radius: 5px;
+}
+
+/* Link */
+a {
+  color: grey;
+  text-decoration: 1px solid underline darkgrey;
+}

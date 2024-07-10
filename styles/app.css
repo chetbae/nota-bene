@@ -83,10 +83,3 @@ body {
   width: 100%;
   min-width: 300px;
 }
-
-/* Code */
-.code {
-  background-color: darkslategrey;
-  color: orange;
-  border-radius: 5px;
-}

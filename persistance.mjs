@@ -1,4 +1,5 @@
 import { addAllCheckboxListeners } from "./checkboxes.mjs";
+import { addAllLinkListeners } from "./utils.mjs";
 
 /**
  * Persistance module to save and load content from chrome storage
@@ -23,6 +24,8 @@ export function persistChrome(CHROME_KEY) {
 
     // Apply listeners to checkboxes
     addAllCheckboxListeners();
+    // Apply listeners to links
+    addAllLinkListeners();
   });
 
   // Save based on user activity
