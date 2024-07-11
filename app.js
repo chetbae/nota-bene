@@ -57,12 +57,13 @@ notePage.addEventListener("keyup", (event) => {
 
 function onEnter() {
   const focusNode = document.getSelection().focusNode;
+  const parentElement = focusNode.parentElement;
 
-  // If Enter key is pressed for checkbox newline, make sure the new line is not checked
-  if (focusNode.parentElement && focusNode.parentElement.classList.contains("checkbox")) {
-    if (focusNode.parentElement.classList.contains("checked")) {
-      focusNode.parentElement.classList.remove("checked");
-    }
+  // Check whether or not focusNode is child of checked checkbox
+  const li = parentElement.closest("li.checkbox.checked");
+  if (li) {
+    li.classList.remove("checked");
+    return;
   }
 
   // If no carryover text and not a list item, add newline stripped of previous styling
