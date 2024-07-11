@@ -20,11 +20,20 @@ infoButton.addEventListener("click", () => {
   appFooter.classList.toggle("info-open");
 });
 
-// Apply listener to focus on note-page end if clicked on content container empty space
 appContentContainer.addEventListener("click", (event) => {
-  // Don't set cursor if clicking on note-page and not container
+  // If clicked on content container, set cursor to end of note-page new line (make new line if necessary)
   if (event.target === appContentContainer) {
     const notePage = document.getElementById("note-page");
+
+    // If note page is empty, do nothing
+    if (!notePage.hasChildNodes()) return;
+
+    if (notePage.lastChild.innerHTML !== "<br>") {
+      const div = document.createElement("div");
+      div.innerHTML = "<br>";
+      notePage.appendChild(div);
+    }
+
     setCursorToOffset(notePage, notePage.childElementCount);
   }
 });
