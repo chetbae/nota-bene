@@ -1,8 +1,12 @@
 /* Code */
-.code {
-  background-color: darkslategrey;
-  color: orange;
+pre.code {
+  color: #ffd173;
+  background-color: rgb(31, 36, 48);
+  font-family: "Courier New" monospace;
+  font-size: 12px;
+  line-height: 18px;
   border-radius: 5px;
+  padding: 2px 6px;
 }
 
 /* Link */

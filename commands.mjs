@@ -1,7 +1,7 @@
 import { createCheckboxList } from "./checkboxes.mjs";
 import { setCursorToOffset } from "./utils.mjs";
 
-const commandMap = {
+export const commandMap = {
   "#": (parent, text) => transformElement(parent, "h1", text),
   "##": (parent, text) => transformElement(parent, "h2", text),
   "###": (parent, text) => transformElement(parent, "h3", text),
@@ -9,7 +9,7 @@ const commandMap = {
   "1.": (parent, text) => transformList(parent, "ol", text),
   "*": (parent, text) => transformList(parent, "ul", text),
   "[]": (parent, text) => transformCheckboxList(parent, text),
-  // "```": "code",
+  "```": (parent, text) => transformCodeBlock(parent),
 };
 
 /**
@@ -63,4 +63,21 @@ function transformCheckboxList(element, text) {
   return checkboxList;
 }
 
-export default commandMap;
+/**
+ * Transforms an element into a code block element
+ * @param {HTMLElement} element
+ * @returns New code block element
+ */
+function transformCodeBlock(element) {
+  const container = document.createElement("pre");
+  container.spellcheck = false;
+  container.classList.add("code");
+  const div = document.createElement("div");
+  div.innerHTML = "<br>";
+  container.appendChild(div);
+  element.replaceWith(container);
+
+  // Set cursor to end of element
+  setCursorToOffset(div, 0);
+  return container;
+}

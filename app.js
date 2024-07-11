@@ -1,5 +1,5 @@
 import { persistChrome } from "./persistance.mjs";
-import commandMap from "./commands.mjs";
+import { commandMap } from "./commands.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
 
@@ -37,6 +37,12 @@ appContentContainer.addEventListener("click", (event) => {
 });
 
 notePage.addEventListener("keydown", (event) => {
+  // Prevent tab on note-page
+  if (event.key === "Tab") {
+    event.preventDefault();
+    document.execCommand("insertText", false, "\t");
+  }
+
   // Apply listener to note-page for keyboard shortcuts
   if (event.shiftKey && event.metaKey) {
     event.preventDefault();
