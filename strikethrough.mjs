@@ -4,14 +4,62 @@
 export function toggleStrikethrough() {
   const selection = window.getSelection();
 
-  // Toggle s for caret selection
   if (selection.type === "Caret") toggleStrikethroughCaret(selection);
-  // Toggle s for range selection
   else if (selection.type === "Range") toggleStrikethroughRange(selection);
 }
 
 function toggleStrikethroughCaret(selection) {
-  console.log("toggleStrikethroughCaret");
+  const focusNode = selection.focusNode;
+  const focusOffset = selection.focusOffset;
+  const s = focusNode.parentElement;
+  const hasStrikethrough = searchStrikethroughParent(focusNode);
+  console.log(focusNode, focusOffset);
+
+  // Unstrike:
+  if (hasStrikethrough) {
+    if (s.tagName !== "S") console.log("Error: Parent node is not <s>", s);
+
+    const textContent = s.textContent;
+
+    const beforeText = textContent.slice(0, focusOffset);
+    const afterText = textContent.slice(focusOffset);
+
+    const sParent = s.parentElement;
+    const before = document.createElement("s");
+    before.innerHTML = beforeText;
+    const invisibleTextNode = document.createTextNode("‎");
+
+    // "<s>afterText</s>" -> "&lrm;"<s>afterText</s> -> <s>beforeText</s>"&lrm;"<s>afterText</s>
+    s.textContent = afterText;
+    sParent.insertBefore(invisibleTextNode, s);
+    sParent.insertBefore(before, invisibleTextNode);
+
+    // Set cursor to on invisible text node
+    selection.selectAllChildren(s);
+    selection.collapseToStart();
+  }
+  // Strike: Insert empty <s> tag at focusOffset position in parent
+  else {
+    // "beforeTextAfterText" -> "beforeText"<s></s>"AfterText"
+    const textContent = focusNode.textContent,
+      beforeText = textContent.slice(0, focusOffset),
+      afterText = textContent.slice(focusOffset);
+
+    const parent = focusNode.parentElement;
+    const s = document.createElement("s");
+    s.appendChild(document.createTextNode("‎"));
+    const before = document.createTextNode(beforeText);
+
+    // "afterText" -> <s></s>"beforeText" -> "beforeText"<s></s>"afterText"
+    focusNode.textContent = afterText;
+    parent.insertBefore(s, focusNode);
+    parent.insertBefore(before, s);
+
+    // Set cursor to on <s> tag
+    selection.selectAllChildren(s);
+  }
+
+  focusNode.normalize();
 }
 
 function toggleStrikethroughRange(selection) {
@@ -29,21 +77,68 @@ function toggleStrikethroughRange(selection) {
   const end = allNodes.indexOf(endContainer);
   const selectedNodes = allNodes.slice(start, end + 1);
 
-  // If all nodes are <s>, remove <s>
   const isAllStrikethrough = allStrikethrough(selectedNodes);
-  // if (isAllStrikethrough) removeStrikethrough(selectedNodes);
-  // else {
-  const [newStartContainer, newEndContainer] = addStrikethroughToRange(
-    selectedNodes,
-    startOffset,
-    endOffset
-  );
-  // }
-  commonAncestorContainer.normalize();
+  console.log("isAllStrikethrough", isAllStrikethrough);
 
-  // Reset range to same start and end
-  range.setStart(newStartContainer, 0);
-  range.setEnd(newEndContainer, newEndContainer.textContent.length);
+  // Remove all strikethrough from nodes
+  if (isAllStrikethrough) {
+    console.log("Remove strikethrough");
+  }
+  // Add strikethrough to all nodes
+  else {
+    console.log("Add strikethrough");
+    // wrapStrikethrough(selection);
+  }
+}
+
+/**
+ * Wraps selected text in <s> tag.
+ * @param {Selection} selection
+ */
+function wrapStrikethrough(selection) {
+  const range = selection.getRangeAt(0);
+  const selectedText = range.extractContents();
+  const s = document.createElement("s");
+
+  s.appendChild(selectedText);
+  range.insertNode(s);
+}
+
+/**
+ * Checks if a node or its sub-trees have <s> tags.
+ * @param {Node} root
+ * @returns {boolean} True if a <s> tag is found in the node or its sub-trees.
+ */
+function searchStrikethroughChildren(root) {
+  const stack = [root];
+
+  while (stack.length > 0) {
+    const node = stack.pop();
+
+    if (node.tagName === "S") return true;
+    if (node.hasChildNodes()) {
+      const children = Array.from(node.childNodes);
+      stack.push(...children);
+    }
+  }
+  return false;
+}
+
+/**
+ * Checks if a node or its parent nodes have <s> tags.
+ * @param {Node} node
+ * @returns {boolean} True if a <s> tag is found in the node or its parent nodes.
+ */
+function searchStrikethroughParent(node) {
+  let currentNode = node;
+
+  while (currentNode) {
+    if (currentNode.tagName === "S") return true;
+    if (!currentNode.parentElement || currentNode.parentElement.id === "note-page") return false;
+
+    currentNode = currentNode.parentElement;
+  }
+  return false;
 }
 
 /**
@@ -72,75 +167,22 @@ function allStrikethrough(nodes) {
   return nodes.every((node) => node.parentElement.tagName === "S");
 }
 
-/**
- * Removes <s> s tags from nodes.
- * @param {Node[]} nodes
- */
-function removeStrikethrough(nodes) {
-  nodes.forEach((node) => {
-    if (node.parentElement.tagName === "S") node.parentElement.replaceWith(node);
-  });
-}
+// // TODO: Buggy
+// function mergeAdjacentStrikethroughNodes(node) {
+//   if (!node.hasChildNodes()) return;
 
-/** Adds <s> s tags to selected nodes.
- * @param {Node[]} nodes
- * @param {number} startOffset
- * @param {number} endOffset
- */
-function addStrikethroughToRange(nodes, startOffset, endOffset) {
-  if (nodes.length === 0) return;
+//   for (let i = 1, n = node.childNodes.length; i < n; i++) {
+//     const prevNode = node.childNodes[i - 1];
+//     const currentNode = node.childNodes[i];
 
-  // Get start node and text
-  let startNode = nodes[0];
+//     // Check if adjacent nodes have the same tag
+//     if (prevNode.tagName === "S" && currentNode.tagName === "S") {
+//       // Merge prev into node
+//       currentNode.textContent = prevNode.textContent + currentNode.textContent;
+//       prevNode.remove();
+//     }
 
-  // If start not strikethrough, split by startOffset and wrap selected text in <s>
-  if (startNode.parentElement.tagName !== "S") {
-    const startTextBefore = startNode.textContent.slice(0, startOffset);
-    const startTextSelected = startNode.textContent.slice(startOffset);
-
-    // Replace and insert <s> text into start node
-    startNode.textContent = startTextBefore;
-    const startS = document.createElement("s");
-    startS.textContent = startTextSelected;
-    startNode.parentElement.insertBefore(startS, startNode.nextSibling);
-
-    // Set new start node as textNode of new <s>
-    startNode = startS.childNodes[0];
-  }
-
-  // Return startNode if only one node selected
-  if (nodes.length === 1) return [startNode, startNode];
-
-  // Wrap middle nodes in <s>
-  for (let i = 1, n = nodes.length; i < n - 1; i++) {
-    const node = nodes[i];
-
-    // If node is already strikethrough, skip
-    if (node.parentElement.tagName === "S") continue;
-
-    const s = document.createElement("s");
-    s.textContent = node.textContent;
-    node.textContent = "";
-    node.appendChild(s);
-  }
-
-  // Get end node and text
-  let endNode = nodes[nodes.length - 1];
-
-  // If end not strikethrough, split by endOffset and wrap selected text in <s>
-  if (endNode.parentElement.tagName !== "S") {
-    const endTextSelected = endNode.textContent.slice(0, endOffset);
-    const endTextAfter = endNode.textContent.slice(endOffset);
-
-    // Replace and insert <s> text into end node
-    endNode.textContent = endTextAfter;
-    const endS = document.createElement("s");
-    endS.textContent = endTextSelected;
-    endNode.parentElement.insertBefore(endS, endNode);
-
-    // Set new end node as textNode of new <s>
-    endNode = endS.childNodes[0];
-  }
-
-  return [startNode, endNode];
-}
+//     // Traverse children
+//     mergeAdjacentStrikethroughNodes(currentNode);
+//   }
+// }
