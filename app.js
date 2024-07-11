@@ -25,10 +25,8 @@ appContentContainer.addEventListener("click", (event) => {
   if (event.target === appContentContainer) {
     const notePage = document.getElementById("note-page");
 
-    // If note page is empty, do nothing
-    if (!notePage.hasChildNodes()) return;
-
-    if (notePage.lastChild.innerHTML !== "<br>") {
+    if (!notePage.hasChildNodes()) notePage.innerHTML = "<br>";
+    else if (notePage.lastChild.innerHTML !== "<br>") {
       const div = document.createElement("div");
       div.innerHTML = "<br>";
       notePage.appendChild(div);
@@ -38,8 +36,8 @@ appContentContainer.addEventListener("click", (event) => {
   }
 });
 
-// Apply listener to note-page for keyboard shortcuts
 notePage.addEventListener("keydown", (event) => {
+  // Apply listener to note-page for keyboard shortcuts
   if (event.shiftKey && event.metaKey) {
     event.preventDefault();
 
@@ -59,7 +57,7 @@ function onEnter() {
   const focusNode = document.getSelection().focusNode;
   const parentElement = focusNode.parentElement;
 
-  // Check whether or not focusNode is child of checked checkbox
+  // Check parent is checked checkbox
   const li = parentElement.closest("li.checkbox.checked");
   if (li) {
     li.classList.remove("checked");
@@ -103,7 +101,7 @@ function onSpacebar() {
     }
 
     // Apply command function
-    parent = commandMap[command](parent, textPart);
+    commandMap[command](parent, textPart);
   }
 }
 
