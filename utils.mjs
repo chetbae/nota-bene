@@ -13,19 +13,27 @@ export function setCursorToOffset(element, offset) {
 }
 
 export function createLink() {
-  const a = document.createElement("a");
-  const url = prompt("Enter URL:");
-  if (!url) return;
+  try {
+    // Check if selection consists of only text nodes
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const nodes = Array.from(range.cloneContents().childNodes);
+    for (const node of nodes) {
+      if (node.nodeType !== Node.TEXT_NODE) {
+        throw new Error("Non-text node in selection");
+      }
+    }
 
-  a.href = url;
-  a.title = url;
-  addLinkListener(a);
+    const a = document.createElement("a");
+    const url = prompt("Enter URL:");
+    if (!url) return;
 
-  window.getSelection().getRangeAt(0).surroundContents(a);
-
-  // Check if selection is empty -> paste url
-  if (!window.getSelection().toString()) {
+    a.href = url;
+    a.title = url;
+    window.getSelection().getRangeAt(0).surroundContents(a);
     a.innerHTML = url;
+  } catch (error) {
+    window.alert("Only plain text can be linked.");
   }
 }
 
