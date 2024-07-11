@@ -1,6 +1,7 @@
 import { persistChrome } from "./persistance.mjs";
 import commandMap from "./commands.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
+import { toggleStrikethrough } from "./strikethrough.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 
@@ -30,10 +31,13 @@ appContentContainer.addEventListener("click", (event) => {
 
 // Apply listener to note-page for keyboard shortcuts
 notePage.addEventListener("keydown", (event) => {
-  // If Shift + Command + u is pressed, add link to selection
-  if (event.shiftKey && event.metaKey && event.key === "u") {
+  if (event.shiftKey && event.metaKey) {
     event.preventDefault();
-    createLink();
+
+    // Shift + Command + u -> link
+    if (event.key === "u") createLink();
+    // Shift + Command + x -> strikethrough
+    else if (event.key === "x") toggleStrikethrough();
   }
 });
 
@@ -43,8 +47,7 @@ notePage.addEventListener("keyup", (event) => {
 });
 
 function onEnter() {
-  const selection = document.getSelection();
-  const focusNode = selection.focusNode;
+  const focusNode = document.getSelection().focusNode;
 
   // If Enter key is pressed for checkbox newline, make sure the new line is not checked
   if (focusNode.parentElement && focusNode.parentElement.classList.contains("checkbox")) {

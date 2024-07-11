@@ -10,3 +10,7 @@ a {
   color: grey;
   text-decoration: 1px solid underline darkgrey;
 }
+
+s {
+  display: inline;
+}
