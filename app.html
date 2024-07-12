@@ -13,25 +13,20 @@
   <body>
     <!-- main content -->
     <div id="app-body">
-      <!-- top header -->
+      <!-- header -->
       <div id="app-header">
         <div id="app-title" class="disable-select">Nota Bene</div>
 
         <div id="app-toolbar">
           <div id="copy-md-container">
             <img id="copy-md-icon" class="disable-select" src="assets/clipboard.png" />
-            <div id="copy-md-tooltip">Copy Markdown</div>
+            <div id="copy-md-tooltip" class="tooltip">Copy Markdown</div>
           </div>
         </div>
       </div>
 
       <!-- sidebar -->
-      <div id="app-sidebar" class="responsive-left">
-        <div id="info-button-container">
-          <div id="info-button">?</div>
-          <div id="info-button-tooltip">Help and information</div>
-        </div>
-      </div>
+      <div id="app-sidebar" class="responsive-left"></div>
 
       <div id="app-divider"></div>
 
@@ -42,8 +37,15 @@
         </div>
       </div>
 
+      <!-- snackbar -->
       <div id="snackbar-container" class="disable-select">
         <div id="snackbar">Hello</div>
+      </div>
+
+      <!-- info button -->
+      <div id="info-button-container">
+        <div id="info-button">?</div>
+        <div id="info-button-tooltip" class="tooltip">Help and information</div>
       </div>
     </div>
 

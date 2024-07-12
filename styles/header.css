@@ -74,17 +74,8 @@
   display: none;
   position: absolute;
   width: 90px;
-
   bottom: -30px;
   right: 0;
-
-  font-size: 11px;
-  text-align: center;
-  padding: 5px;
-  border-radius: 5px;
-
-  background-color: black;
-  color: white;
 }
 
 #copy-md-icon:hover + #copy-md-tooltip {
