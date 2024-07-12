@@ -30,8 +30,10 @@ export function createLink() {
 
     a.href = url;
     a.title = url;
-    window.getSelection().getRangeAt(0).surroundContents(a);
-    a.innerHTML = url;
+    a.textContent = range.toString();
+    range.deleteContents();
+    range.insertNode(a);
+    addLinkListener(a);
   } catch (error) {
     window.alert("Only plain text can be linked.");
   }
