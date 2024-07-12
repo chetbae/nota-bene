@@ -67,6 +67,8 @@ notePage.addEventListener("keydown", (event) => {
     document.execCommand("insertText", false, "\t");
   }
 
+  if (event.key === "Backspace") onBackspace();
+
   // Apply listener to note-page for keyboard shortcuts
   if (event.shiftKey && event.metaKey) {
     event.preventDefault();
@@ -97,7 +99,19 @@ function onEnter() {
   }
 
   // If no carryover text and not a list item, add newline stripped of previous styling
-  if (!focusNode.textContent && focusNode.tagName !== "LI") {
+  if (!focusNode.textContent && !["LI"].includes(focusNode.tagName)) {
+    const div = document.createElement("div");
+    div.innerHTML = "<br>";
+    focusNode.replaceWith(div);
+    setCursorToOffset(div, 0);
+  }
+}
+
+function onBackspace() {
+  const focusNode = document.getSelection().focusNode;
+
+  // Check for empty code block and remove it
+  if (focusNode.tagName === "PRE" && focusNode.classList.contains("code")) {
     const div = document.createElement("div");
     div.innerHTML = "<br>";
     focusNode.replaceWith(div);
