@@ -11,6 +11,7 @@ export function createCheckboxList(text) {
   checkboxLi.classList.add("checkbox");
 
   const div = document.createElement("div");
+  div.classList.add("checkbox");
   div.innerHTML = text ? text : "<br>";
 
   checkboxLi.appendChild(div);
