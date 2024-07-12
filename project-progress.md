@@ -15,8 +15,6 @@ Chrome extension allows users to take notes in a new tab. Notion-like functional
 - [x] Load text from storage
 - [x] Track cursor and selection
 - [x] Convert row type by commands
-- [ ] Convert text to markdown
-- [ ] Convert markdown to text
 - [x] Add setTimeout to save text to storage
 
 ## Commands
@@ -25,7 +23,7 @@ Chrome extension allows users to take notes in a new tab. Notion-like functional
 - [x] Bullet points
 - [x] Numbered lists
 - [x] Checkboxes
-- [ ] Code blocks
+- [x] Code blocks
 
 ## Features
 
@@ -34,18 +32,32 @@ Chrome extension allows users to take notes in a new tab. Notion-like functional
 
 # Sprint 2
 
-July 7 to ...
+July 7 to July 12
 
 ## Commands
 
-- [ ] Code blocks
-- [ ] keyboard shortcuts: bold, italic, underline, link, image
+- [x] Code blocks
+- [x] keyboard shortcuts: bold, italic, underline, link
+- [ ] List tabbing
 
 ## Features
 
-- [ ] Information popup for commands and about
+- [x] Information popup for commands and about
 - [ ] Different themes (dark, light, secret one)
 - [ ] multiple note tabs
 - [ ] Convert text to markdown
-- [ ] Convert markdown to text
+  <!-- - [ ] Convert markdown to text -->
+  <!-- - [ ] image upload -->
+
+Pikolo Fri Jul 12
+
+- [x] Convert text to markdown
+- [x] Copy Markdown to clipboard and snackbar
+- [ ] fix code block newline
+- [ ] fix first line newline
 - [ ] Click on extension to open a new tab
+- [ ] Different themes (dark, light, secret one)
+- [ ] multiple note tabs
+- [ ] list tabbing
+  - [ ] list tab to markdown
+        []

@@ -4,19 +4,27 @@
   <head>
     <title>Nota Bene</title>
     <link rel="stylesheet" href="styles/app.css" />
+    <link rel="stylesheet" href="styles/header.css" />
     <link rel="stylesheet" href="styles/sidebar.css" />
     <link rel="stylesheet" href="styles/footer.css" />
     <link rel="stylesheet" href="styles/checkbox.css" />
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <!-- top header -->
-    <div id="app-header">
-      <div id="app-title">Nota Bene</div>
-    </div>
-
     <!-- main content -->
     <div id="app-body">
+      <!-- top header -->
+      <div id="app-header">
+        <div id="app-title" class="disable-select">Nota Bene</div>
+
+        <div id="app-toolbar">
+          <div id="copy-md-container">
+            <img id="copy-md-icon" class="disable-select" src="assets/clipboard.png" />
+            <div id="copy-md-tooltip">Copy Markdown</div>
+          </div>
+        </div>
+      </div>
+
       <!-- sidebar -->
       <div id="app-sidebar" class="responsive-left">
         <div id="info-button-container">
@@ -32,6 +40,10 @@
         <div id="note-page" contenteditable="true">
           <div>Write here...</div>
         </div>
+      </div>
+
+      <div id="snackbar-container" class="disable-select">
+        <div id="snackbar">Hello</div>
       </div>
     </div>
 

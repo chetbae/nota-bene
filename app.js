@@ -2,6 +2,7 @@ import { persistChrome } from "./persistance.mjs";
 import { commandMap } from "./commands.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
+import { nodeToMarkdown } from "./markdown.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 
@@ -9,6 +10,9 @@ const appBody = document.getElementById("app-body");
 const appContentContainer = document.getElementById("app-content-container");
 const notePage = document.getElementById("note-page");
 const infoButton = document.getElementById("info-button");
+const markdownButton = document.getElementById("copy-md-icon");
+const snackbarContainer = document.getElementById("snackbar-container");
+const snackbar = document.getElementById("snackbar");
 const appFooter = document.getElementById("app-footer");
 
 // Save and load content area to/from chrome storage
@@ -18,6 +22,26 @@ persistChrome(CHROME_CONTENT_KEY);
 infoButton.addEventListener("click", () => {
   appBody.classList.toggle("info-open");
   appFooter.classList.toggle("info-open");
+});
+
+// Markdown button copies note-page markdown to clipboard and displays snackbar temporarily
+markdownButton.addEventListener("click", async () => {
+  const markdown = nodeToMarkdown(notePage);
+
+  await navigator.clipboard
+    .writeText(markdown)
+    .then(() => {
+      snackbar.innerHTML = "Copied to clipboard.";
+      snackbarContainer.classList.add("show");
+      snackbar.classList.add("show");
+      setTimeout(() => {
+        snackbarContainer.classList.remove("show");
+        snackbar.classList.remove("show");
+      }, 3000);
+    })
+    .catch((error) => {
+      console.error("Failed to copy markdown to clipboard: ", error);
+    });
 });
 
 appContentContainer.addEventListener("click", (event) => {
@@ -51,6 +75,8 @@ notePage.addEventListener("keydown", (event) => {
     if (event.key === "u") createLink();
     // Shift + Command + x -> strikethrough
     else if (event.key === "x") toggleStrikethrough();
+    else if (event.key === "m") console.log(notePageToMarkdown());
+    // else if (event.key === "r") console.log(getMarkdownTree(notePage));
   }
 });
 
@@ -110,7 +136,6 @@ function onSpacebar() {
     commandMap[command](parent, textPart);
   }
 }
-
 /**
  * (1) If contenteditable only has one line, the text content is not wrapped in a div. For our purposes, we need a div wrapper to apply the command.
  */
