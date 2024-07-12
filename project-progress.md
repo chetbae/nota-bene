@@ -53,6 +53,7 @@ Pikolo Fri Jul 12
 
 - [x] Convert text to markdown
 - [x] Copy Markdown to clipboard and snackbar
+- [x] Move around info button
 - [ ] fix code block newline
 - [ ] fix first line newline
 - [ ] Click on extension to open a new tab

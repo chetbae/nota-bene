@@ -84,7 +84,7 @@ body {
 /* Snackbar */
 
 #snackbar-container {
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   left: calc(100vw / 2 - 150px);
   width: 300px;
