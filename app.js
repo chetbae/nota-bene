@@ -105,8 +105,8 @@ function onEnter() {
 function onBackspace() {
   const focusNode = document.getSelection().focusNode;
 
-  // Check for empty code block and remove it
-  if (focusNode.tagName === "PRE" && focusNode.classList.contains("code")) {
+  // Check for empty code block, headings
+  if (focusNode.textContent === "" && ["PRE", "H1", "H2", "H3"].includes(focusNode.tagName)) {
     const div = document.createElement("div");
     div.innerHTML = "<br>";
     focusNode.replaceWith(div);
