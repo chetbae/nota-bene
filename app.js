@@ -96,7 +96,6 @@ function onEnter() {
 
   // Check if new line is empty, if so replace with <br>
   if (focusNode.textContent === "" && !["DIV", "PRE", "LI"].includes(focusNode.tagName)) {
-    console.log("activated");
     const br = document.createElement("br");
     focusNode.replaceWith(br);
     setCursorToOffset(br, 0);
