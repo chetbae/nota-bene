@@ -6,7 +6,6 @@
 export function nodeToMarkdown(node, prefix = "", indent = -1) {
   let res = [];
 
-  console.log(node.tagName, node.textContent);
   // Leaf text node -> text
   if (node.nodeType === Node.TEXT_NODE) {
     res.push(node.textContent);
@@ -28,16 +27,14 @@ export function nodeToMarkdown(node, prefix = "", indent = -1) {
     for (const child of node.childNodes) {
       res.push(`- ${nodeToMarkdown(child)}`);
     }
-    res.push("\n");
   } else if (node.tagName === "LI" && node.classList.contains("checkbox")) {
     for (const child of node.childNodes) {
-      res.push(`[${node.classList.contains("checked") ? "x" : " "}] ${nodeToMarkdown(child)}`);
+      res.push(`[${node.classList.contains("checked") ? "x" : " "}] ${nodeToMarkdown(child)}\n`);
     }
   } else if (node.tagName === "DIV" && node.classList.contains("checkbox")) {
     for (const child of node.childNodes) {
       res.push(nodeToMarkdown(child));
     }
-    res.push("\n");
   }
 
   // Bullet List -> - {recurse contents} + newline
@@ -73,8 +70,7 @@ export function nodeToMarkdown(node, prefix = "", indent = -1) {
 
   // Containers
   // General containers -> recurse child nodes + newline
-  else if (node.tagName === "DIV") {
-    console.log("div");
+  else if (node.tagName === "DIV" && !node.classList.contains("checkbox")) {
     for (const child of node.childNodes) {
       res.push(nodeToMarkdown(child));
     }
