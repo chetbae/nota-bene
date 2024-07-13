@@ -75,8 +75,6 @@ notePage.addEventListener("keydown", (event) => {
     if (event.key === "u") createLink();
     // Shift + Command + x -> strikethrough
     else if (event.key === "x") toggleStrikethrough();
-    else if (event.key === "m") console.log(notePageToMarkdown());
-    // else if (event.key === "r") console.log(getMarkdownTree(notePage));
   }
 });
 
@@ -96,12 +94,12 @@ function onEnter() {
     return;
   }
 
-  // If no carryover text and not a list item, add newline stripped of previous styling
-  if (!focusNode.textContent && !["LI"].includes(focusNode.tagName)) {
-    const div = document.createElement("div");
-    div.innerHTML = "<br>";
-    focusNode.replaceWith(div);
-    setCursorToOffset(div, 0);
+  // Check if new line is empty, if so replace with <br>
+  if (focusNode.textContent === "" && !["DIV", "PRE", "LI"].includes(focusNode.tagName)) {
+    console.log("activated");
+    const br = document.createElement("br");
+    focusNode.replaceWith(br);
+    setCursorToOffset(br, 0);
   }
 }
 
@@ -136,7 +134,7 @@ function onSpacebar() {
     let parent = focusNode.parentElement;
     const textPart = textContent ? textContent.slice(cursorIndex) : "";
 
-    // Wrap focusNode into <div> if it's exposed in note-page (1)
+    // Wrap focusNode into <div> if it's exposed in note-page
     if (parent.id === "note-page") {
       const div = document.createElement("div");
       div.innerHTML = textContent;
@@ -148,6 +146,3 @@ function onSpacebar() {
     commandMap[command](parent, textPart);
   }
 }
-/**
- * (1) If contenteditable only has one line, the text content is not wrapped in a div. For our purposes, we need a div wrapper to apply the command.
- */
