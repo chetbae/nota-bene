@@ -68,7 +68,7 @@ function saveContent(CHROME_KEY, content) {
  * @param {string} CHROME_KEY
  * @returns {Promise<string>} undefined or saved content
  */
-async function loadContent(CHROME_KEY) {
+export async function loadContent(CHROME_KEY) {
   return await chrome.storage.local
     .get([CHROME_KEY])
     .then((result) => {

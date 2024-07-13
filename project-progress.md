@@ -54,11 +54,11 @@ Pikolo Fri Jul 12
 - [x] Convert text to markdown
 - [x] Copy Markdown to clipboard and snackbar
 - [x] Move around info button
-- [ ] fix code block newline
+- [x] fix code block newline
+- [x] create chrome popup for nota bena
 - [ ] fix first line newline
 - [ ] Click on extension to open a new tab
 - [ ] Different themes (dark, light, secret one)
 - [ ] multiple note tabs
 - [ ] list tabbing
   - [ ] list tab to markdown
-        []
