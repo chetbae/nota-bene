@@ -49,14 +49,12 @@ appContentContainer.addEventListener("click", (event) => {
   if (event.target === appContentContainer) {
     const notePage = document.getElementById("note-page");
 
-    if (!notePage.hasChildNodes()) notePage.innerHTML = "<br>";
-    else if (notePage.lastChild.innerHTML !== "<br>") {
+    if (notePage.lastChild.innerHTML !== "<br>") {
       const div = document.createElement("div");
       div.innerHTML = "<br>";
       notePage.appendChild(div);
     }
-
-    setCursorToOffset(notePage, notePage.childElementCount);
+    setCursorToOffset(notePage, notePage.childNodes.length);
   }
 });
 
