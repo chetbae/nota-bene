@@ -7,3 +7,48 @@
 
   /* background-color: aquamarine; */
 }
+
+#note-tab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  /* background-color: blue; */
+}
+
+.note-tab {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding: 0 10px;
+  /* width: 100%; */
+  height: 40px;
+
+  font-size: 15px;
+  font-weight: 500;
+  color: darkgrey;
+  border: 2px solid lightgrey;
+  border-radius: 5px;
+
+  cursor: pointer;
+  transition: all 0.1s linear;
+
+  /* background-color: red; */
+}
+
+.note-tab.active {
+  color: grey;
+  border-color: grey;
+}
+
+.note-tab:hover {
+  border-color: grey;
+}
+
+#new-note-tab {
+}

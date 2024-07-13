@@ -45,7 +45,7 @@ July 7 to July 12
 - [x] Information popup for commands and about
 - [ ] Different themes (dark, light, secret one)
 - [ ] multiple note tabs
-- [ ] Convert text to markdown
+- [x] Convert text to markdownx
   <!-- - [ ] Convert markdown to text -->
   <!-- - [ ] image upload -->
 
@@ -56,8 +56,8 @@ Pikolo Fri Jul 12
 - [x] Move around info button
 - [x] fix code block newline
 - [x] create chrome popup for nota bena
-- [ ] fix first line newline
-- [ ] Click on extension to open a new tab
+- [x] fix first line newline
+- [x] Click on extension to open a new tab
 - [ ] Different themes (dark, light, secret one)
 - [ ] multiple note tabs
 - [ ] list tabbing
