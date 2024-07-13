@@ -212,3 +212,32 @@ body {
 #info-button:hover + #info-button-tooltip {
   display: block;
 }
+
+/* Context menu */
+#context-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  flex-direction: column;
+
+  padding: 5px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+
+  &.show {
+    display: flex;
+  }
+}
+
+.context-menu-button {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 5px;
+  width: caloc(100% - 10px);
+
+  &:hover {
+    background-color: rgb(87, 87, 87);
+  }
+}

@@ -3,6 +3,7 @@ import { commandMap } from "./commands.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
 import { nodeToMarkdown } from "./markdown.mjs";
+import NoteTabManager from "/NoteTabManager.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 
@@ -13,7 +14,7 @@ const infoButton = document.getElementById("info-button");
 const markdownButton = document.getElementById("copy-md-icon");
 const snackbarContainer = document.getElementById("snackbar-container");
 const snackbar = document.getElementById("snackbar");
-const appFooter = document.getElementById("app-footer");
+const footer = document.getElementById("app-footer");
 
 // Save and load content area to/from chrome storage
 persistChrome(CHROME_CONTENT_KEY);
@@ -21,7 +22,7 @@ persistChrome(CHROME_CONTENT_KEY);
 // Apply listener to info button to toggle footer
 infoButton.addEventListener("click", () => {
   appBody.classList.toggle("info-open");
-  appFooter.classList.toggle("info-open");
+  footer.classList.toggle("info-open");
 });
 
 // Markdown button copies note-page markdown to clipboard and displays snackbar temporarily
@@ -145,3 +146,6 @@ function onSpacebar() {
     commandMap[command](parent, textPart);
   }
 }
+
+// Note Tab Manager
+const noteTabManager = NoteTabManager();
