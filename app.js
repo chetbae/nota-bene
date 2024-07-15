@@ -1,9 +1,9 @@
-import { persistChrome } from "./persistance.mjs";
+import { loadNotePageFromChrome } from "./persistance.mjs";
 import { commandMap } from "./commands.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
 import { nodeToMarkdown } from "./markdown.mjs";
-import NoteTabManager from "/NoteTabManager.mjs";
+import ContextMenuManager from "/ContextMenuManager.mjs";
 
 const CHROME_CONTENT_KEY = "nota-bene-content";
 
@@ -17,7 +17,7 @@ const snackbar = document.getElementById("snackbar");
 const footer = document.getElementById("app-footer");
 
 // Save and load content area to/from chrome storage
-persistChrome(CHROME_CONTENT_KEY);
+loadNotePageFromChrome(CHROME_CONTENT_KEY);
 
 // Apply listener to info button to toggle footer
 infoButton.addEventListener("click", () => {
@@ -48,8 +48,6 @@ markdownButton.addEventListener("click", async () => {
 appContentContainer.addEventListener("click", (event) => {
   // If clicked on content container, set cursor to end of note-page new line (make new line if necessary)
   if (event.target === appContentContainer) {
-    const notePage = document.getElementById("note-page");
-
     if (notePage.lastChild && notePage.lastChild.innerHTML !== "<br>") {
       const div = document.createElement("div");
       div.innerHTML = "<br>";
@@ -148,4 +146,4 @@ function onSpacebar() {
 }
 
 // Note Tab Manager
-const noteTabManager = NoteTabManager();
+const noteTabManager = ContextMenuManager(appBody);

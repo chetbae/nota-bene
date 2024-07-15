@@ -2,32 +2,37 @@ import { addAllCheckboxListeners } from "./checkboxes.mjs";
 import { addAllLinkListeners } from "./utils.mjs";
 
 /**
- * Persistance module to save and load content from chrome storage
+ * load content from chrome storage and persist changes.
  *
- * @param {HTMLElement} container - The element to persist
  * @param {string} CHROME_KEY - The key to use in chrome storage
- * @param {function[]} applyListener - List of functions to apply event listeners to static elements
  */
-export function persistChrome(CHROME_KEY) {
+export async function loadNotePageFromChrome(CHROME_KEY) {
   const container = document.getElementById("note-page");
 
-  window.addEventListener("DOMContentLoaded", async () => {
-    const content = await loadContent(CHROME_KEY);
+  const content = await loadContent(CHROME_KEY);
 
-    // Load content if user has previously saved
-    if (content !== undefined) container.innerHTML = content;
-    // If first time use, add prompt text and apply listener that wipes it on first click
-    else {
-      container.innerHTML = "Write Here...";
-      container.addEventListener("click", onFirstClick, { once: true });
-    }
+  // Load content if user has previously saved
+  if (content !== undefined) container.innerHTML = content;
+  // If first time use, add prompt text and apply listener that wipes it on first click
+  else {
+    container.innerHTML = "<i>Write Here...</i>";
+    container.addEventListener("click", onFirstClick, { once: true });
+  }
 
-    // Apply listeners to checkboxes
-    addAllCheckboxListeners();
-    // Apply listeners to links
-    addAllLinkListeners();
-  });
+  // Apply listeners to checkboxes, links
+  addAllCheckboxListeners();
+  addAllLinkListeners();
 
+  // Save content on user activity
+  saveOnActivity(container, CHROME_KEY);
+}
+
+/**
+ * Saves content to chrome storage based on user activity
+ * @param {HTMLElement} container
+ * @param {string} CHROME_KEY
+ */
+function saveOnActivity(container, CHROME_KEY) {
   // Save based on user activity
   let lastTimeoutId = 0;
   let timeoutId = 0;
