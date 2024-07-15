@@ -27,7 +27,7 @@
   align-items: center;
 
   padding: 0 10px;
-  /* width: 100%; */
+  width: calc(100% - 20px);
   height: 40px;
 
   font-size: 15px;
@@ -39,7 +39,7 @@
   cursor: pointer;
   transition: all 0.1s linear;
 
-  /* background-color: red; */
+  background-color: white;
 
   &:hover {
     border-color: grey;
@@ -49,4 +49,23 @@
 .note-tab.active {
   color: grey;
   border-color: grey;
+}
+
+#new-note-tab {
+  justify-content: center;
+
+  &:hover {
+    color: grey;
+  }
+}
+
+#new-note-tab-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
 }
