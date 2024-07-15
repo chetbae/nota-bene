@@ -20,6 +20,7 @@
   /* background-color: blue; */
 }
 
+#new-note-tab,
 .note-tab {
   display: flex;
   justify-content: flex-start;
@@ -39,16 +40,13 @@
   transition: all 0.1s linear;
 
   /* background-color: red; */
+
+  &:hover {
+    border-color: grey;
+  }
 }
 
 .note-tab.active {
   color: grey;
   border-color: grey;
-}
-
-.note-tab:hover {
-  border-color: grey;
-}
-
-#new-note-tab {
 }
