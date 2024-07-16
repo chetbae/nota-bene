@@ -1,11 +1,15 @@
 import { loadContent } from "./persistance.mjs";
-
-const CHROME_CONTENT_KEY = "nota-bene-content";
+import storageKeys from "./chrome_keys.mjs";
 
 const notePage = document.getElementById("note-page-popup");
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const content = await loadContent(CHROME_CONTENT_KEY);
-  if (content) notePage.innerHTML = content;
-  else notePage.innerHTML = "No Notes (Yet).";
+  try {
+    const currentNoteId = await loadContent(storageKeys.CURRENT_NOTE_KEY);
+    const content = await loadContent(currentNoteId);
+    notePage.innerHTML = content;
+  } catch (error) {
+    console.error(error);
+    notePage.innerHTML = "No Notes (Yet).";
+  }
 });
