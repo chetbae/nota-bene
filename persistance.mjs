@@ -1,60 +1,74 @@
 import { addAllCheckboxListeners } from "./checkboxes.mjs";
 import { addAllLinkListeners } from "./utils.mjs";
+import storageKeys from "./chrome_keys.mjs";
 
 /**
- * load content from chrome storage and persist changes.
+ * Load content from chrome storage and persist changes.
+ * (does not save current tab)
  *
- * @param {string} CHROME_KEY - The key to use in chrome storage
+ * @param {string} noteId - The key for specific note page in chrome storage
  */
-export async function loadNotePageFromChrome(CHROME_KEY) {
-  const container = document.getElementById("note-page");
+export async function updateAndPersistNotePage(noteId) {
+  const notePage = document.getElementById("note-page");
 
-  const content = await loadContent(CHROME_KEY);
+  notePage.removeEventListener("input", saveOnActivity);
+
+  const content = await loadContent(noteId);
 
   // Load content if user has previously saved
-  if (content !== undefined) container.innerHTML = content;
+  if (content !== undefined) notePage.innerHTML = content;
   // If first time use, add prompt text and apply listener that wipes it on first click
-  else {
-    container.innerHTML = "<i>Write Here...</i>";
-    container.addEventListener("click", onFirstClick, { once: true });
-  }
+  else notePage.innerHTML = "";
 
   // Apply listeners to checkboxes, links
   addAllCheckboxListeners();
   addAllLinkListeners();
 
-  // Save content on user activity
-  saveOnActivity(container, CHROME_KEY);
+  // Save based on user activity
+  notePage.noteId = noteId;
+  notePage.lastTimeoutId = 0;
+  notePage.timeoutId = 0;
+  notePage.addEventListener("input", saveOnActivity);
 }
 
 /**
- * Saves content to chrome storage based on user activity
- * @param {HTMLElement} container
- * @param {string} CHROME_KEY
+ * Callback function for input on note-page, saves content after 1 second of inactivity
+ * @param {InputEvent} event
+ * @listens input
  */
-function saveOnActivity(container, CHROME_KEY) {
-  // Save based on user activity
-  let lastTimeoutId = 0;
-  let timeoutId = 0;
-  container.addEventListener("input", () => {
-    clearTimeout(timeoutId);
+function saveOnActivity(event) {
+  const notePage = event.target;
+  if (notePage.id !== "note-page") return;
 
-    // Save if 10 inputs have passed since last save
-    if (timeoutId > lastTimeoutId + 10) {
-      saveContent(CHROME_KEY, container.innerHTML);
-      lastTimeoutId = timeoutId;
-      return;
-    }
+  const noteId = notePage.noteId;
+  const content = notePage.innerHTML;
 
-    // Otherwise save after 2 seconds of inactivity
-    timeoutId = setTimeout(() => {
-      saveContent(CHROME_KEY, container.innerHTML);
-      lastTimeoutId = timeoutId;
-    }, 2000);
-  });
+  clearTimeout(notePage.timeoutId);
 
-  // Save when user navigates away from page
-  window.addEventListener("visibilitychange", () => saveContent(CHROME_KEY, container.innerHTML));
+  // Save if 10 inputs have passed since last save
+  if (notePage.timeoutId > notePage.lastTimeoutId + 10) {
+    saveContent(noteId, content);
+    notePage.lastTimeoutId = notePage.timeoutId;
+    return;
+  }
+
+  // Otherwise save after 1 seconds of inactivity
+  notePage.timeoutId = setTimeout(() => {
+    saveContent(noteId, content);
+    notePage.lastTimeoutId = notePage.timeoutId;
+  }, 1000);
+}
+
+export async function loadNoteTabs() {
+  const idsValue = await loadContent(storageKeys.NOTES_LIST_KEY);
+  const currentIdValue = await loadContent(storageKeys.CURRENT_NOTE_KEY);
+
+  return { idsValue, currentIdValue };
+}
+
+export function persistNoteTabs(noteIds, currentId) {
+  saveContent(storageKeys.NOTES_LIST_KEY, JSON.stringify(noteIds));
+  saveContent(storageKeys.CURRENT_NOTE_KEY, currentId);
 }
 
 /**
@@ -62,7 +76,7 @@ function saveOnActivity(container, CHROME_KEY) {
  * @param {string} CHROME_KEY
  * @param {string} content
  */
-function saveContent(CHROME_KEY, content) {
+export function saveContent(CHROME_KEY, content) {
   chrome.storage.local.set({ [CHROME_KEY]: content }).catch((error) => {
     console.error(error);
   });
@@ -75,10 +89,8 @@ function saveContent(CHROME_KEY, content) {
  */
 export async function loadContent(CHROME_KEY) {
   return await chrome.storage.local
-    .get([CHROME_KEY])
+    .get(CHROME_KEY)
     .then((result) => {
-      console.log('Loaded from chrome.storage.local["' + CHROME_KEY + '"]:\n' + result[CHROME_KEY]);
-
       return result[CHROME_KEY];
     })
     .catch((error) => {
@@ -87,10 +99,30 @@ export async function loadContent(CHROME_KEY) {
 }
 
 /**
- * If user has not clicked before, clear initial "Write Here..." text
+ * Deletes content from chrome storage
+ * @param {string} CHROME_KEY
  */
-function onFirstClick() {
-  const container = document.getElementById("note-page");
-  container.innerHTML = "";
-  container.removeEventListener("click", () => onFirstClick(container));
+export async function deleteContent(CHROME_KEY) {
+  chrome.storage.local.remove(CHROME_KEY).catch((error) => {
+    console.error(error);
+  });
 }
+
+// export async function printKeys() {
+//   const noteTabsString = await loadContent(storageKeys.NOTES_LIST_KEY);
+//   const currentId = await loadContent(storageKeys.CURRENT_NOTE_KEY);
+
+//   console.log("Note Tabs: ", noteTabsString);
+//   console.log("Current Note: ", currentId);
+// }
+
+// export async function wipeKeys() {
+//   const { idsValue, currentIdValue } = await loadNoteTabs();
+//   deleteContent(storageKeys.NOTES_LIST_KEY);
+//   deleteContent(storageKeys.CURRENT_NOTE_KEY);
+
+//   const ids = JSON.parse(idsValue);
+//   ids.forEach((id) => deleteContent(id));
+
+//   console.log("Wiped keys");
+// }

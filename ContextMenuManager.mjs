@@ -1,17 +1,12 @@
-import NoteTabManager, { deleteNoteTab } from "./NoteTabManager.mjs";
-
-function ContextMenuManager(app) {
+function ContextMenuManager(app, deleteNoteTab) {
   const contextMenu = document.getElementById("context-menu");
   const deleteButton = document.getElementById("context-menu-delete");
-
-  let noteId = null;
 
   app.addEventListener("contextmenu", (event) => {
     // If right clicking on note tabs, open context menu for deleting tab
     if (event.target.classList.contains("note-tab")) {
       event.preventDefault();
-      noteId = event.target.id;
-      console.log("Right clicked on note tab", noteId);
+      contextMenu.noteId = event.target.id;
 
       deleteButton.hidden = false;
       showContextMenu(event);
@@ -23,13 +18,13 @@ function ContextMenuManager(app) {
   // Close context menu if clicked outside
   app.addEventListener("click", (event) => {
     if (![contextMenu, deleteButton].includes(event.target)) {
-      closeContextMenuIfOpen(event);
-      noteId = null;
+      delete contextMenu.noteId;
     }
   });
 
-  deleteButton.addEventListener("click", (event) => {
-    if (noteId) deleteNoteTab(noteId);
+  // Delete action on note tab/page
+  deleteButton.addEventListener("click", () => {
+    if (contextMenu.noteId) deleteNoteTab(contextMenu.noteId);
     closeContextMenuIfOpen();
   });
 

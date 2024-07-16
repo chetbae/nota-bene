@@ -1,23 +1,22 @@
-import { loadNotePageFromChrome } from "./persistance.mjs";
+// import { printKeys, wipeKeys } from "./persistance.mjs";
 import { commandMap } from "./commands.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
 import { nodeToMarkdown } from "./markdown.mjs";
 import ContextMenuManager from "/ContextMenuManager.mjs";
-
-const CHROME_CONTENT_KEY = "nota-bene-content";
+import NoteTabManager from "./NoteTabManager.mjs";
 
 const appBody = document.getElementById("app-body");
 const appContentContainer = document.getElementById("app-content-container");
-const notePage = document.getElementById("note-page");
 const infoButton = document.getElementById("info-button");
 const markdownButton = document.getElementById("copy-md-icon");
 const snackbarContainer = document.getElementById("snackbar-container");
 const snackbar = document.getElementById("snackbar");
 const footer = document.getElementById("app-footer");
 
-// Save and load content area to/from chrome storage
-loadNotePageFromChrome(CHROME_CONTENT_KEY);
+// Context menu manager
+const { deleteNoteTab } = NoteTabManager();
+ContextMenuManager(appBody, deleteNoteTab);
 
 // Apply listener to info button to toggle footer
 infoButton.addEventListener("click", () => {
@@ -27,6 +26,7 @@ infoButton.addEventListener("click", () => {
 
 // Markdown button copies note-page markdown to clipboard and displays snackbar temporarily
 markdownButton.addEventListener("click", async () => {
+  const notePage = document.getElementById("note-page");
   const markdown = nodeToMarkdown(notePage);
 
   await navigator.clipboard
@@ -48,6 +48,8 @@ markdownButton.addEventListener("click", async () => {
 appContentContainer.addEventListener("click", (event) => {
   // If clicked on content container, set cursor to end of note-page new line (make new line if necessary)
   if (event.target === appContentContainer) {
+    const notePage = document.getElementById("note-page");
+
     if (notePage.lastChild && notePage.lastChild.innerHTML !== "<br>") {
       const div = document.createElement("div");
       div.innerHTML = "<br>";
@@ -57,7 +59,7 @@ appContentContainer.addEventListener("click", (event) => {
   }
 });
 
-notePage.addEventListener("keydown", (event) => {
+appContentContainer.addEventListener("keydown", (event) => {
   // Prevent tab on note-page
   if (event.key === "Tab") {
     event.preventDefault();
@@ -74,10 +76,15 @@ notePage.addEventListener("keydown", (event) => {
     if (event.key === "u") createLink();
     // Shift + Command + x -> strikethrough
     else if (event.key === "x") toggleStrikethrough();
+    // else if (event.key === "m") {
+    //   printKeys();
+    // } else if (event.key === "l") {
+    //   wipeKeys();
+    // }
   }
 });
 
-notePage.addEventListener("keyup", (event) => {
+appContentContainer.addEventListener("keyup", (event) => {
   if (event.key === "Enter") onEnter();
   else if (event.key === " ") onSpacebar();
 });
@@ -144,6 +151,3 @@ function onSpacebar() {
     commandMap[command](parent, textPart);
   }
 }
-
-// Note Tab Manager
-const noteTabManager = ContextMenuManager(appBody);

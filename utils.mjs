@@ -52,3 +52,11 @@ export function addAllLinkListeners() {
     addLinkListener(a);
   });
 }
+
+/**
+ * Generate id for note tab
+ * @returns {string} id
+ */
+export function genId() {
+  return Math.random().toString(36).substring(2, 15);
+}

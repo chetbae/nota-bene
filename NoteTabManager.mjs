@@ -1,37 +1,135 @@
-export function deleteNoteTab(noteId) {
-  // prompt user to confirm deletion
-  const confirmed = window.confirm("Are you sure you want to delete this note?");
-  if (!confirmed) return;
+import {
+  deleteContent,
+  loadNoteTabs,
+  persistNoteTabs,
+  updateAndPersistNotePage,
+} from "./persistance.mjs";
+import { genId } from "./utils.mjs";
 
-  console.log("Deleting note tab", noteId);
-}
-
-const NoteTabManager = function NoteTabManager() {
+/**
+ * Manages note tab loading from storage, persisting data for current notetab and all notetabs, and updating the UI
+ */
+function NoteTabManager() {
   let currentId = null;
-  const tabIdArr = [];
+  let noteIds = [];
 
-  function getNoteTabId() {
-    return currentId;
-  }
+  const noteTabContainer = document.getElementById("note-tab-container");
+  const newNoteButton = document.getElementById("new-note-tab");
+
+  // Inital load of note tab ids and current id, update UI
+  loadNoteTabs().then(({ idsValue, currentIdValue }) => {
+    // Note List exists but not current id
+    if (idsValue && !currentIdValue) {
+      noteIds = JSON.parse(idsValue);
+      currentId = noteIds[0];
+    }
+    // No note list but current id exists
+    else if (!idsValue && currentIdValue) {
+      currentId = currentIdValue;
+      noteIds = [currentId];
+    }
+    // Both exist
+    else if (idsValue && currentIdValue) {
+      noteIds = JSON.parse(idsValue);
+      currentId = currentIdValue;
+    }
+    // Neither exist
+    else {
+      currentId = genId();
+      noteIds.push(currentId);
+      persistNoteTabs(noteIds, currentId);
+    }
+
+    updateAndPersistNotePage(currentId);
+    updateNoteTabs();
+  });
+
+  newNoteButton.addEventListener("click", createNewNoteTab);
 
   function createNewNoteTab() {
-    const id = generateId();
+    const id = genId();
+    noteIds.push(id);
     currentId = id;
-    return id;
+
+    // Persist new id
+    persistNoteTabs(noteIds, currentId);
+
+    // Update UI
+    updateNoteTabs();
+    updateAndPersistNotePage(currentId);
   }
 
-  function updateNoteTab(id) {
-    currentId = id;
+  async function deleteNoteTab(id) {
+    // If only one note tab, don't allow deletion
+    if (noteIds.length === 1) {
+      alert("Cannot delete only note tab.");
+      return;
+    }
+
+    // Confirm with user
+    const confirmDelete = confirm("Are you sure you want to delete this note?");
+
+    if (confirmDelete) {
+      // Delete from storage
+      await deleteContent(id);
+
+      // Remove note id from list
+      noteIds = noteIds.filter((noteId) => noteId !== id);
+
+      // Open first tab if current tab is deleted
+      if (id === currentId) openTab(noteIds[0]);
+      // Otherwise only persist new tab datas
+      else persistNoteTabs(noteIds, currentId);
+
+      // Update UI
+      updateNoteTabs();
+    }
   }
 
-  function generateId() {
-    return Math.random().toString(36).substring(2);
+  function updateNoteTabs() {
+    noteTabContainer.innerHTML = "";
+
+    noteIds.forEach((id) => {
+      const noteTab = createNoteTab(id);
+      noteTabContainer.appendChild(noteTab);
+    });
+
+    const activeTab = document.getElementById(currentId);
+    activeTab.classList.add("active");
+  }
+
+  function createNoteTab(id) {
+    const div = document.createElement("div");
+    div.classList.add("note-tab");
+    div.id = id;
+    div.innerText = id;
+
+    // add click listener to load page if clicked
+    div.addEventListener("click", () => openTab(id));
+
+    return div;
+  }
+
+  function openTab(id) {
+    if (id !== currentId) {
+      // Remove active from old tab, set new tab active
+      const activeTab = document.getElementById(currentId);
+      activeTab.classList.remove("active");
+      const newTab = document.getElementById(id);
+      newTab.classList.add("active");
+
+      // Save new current id
+      currentId = id;
+      persistNoteTabs(noteIds, currentId);
+
+      // load new note page
+      updateAndPersistNotePage(id);
+    }
   }
 
   return {
-    updateNoteTab,
-    getNoteTabId,
+    deleteNoteTab,
   };
-};
+}
 
 export default NoteTabManager;
