@@ -18,6 +18,7 @@ function ContextMenuManager(app, deleteNoteTab) {
   // Close context menu if clicked outside
   app.addEventListener("click", (event) => {
     if (![contextMenu, deleteButton].includes(event.target)) {
+      closeContextMenuIfOpen(event);
       delete contextMenu.noteId;
     }
   });
