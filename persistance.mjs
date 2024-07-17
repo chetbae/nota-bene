@@ -90,14 +90,14 @@ async function loadNotePageData(noteId) {
 }
 
 export async function loadNoteTabs() {
-  const idsValue = await loadData(storageKeys.NOTES_LIST_KEY);
+  const idsValue = await loadData(storageKeys.NOTE_IDS_KEY);
   const currentIdValue = await loadData(storageKeys.CURRENT_NOTE_KEY);
 
   return { idsValue, currentIdValue };
 }
 
 export function persistNoteTabs(noteIds, currentId) {
-  if (noteIds) saveData(storageKeys.NOTES_LIST_KEY, JSON.stringify(noteIds));
+  if (noteIds) saveData(storageKeys.NOTE_IDS_KEY, JSON.stringify(noteIds));
   if (currentId) saveData(storageKeys.CURRENT_NOTE_KEY, currentId);
 }
 
@@ -139,7 +139,7 @@ export async function deleteData(CHROME_KEY) {
 }
 
 export async function printKeys() {
-  const noteTabsString = await loadData(storageKeys.NOTES_LIST_KEY);
+  const noteTabsString = await loadData(storageKeys.NOTE_IDS_KEY);
   const currentId = await loadData(storageKeys.CURRENT_NOTE_KEY);
   const notePreviews = await loadNotePreviewMap();
 
@@ -150,7 +150,7 @@ export async function printKeys() {
 
 export async function wipeKeys() {
   const { idsValue, currentIdValue } = await loadNoteTabs();
-  deleteData(storageKeys.NOTES_LIST_KEY);
+  deleteData(storageKeys.NOTE_IDS_KEY);
   deleteData(storageKeys.CURRENT_NOTE_KEY);
 
   const ids = JSON.parse(idsValue);
