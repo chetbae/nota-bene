@@ -10,6 +10,8 @@ import storageKeys from "./chrome_keys.mjs";
  */
 export async function updateAndPersistNotePage(noteId) {
   const notePage = document.getElementById("note-page");
+  const emptyPrompt = document.getElementById("empty-prompt");
+
   notePage.removeEventListener("input", saveOnActivity);
 
   // Save previous note page content if exists
@@ -19,6 +21,10 @@ export async function updateAndPersistNotePage(noteId) {
   // Load content if user has previously saved
   if (data !== undefined) notePage.innerHTML = data.content;
   else notePage.innerHTML = "";
+
+  // Display #empty-prompt element if note is empty
+  emptyPrompt.hidden = notePage.innerHTML !== "";
+
   // Apply listeners to checkboxes, links
   addAllCheckboxListeners();
   addAllLinkListeners();

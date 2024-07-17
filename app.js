@@ -13,6 +13,8 @@ const markdownButton = document.getElementById("copy-md-icon");
 const snackbarContainer = document.getElementById("snackbar-container");
 const snackbar = document.getElementById("snackbar");
 const footer = document.getElementById("app-footer");
+const emptyPrompt = document.getElementById("empty-prompt");
+const notePage = document.getElementById("note-page");
 
 // Context menu manager
 const { deleteNoteTab } = NoteTabManager();
@@ -46,15 +48,22 @@ markdownButton.addEventListener("click", async () => {
 });
 
 appContentContainer.addEventListener("click", (event) => {
-  // If clicked on content container, set cursor to end of note-page new line (make new line if necessary)
-  if (event.target === appContentContainer) {
-    const notePage = document.getElementById("note-page");
+  // Hide empty prompt
+  if (!emptyPrompt.hidden) {
+    emptyPrompt.hidden = true;
 
+    // Set cursor to end of note-page
+    setCursorToOffset(notePage, notePage.childNodes.length);
+  }
+
+  // If clicked on content container, set cursor to end of note-page new line (make new line if necessary)
+  else if (event.target === appContentContainer) {
     if (notePage.lastChild && notePage.lastChild.innerHTML !== "<br>") {
       const div = document.createElement("div");
       div.innerHTML = "<br>";
       notePage.appendChild(div);
     }
+    // Set cursor to end of note-page
     setCursorToOffset(notePage, notePage.childNodes.length);
   }
 });

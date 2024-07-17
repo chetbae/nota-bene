@@ -15,6 +15,7 @@ a {
   text-decoration: 1px solid underline darkgrey;
 }
 
-s {
-  display: inline;
+/* ghost text */
+.ghost {
+  opacity: 0.2;
 }
