@@ -81,7 +81,7 @@ function saveNotePageData(notePage) {
  * @param {string} noteId
  * @returns { content: string, preview: string } | undefined
  */
-async function loadNotePageData(noteId) {
+export async function loadNotePageData(noteId) {
   const data = await loadData(noteId);
   if (data === undefined) return;
 
@@ -106,7 +106,7 @@ export function persistNoteTabs(noteIds, currentId) {
  * @param {string} CHROME_KEY
  * @param {string} content
  */
-export function saveData(CHROME_KEY, content) {
+function saveData(CHROME_KEY, content) {
   chrome.storage.local.set({ [CHROME_KEY]: content }).catch((error) => {
     console.error(error);
   });
