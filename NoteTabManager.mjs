@@ -1,5 +1,5 @@
 import {
-  deleteContent,
+  deleteData,
   loadNoteTabs,
   persistNoteTabs,
   updateAndPersistNotePage,
@@ -12,33 +12,22 @@ import { genId } from "./utils.mjs";
 function NoteTabManager() {
   let currentId = null;
   let noteIds = [];
+  let noteContents = {};
 
   const noteTabContainer = document.getElementById("note-tab-container");
   const newNoteButton = document.getElementById("new-note-tab");
 
-  // Inital load of note tab ids and current id, update UI
+  // Initial Load
   loadNoteTabs().then(({ idsValue, currentIdValue }) => {
-    // Note List exists but not current id
-    if (idsValue && !currentIdValue) {
-      noteIds = JSON.parse(idsValue);
-      currentId = noteIds[0];
-    }
-    // No note list but current id exists
-    else if (!idsValue && currentIdValue) {
-      currentId = currentIdValue;
-      noteIds = [currentId];
-    }
-    // Both exist
-    else if (idsValue && currentIdValue) {
-      noteIds = JSON.parse(idsValue);
-      currentId = currentIdValue;
-    }
-    // Neither exist
-    else {
-      currentId = genId();
+    if (!idsValue) {
+      currentId = currentIdValue ? currentIdValue : genId();
       noteIds.push(currentId);
-      persistNoteTabs(noteIds, currentId);
-    }
+    } else noteIds = JSON.parse(idsValue);
+
+    if (!currentIdValue) currentId = noteIds[0];
+    else currentId = currentIdValue;
+
+    if (!(idsValue && currentIdValue)) persistNoteTabs(noteIds, currentId);
 
     updateAndPersistNotePage(currentId);
     updateNoteTabs();
@@ -55,8 +44,8 @@ function NoteTabManager() {
     persistNoteTabs(noteIds, currentId);
 
     // Update UI
-    updateNoteTabs();
     updateAndPersistNotePage(currentId);
+    updateNoteTabs();
   }
 
   async function deleteNoteTab(id) {
@@ -71,7 +60,7 @@ function NoteTabManager() {
 
     if (confirmDelete) {
       // Delete from storage
-      await deleteContent(id);
+      await deleteData(id);
 
       // Remove note id from list
       noteIds = noteIds.filter((noteId) => noteId !== id);
@@ -98,6 +87,11 @@ function NoteTabManager() {
     activeTab.classList.add("active");
   }
 
+  /**
+   * Creates new DIV note tab with id of noteId and text of its preview
+   * @param {string} id
+   * @returns {HTMLDivElement} note-tab div
+   */
   function createNoteTab(id) {
     const div = document.createElement("div");
     div.classList.add("note-tab");
@@ -113,6 +107,7 @@ function NoteTabManager() {
   function openTab(id) {
     if (id !== currentId) {
       // Remove active from old tab, set new tab active
+
       const activeTab = document.getElementById(currentId);
       activeTab.classList.remove("active");
       const newTab = document.getElementById(id);
@@ -126,6 +121,21 @@ function NoteTabManager() {
       updateAndPersistNotePage(id);
     }
   }
+
+  // function updateNoteTabTitle(id) {}
+
+  // function getNoteTabPreview(id) {
+  //   console.log("getNoteTabPreview", id);
+
+  //   const contentValue = loadData(id);
+
+  //   if (!contentValue) return "New Note";
+  //   else {
+  //     const content = contentValue;
+  //     const preview = content.slice(0, 15);
+  //     return preview;
+  //   }
+  // }
 
   return {
     deleteNoteTab,

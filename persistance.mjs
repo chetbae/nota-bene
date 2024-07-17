@@ -10,21 +10,20 @@ import storageKeys from "./chrome_keys.mjs";
  */
 export async function updateAndPersistNotePage(noteId) {
   const notePage = document.getElementById("note-page");
-
   notePage.removeEventListener("input", saveOnActivity);
 
-  const content = await loadContent(noteId);
+  // Save previous note page content if exists
+  if (notePage.noteId) saveNotePageData(notePage);
 
+  const data = await loadNotePageData(noteId);
   // Load content if user has previously saved
-  if (content !== undefined) notePage.innerHTML = content;
-  // If first time use, add prompt text and apply listener that wipes it on first click
+  if (data !== undefined) notePage.innerHTML = data.content;
   else notePage.innerHTML = "";
-
   // Apply listeners to checkboxes, links
   addAllCheckboxListeners();
   addAllLinkListeners();
 
-  // Save based on user activity
+  // Update current note attributes and save on user activity
   notePage.noteId = noteId;
   notePage.lastTimeoutId = 0;
   notePage.timeoutId = 0;
@@ -40,35 +39,66 @@ function saveOnActivity(event) {
   const notePage = event.target;
   if (notePage.id !== "note-page") return;
 
-  const noteId = notePage.noteId;
-  const content = notePage.innerHTML;
-
   clearTimeout(notePage.timeoutId);
 
   // Save if 10 inputs have passed since last save
   if (notePage.timeoutId > notePage.lastTimeoutId + 10) {
-    saveContent(noteId, content);
-    notePage.lastTimeoutId = notePage.timeoutId;
+    saveNotePageData(notePage);
     return;
   }
 
   // Otherwise save after 1 seconds of inactivity
   notePage.timeoutId = setTimeout(() => {
-    saveContent(noteId, content);
-    notePage.lastTimeoutId = notePage.timeoutId;
+    saveNotePageData(notePage);
   }, 1000);
 }
 
+/**
+ * Saves the content of notePage and a preview to chrome storage
+ * @param {DIVElement} notePage
+ */
+function saveNotePageData(notePage) {
+  const noteId = notePage.noteId;
+  const content = notePage.innerHTML;
+
+  // Get first line of note as preview
+  let child = notePage.firstChild;
+  let preview = child.textContent;
+  while (child !== null) {
+    if (preview !== "") break;
+    preview = child.textContent;
+    child = child.nextSibling;
+  }
+
+  const data = JSON.stringify({ content, preview });
+
+  saveData(noteId, data);
+  notePage.lastTimeoutId = notePage.timeoutId;
+}
+
+/**
+ * Load note page content and preview from chrome storage
+ * @param {string} noteId
+ * @returns { content: string, preview: string } | undefined
+ */
+async function loadNotePageData(noteId) {
+  const data = await loadData(noteId);
+  if (data === undefined) return;
+
+  const { content, preview } = JSON.parse(data);
+  return { content, preview };
+}
+
 export async function loadNoteTabs() {
-  const idsValue = await loadContent(storageKeys.NOTES_LIST_KEY);
-  const currentIdValue = await loadContent(storageKeys.CURRENT_NOTE_KEY);
+  const idsValue = await loadData(storageKeys.NOTES_LIST_KEY);
+  const currentIdValue = await loadData(storageKeys.CURRENT_NOTE_KEY);
 
   return { idsValue, currentIdValue };
 }
 
 export function persistNoteTabs(noteIds, currentId) {
-  saveContent(storageKeys.NOTES_LIST_KEY, JSON.stringify(noteIds));
-  saveContent(storageKeys.CURRENT_NOTE_KEY, currentId);
+  if (noteIds) saveData(storageKeys.NOTES_LIST_KEY, JSON.stringify(noteIds));
+  if (currentId) saveData(storageKeys.CURRENT_NOTE_KEY, currentId);
 }
 
 /**
@@ -76,7 +106,7 @@ export function persistNoteTabs(noteIds, currentId) {
  * @param {string} CHROME_KEY
  * @param {string} content
  */
-export function saveContent(CHROME_KEY, content) {
+export function saveData(CHROME_KEY, content) {
   chrome.storage.local.set({ [CHROME_KEY]: content }).catch((error) => {
     console.error(error);
   });
@@ -87,7 +117,7 @@ export function saveContent(CHROME_KEY, content) {
  * @param {string} CHROME_KEY
  * @returns {Promise<string>} undefined or saved content
  */
-export async function loadContent(CHROME_KEY) {
+export async function loadData(CHROME_KEY) {
   return await chrome.storage.local
     .get(CHROME_KEY)
     .then((result) => {
@@ -102,27 +132,29 @@ export async function loadContent(CHROME_KEY) {
  * Deletes content from chrome storage
  * @param {string} CHROME_KEY
  */
-export async function deleteContent(CHROME_KEY) {
+export async function deleteData(CHROME_KEY) {
   chrome.storage.local.remove(CHROME_KEY).catch((error) => {
     console.error(error);
   });
 }
 
-// export async function printKeys() {
-//   const noteTabsString = await loadContent(storageKeys.NOTES_LIST_KEY);
-//   const currentId = await loadContent(storageKeys.CURRENT_NOTE_KEY);
+export async function printKeys() {
+  const noteTabsString = await loadData(storageKeys.NOTES_LIST_KEY);
+  const currentId = await loadData(storageKeys.CURRENT_NOTE_KEY);
+  const notePreviews = await loadNotePreviewMap();
 
-//   console.log("Note Tabs: ", noteTabsString);
-//   console.log("Current Note: ", currentId);
-// }
+  console.log("Note Tabs: ", noteTabsString);
+  console.log("Current Note: ", currentId);
+  console.log("Note Previews: ", notePreviews);
+}
 
-// export async function wipeKeys() {
-//   const { idsValue, currentIdValue } = await loadNoteTabs();
-//   deleteContent(storageKeys.NOTES_LIST_KEY);
-//   deleteContent(storageKeys.CURRENT_NOTE_KEY);
+export async function wipeKeys() {
+  const { idsValue, currentIdValue } = await loadNoteTabs();
+  deleteData(storageKeys.NOTES_LIST_KEY);
+  deleteData(storageKeys.CURRENT_NOTE_KEY);
 
-//   const ids = JSON.parse(idsValue);
-//   ids.forEach((id) => deleteContent(id));
+  const ids = JSON.parse(idsValue);
+  ids.forEach((id) => deleteData(id));
 
-//   console.log("Wiped keys");
-// }
+  console.log("Wiped keys");
+}
