@@ -55,7 +55,14 @@ function NoteTabManager() {
   async function deleteNoteTab(id) {
     // If only one note tab, don't allow deletion
     if (noteIds.length === 1) {
-      alert("Cannot delete only note tab.");
+      const messages = [
+        "Cannot delete your the only note left.",
+        "This is your only note!",
+        "Do you really want to be noteless?",
+        "Please don't delete me 🥺",
+      ];
+
+      alert(messages[Math.floor(Math.random() * messages.length)]);
       return;
     }
     let confirmDelete = false;
