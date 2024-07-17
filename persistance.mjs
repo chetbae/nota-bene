@@ -63,15 +63,17 @@ function saveNotePageData(notePage) {
 
   // Get first line of note as preview
   let child = notePage.firstChild;
-  let preview = child.textContent;
-  while (child !== null) {
-    if (preview !== "") break;
+  let preview = "";
+  if (child) {
     preview = child.textContent;
-    child = child.nextSibling;
+    while (child !== null) {
+      if (preview !== "") break;
+      preview = child.textContent;
+      child = child.nextSibling;
+    }
   }
 
   const data = JSON.stringify({ content, preview });
-
   saveData(noteId, data);
   notePage.lastTimeoutId = notePage.timeoutId;
 }
