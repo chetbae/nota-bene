@@ -48,30 +48,37 @@ function NoteTabManager() {
     updateNoteTabs();
   }
 
+  /**
+   * Deletes note tab and its data from storage, prompts user for confirmation if non-empty
+   * @param {string} id - note tab id
+   */
   async function deleteNoteTab(id) {
     // If only one note tab, don't allow deletion
     if (noteIds.length === 1) {
       alert("Cannot delete only note tab.");
       return;
     }
+    let confirmDelete = false;
 
-    // Confirm with user
-    const confirmDelete = confirm("Are you sure you want to delete this note?");
+    // if note has content, confirm deletion with user
+    const data = await loadNotePageData(id);
+    if (data && data.preview !== "") {
+      confirmDelete = confirm("Are you sure you want to delete this note?");
+    }
+    // Otherwise, delete immediately
+    else confirmDelete = true;
 
     if (confirmDelete) {
-      // Delete from storage
-      await deleteData(id);
-
       // Remove note id from list
       noteIds = noteIds.filter((noteId) => noteId !== id);
 
       // Open first tab if current tab is deleted
       if (id === currentId) openTab(noteIds[0]);
-      // Otherwise only persist new tab datas
+      // Otherwise persist modified noteIds
       else persistNoteTabs(noteIds, currentId);
 
-      // Update UI
       updateNoteTabs();
+      deleteData(id);
     }
   }
 
