@@ -3,8 +3,9 @@ import {
   loadNoteTabs,
   persistNoteTabs,
   updateAndPersistNotePage,
+  loadNotePageData,
 } from "./persistance.mjs";
-import { genId } from "./utils.mjs";
+import { genId, previewToTitle } from "./utils.mjs";
 
 /**
  * Manages note tab loading from storage, persisting data for current notetab and all notetabs, and updating the UI
@@ -12,7 +13,6 @@ import { genId } from "./utils.mjs";
 function NoteTabManager() {
   let currentId = null;
   let noteIds = [];
-  let noteContents = {};
 
   const noteTabContainer = document.getElementById("note-tab-container");
   const newNoteButton = document.getElementById("new-note-tab");
@@ -75,7 +75,7 @@ function NoteTabManager() {
     }
   }
 
-  function updateNoteTabs() {
+  async function updateNoteTabs() {
     noteTabContainer.innerHTML = "";
 
     noteIds.forEach((id) => {
@@ -96,18 +96,21 @@ function NoteTabManager() {
     const div = document.createElement("div");
     div.classList.add("note-tab");
     div.id = id;
-    div.innerText = id;
 
-    // add click listener to load page if clicked
+    // Set preview/title
+    loadNotePageData(id).then((data) => (div.innerText = previewToTitle(data)));
+
     div.addEventListener("click", () => openTab(id));
-
     return div;
   }
 
+  /**
+   * Load new note page (w/ persistance), persists current tab data, updates active styling for tab UI
+   * @param {string} id
+   */
   function openTab(id) {
     if (id !== currentId) {
       // Remove active from old tab, set new tab active
-
       const activeTab = document.getElementById(currentId);
       activeTab.classList.remove("active");
       const newTab = document.getElementById(id);
@@ -121,21 +124,6 @@ function NoteTabManager() {
       updateAndPersistNotePage(id);
     }
   }
-
-  // function updateNoteTabTitle(id) {}
-
-  // function getNoteTabPreview(id) {
-  //   console.log("getNoteTabPreview", id);
-
-  //   const contentValue = loadData(id);
-
-  //   if (!contentValue) return "New Note";
-  //   else {
-  //     const content = contentValue;
-  //     const preview = content.slice(0, 15);
-  //     return preview;
-  //   }
-  // }
 
   return {
     deleteNoteTab,

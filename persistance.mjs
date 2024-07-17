@@ -1,5 +1,5 @@
 import { addAllCheckboxListeners } from "./checkboxes.mjs";
-import { addAllLinkListeners } from "./utils.mjs";
+import { addAllLinkListeners, previewToTitle } from "./utils.mjs";
 import storageKeys from "./chrome_keys.mjs";
 
 /**
@@ -76,12 +76,16 @@ function saveNotePageData(notePage) {
   const data = JSON.stringify({ content, preview });
   saveData(noteId, data);
   notePage.lastTimeoutId = notePage.timeoutId;
+
+  // Update tab title
+  const noteTab = document.getElementById(noteId);
+  if (noteTab) noteTab.innerText = previewToTitle({ preview });
 }
 
 /**
  * Load note page content and preview from chrome storage
  * @param {string} noteId
- * @returns { content: string, preview: string } | undefined
+ * @returns {Promise<{content: string, preview: string}>} content and preview of note
  */
 export async function loadNotePageData(noteId) {
   const data = await loadData(noteId);

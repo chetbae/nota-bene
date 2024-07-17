@@ -60,3 +60,15 @@ export function addAllLinkListeners() {
 export function genId() {
   return Math.random().toString(36).substring(2, 15);
 }
+
+/**
+ * Transforms preview data to appropriate tab title.
+ * No data -> "New Note"
+ * Empty preview -> "(Untitled)"
+ * @param {Object} data - note page data
+ * @returns {string} formatted title
+ */
+export function previewToTitle(data) {
+  const title = data ? (data.preview === "" ? "(Untitled)" : data.preview) : "New Note";
+  return title;
+}
