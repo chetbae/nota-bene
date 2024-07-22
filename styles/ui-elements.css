@@ -136,4 +136,6 @@
 
   background-color: black;
   color: white;
+
+  z-index: 3;
 }

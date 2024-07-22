@@ -14,10 +14,53 @@
 #app-title {
   position: absolute;
   left: 20px;
-  top: 15px;
+  top: 22px;
 
   font-size: 20px;
   font-weight: 800;
+}
+
+#new-note-button-container {
+  position: absolute;
+  top: 22px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#new-note-button {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  height: 20px;
+  width: 15px;
+  padding: 0px 5px 5px 5px;
+  border-radius: 3px;
+
+  color: #e0e0e0;
+  font-size: 30px;
+  font-weight: 300;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lightgrey;
+    color: white;
+  }
+}
+
+#new-note-tooltip {
+  display: none;
+  position: absolute;
+  width: 60px;
+  bottom: -35px;
+}
+
+#new-note-button:hover + #new-note-tooltip {
+  display: block;
 }
 
 #note-tab-container {
@@ -73,39 +116,6 @@
 .note-tab.active {
   color: grey;
   font-weight: 650;
-}
-
-#new-note-button-container {
-  margin-top: 5px;
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#new-note-button {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-
-  height: 20px;
-  width: 15px;
-  padding: 0px 5px 5px 5px;
-  border-radius: 3px;
-  border: 1.5px solid #e0e0e0;
-
-  color: #e0e0e0;
-  font-size: 30px;
-  font-weight: 400;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-
-  &:hover {
-    background-color: darkgrey;
-    border-color: darkgrey;
-    color: white;
-  }
 }
 
 #app-theme-container {
