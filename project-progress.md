@@ -57,8 +57,7 @@ Pikolo Fri Jul 12
 - [x] fix code block newline
 - [x] create chrome popup for nota bena
 - [x] fix first line newline
-- [x] Click on extension to open a new tab
 - [ ] Different themes (dark, light, secret one)
-- [ ] multiple note tabs
+- [x] multiple note tabs
 - [ ] list tabbing
   - [ ] list tab to markdown

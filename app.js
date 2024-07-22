@@ -9,7 +9,7 @@ import NoteTabManager from "./NoteTabManager.mjs";
 const appBody = document.getElementById("app-body");
 const appContentContainer = document.getElementById("app-content-container");
 const infoButton = document.getElementById("info-button");
-const markdownButton = document.getElementById("copy-md-icon");
+const markdownButton = document.getElementById("copy-md-button");
 const snackbarContainer = document.getElementById("snackbar-container");
 const snackbar = document.getElementById("snackbar");
 const footer = document.getElementById("app-footer");

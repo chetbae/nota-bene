@@ -4,42 +4,51 @@
   <head>
     <title>Nota Bene</title>
     <link rel="stylesheet" href="styles/app.css" />
-    <link rel="stylesheet" href="styles/header.css" />
     <link rel="stylesheet" href="styles/sidebar.css" />
+    <link rel="stylesheet" href="styles/main-content.css" />
     <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/ui-elements.css" />
     <link rel="stylesheet" href="styles/checkbox.css" />
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <!-- main content -->
     <div id="app-body">
-      <!-- header -->
-      <div id="app-header">
-        <div id="app-title" class="disable-select">Nota Bene</div>
+      <!-- left side -->
+      <div id="app-sidebar" class="responsive-left">
+        <!-- header -->
+        <div id="left-header">
+          <div id="app-title" class="disable-select">Nota Bene</div>
+        </div>
+        <!-- content -->
+        <div id="note-tab-container"></div>
+        <div id="new-note-button-container">
+          <div id="new-note-button">+</div>
+        </div>
 
-        <div id="app-toolbar">
+        <!-- dark mode toggle -->
+        <!-- <div id="app-theme-container">
+          <div id="app-theme-button">🌚</div>
+        </div> -->
+
+        <div id="app-divider"></div>
+      </div>
+
+      <!-- right side -->
+      <div id="app-main-content" class="responsive-right">
+        <!-- header -->
+        <div id="right-header">
           <div id="copy-md-container">
-            <img id="copy-md-icon" class="disable-select" src="assets/clipboard.png" />
+            <img id="copy-md-button" class="disable-select" src="assets/clipboard.png" />
             <div id="copy-md-tooltip" class="tooltip">Copy Markdown</div>
           </div>
         </div>
-      </div>
 
-      <!-- sidebar -->
-      <div id="app-sidebar" class="responsive-left">
-        <div id="note-tab-container"></div>
-        <div id="new-note-tab-container">
-          <div id="new-note-tab">+ New Note</div>
-        </div>
-      </div>
-
-      <div id="app-divider"></div>
-
-      <!-- content container -->
-      <div id="app-content-container" class="responsive-right">
-        <h1 id="empty-prompt" class="ghost" hidden>Start Writing</h1>
-        <div id="note-page" contenteditable="true">
-          <div></div>
+        <!-- content container -->
+        <div id="app-content-container">
+          <div id="empty-prompt" class="ghost" hidden>Start Writing</div>
+          <div id="note-page" contenteditable="true">
+            <div></div>
+          </div>
         </div>
       </div>
 

@@ -15,7 +15,7 @@ function NoteTabManager() {
   let noteIds = [];
 
   const noteTabContainer = document.getElementById("note-tab-container");
-  const newNoteButton = document.getElementById("new-note-tab");
+  const newNoteButton = document.getElementById("new-note-button");
 
   // Initial Load
   loadNoteTabs().then(({ idsValue, currentIdValue }) => {
