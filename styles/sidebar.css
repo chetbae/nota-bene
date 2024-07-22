@@ -49,11 +49,10 @@
 
 .note-tab {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 
   padding: 0 10px;
-  min-height: 40px;
+  height: 40px;
 
   font-size: 15px;
   font-weight: 500;
@@ -62,6 +61,8 @@
 
   cursor: pointer;
   transition: all 0.1s linear;
+
+  white-space: nowrap;
   overflow: hidden;
 
   &:hover {
