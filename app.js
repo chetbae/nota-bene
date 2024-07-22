@@ -1,4 +1,3 @@
-// import { printKeys, wipeKeys } from "./persistance.mjs";
 import { commandMap } from "./commands.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
@@ -85,11 +84,11 @@ appContentContainer.addEventListener("keydown", (event) => {
     if (event.key === "u") createLink();
     // Shift + Command + x -> strikethrough
     else if (event.key === "x") toggleStrikethrough();
-    // else if (event.key === "m") {
-    //   printKeys();
-    // } else if (event.key === "l") {
-    //   wipeKeys();
-    // }
+    else if (event.key === "m") {
+      printKeys();
+    } else if (event.key === "l") {
+      wipeKeys();
+    }
   }
 });
 

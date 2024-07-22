@@ -149,24 +149,3 @@ export async function deleteData(CHROME_KEY) {
     console.error(error);
   });
 }
-
-export async function printKeys() {
-  const noteTabsString = await loadData(storageKeys.NOTE_IDS_KEY);
-  const currentId = await loadData(storageKeys.CURRENT_NOTE_KEY);
-  const notePreviews = await loadNotePreviewMap();
-
-  console.log("Note Tabs: ", noteTabsString);
-  console.log("Current Note: ", currentId);
-  console.log("Note Previews: ", notePreviews);
-}
-
-export async function wipeKeys() {
-  const { idsValue, currentIdValue } = await loadNoteTabs();
-  deleteData(storageKeys.NOTE_IDS_KEY);
-  deleteData(storageKeys.CURRENT_NOTE_KEY);
-
-  const ids = JSON.parse(idsValue);
-  ids.forEach((id) => deleteData(id));
-
-  console.log("Wiped keys");
-}
