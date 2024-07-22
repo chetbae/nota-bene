@@ -6,3 +6,10 @@
   padding: 20px;
   border-color: 4px solid black;
 }
+
+#popup-title {
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 300;
+  color: lightgray;
+}
