@@ -97,15 +97,24 @@ function onEnter() {
   const focusNode = document.getSelection().focusNode;
   const parentElement = focusNode.parentElement;
 
-  // Unchecked new checkbox line by default
-  const li = parentElement.closest("li.checkbox.checked");
-  if (li) {
+  // Checkbox: uncheck by default, turn into checkbox if coming out of tab indent
+  const checkboxUl = parentElement.closest("ul.checkbox");
+  if (checkboxUl) {
+    // focusNode should not be LI, text is wrapped in div -> therefore new line coming out of indent
+    if (focusNode.tagName === "LI") {
+      focusNode.classList.add("checkbox");
+      const div = document.createElement("div");
+      div.classList.add("checkbox");
+      focusNode.appendChild(div);
+      return;
+    }
+
+    const li = parentElement.closest("li.checkbox");
     li.classList.remove("checked");
-    return;
   }
 
   // Check if new line is empty, if so replace with <br>
-  if (focusNode.textContent === "" && ["B", "I", "STRIKE", "U"].includes(focusNode.tagName)) {
+  else if (focusNode.textContent === "" && ["B", "I", "STRIKE", "U"].includes(focusNode.tagName)) {
     const br = document.createElement("br");
     focusNode.replaceWith(br);
     setCursorToOffset(br, 0);
@@ -159,9 +168,31 @@ function onSpacebar() {
 
 function onTab(event) {
   event.preventDefault();
+  const focusNode = document.getSelection().focusNode;
 
-  if (false) {
-  } else {
+  if (!focusNode.tagName) {
     document.execCommand("insertText", false, "\t");
   }
+
+  // Checkbox List
+  else if (focusNode.closest("ul.checkbox")) {
+    // if focusNode is UL, it is the start of a new checkbox list so do not indent
+    if (focusNode.tagName === "UL") return;
+    // indent if li is not only child of ul
+    const li = focusNode.closest("li.checkbox");
+    if (li) commandMap["[]"](li, "");
+  }
+  // Bullet List
+  else if (focusNode.closest("ul")) {
+    const li = focusNode.closest("li");
+    if (li) commandMap["-"](li, "");
+  }
+  // Numbered List
+  else if (focusNode.closest("ol")) {
+    const li = focusNode.closest("li");
+    if (li) commandMap["1."](li, "");
+  }
+
+  // If not lists, insert tab
+  else document.execCommand("insertText", false, "\t");
 }
