@@ -23,7 +23,7 @@ export async function updateAndPersistNotePage(noteId) {
   else notePage.innerHTML = "";
 
   // Display #empty-prompt element if note is empty
-  emptyPrompt.hidden = notePage.innerHTML !== "";
+  emptyPrompt.hidden = notePage.textContent !== "";
 
   // Apply listeners to checkboxes, links
   addAllCheckboxListeners();

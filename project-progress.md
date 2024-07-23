@@ -61,3 +61,4 @@ Pikolo Fri Jul 12
 - [x] multiple note tabs
 - [ ] list tabbing
   - [ ] list tab to markdown
+- [ ] enter for commands, not just spacebar

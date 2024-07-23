@@ -46,17 +46,20 @@ markdownButton.addEventListener("click", async () => {
     });
 });
 
+// Visibility of empty-prompt:
+// 1) if clicked, focus on note-page and hide empty-prompt
+// 2) when focused in, hide empty-prompt
+// 3) when focused out, show empty-prompt if note-page is empty
+emptyPrompt.addEventListener("click", () => notePage.focus());
+notePage.addEventListener("focusin", () => (emptyPrompt.hidden = true));
+notePage.addEventListener("focusout", () => {
+  if (notePage.textContent === "") emptyPrompt.hidden = false;
+});
+
+// If clicked OUTSIDE of note-page -> creates new line (for escaping code blocks, headings, etc.)
 appContentContainer.addEventListener("click", (event) => {
-  // Hide empty prompt
-  if (!emptyPrompt.hidden) {
-    emptyPrompt.hidden = true;
-
-    // Set cursor to end of note-page
-    setCursorToOffset(notePage, notePage.childNodes.length);
-  }
-
-  // If clicked on content container, set cursor to end of note-page new line (make new line if necessary)
-  else if (event.target === appContentContainer) {
+  if (event.target === appContentContainer) {
+    // New line if last child isn't already an empty line
     if (notePage.lastChild && notePage.lastChild.innerHTML !== "<br>") {
       const div = document.createElement("div");
       div.innerHTML = "<br>";
@@ -67,14 +70,10 @@ appContentContainer.addEventListener("click", (event) => {
   }
 });
 
-appContentContainer.addEventListener("keydown", (event) => {
-  // Prevent tab on note-page
-  if (event.key === "Tab") {
-    event.preventDefault();
-    document.execCommand("insertText", false, "\t");
-  }
-
-  if (event.key === "Backspace") onBackspace();
+// Behaviour for backspace, enter, spacebar, tab
+notePage.addEventListener("keydown", (event) => {
+  if (event.key === "Tab") onTab(event);
+  if (event.key === "Backspace") onBackspace(event);
 
   // Apply listener to note-page for keyboard shortcuts
   if (event.shiftKey && event.metaKey) {
@@ -84,24 +83,21 @@ appContentContainer.addEventListener("keydown", (event) => {
     if (event.key === "u") createLink();
     // Shift + Command + x -> strikethrough
     else if (event.key === "x") toggleStrikethrough();
-    else if (event.key === "m") {
-      printKeys();
-    } else if (event.key === "l") {
-      wipeKeys();
-    }
   }
 });
 
-appContentContainer.addEventListener("keyup", (event) => {
+// Behaviour for enter and spacebar
+notePage.addEventListener("keyup", (event) => {
   if (event.key === "Enter") onEnter();
   else if (event.key === " ") onSpacebar();
 });
 
+//
 function onEnter() {
   const focusNode = document.getSelection().focusNode;
   const parentElement = focusNode.parentElement;
 
-  // Check parent is checked checkbox
+  // Unchecked new checkbox line by default
   const li = parentElement.closest("li.checkbox.checked");
   if (li) {
     li.classList.remove("checked");
@@ -109,21 +105,22 @@ function onEnter() {
   }
 
   // Check if new line is empty, if so replace with <br>
-  if (focusNode.textContent === "" && !["DIV", "PRE", "LI"].includes(focusNode.tagName)) {
+  if (focusNode.textContent === "" && ["B", "I", "STRIKE", "U"].includes(focusNode.tagName)) {
     const br = document.createElement("br");
     focusNode.replaceWith(br);
     setCursorToOffset(br, 0);
   }
 }
 
-function onBackspace() {
-  const focusNode = document.getSelection().focusNode;
+function onBackspace(event) {
+  // Deletes code block pre wrapper if empty
+  const codeBlock = document.querySelector("pre.code");
+  if (codeBlock && codeBlock.textContent === "") {
+    event.preventDefault();
 
-  // Check for empty code block, headings
-  if (focusNode.textContent === "" && ["PRE", "H1", "H2", "H3"].includes(focusNode.tagName)) {
     const div = document.createElement("div");
     div.innerHTML = "<br>";
-    focusNode.replaceWith(div);
+    codeBlock.replaceWith(div);
     setCursorToOffset(div, 0);
   }
 }
@@ -157,5 +154,14 @@ function onSpacebar() {
 
     // Apply command function
     commandMap[command](parent, textPart);
+  }
+}
+
+function onTab(event) {
+  event.preventDefault();
+
+  if (false) {
+  } else {
+    document.execCommand("insertText", false, "\t");
   }
 }
