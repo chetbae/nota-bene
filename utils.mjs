@@ -16,11 +16,18 @@ export function createLink() {
   try {
     // Check if selection consists of only text nodes
     const selection = window.getSelection();
+
+    if (selection.toString() === "") {
+      window.alert("Empty selection.");
+      return;
+    }
+
     const range = selection.getRangeAt(0);
     const nodes = Array.from(range.cloneContents().childNodes);
     for (const node of nodes) {
       if (node.nodeType !== Node.TEXT_NODE) {
-        throw new Error("Non-text node in selection");
+        window.alert("Only plain text can be selected.");
+        return;
       }
     }
 
@@ -35,7 +42,7 @@ export function createLink() {
     range.insertNode(a);
     addLinkListener(a);
   } catch (error) {
-    window.alert("Only plain text can be linked.");
+    window.alert("Something went wrong.");
   }
 }
 
