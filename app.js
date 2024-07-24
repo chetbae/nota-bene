@@ -124,7 +124,7 @@ function onEnter() {
 
 function onBackspace(event) {
   const focusNode = document.getSelection().focusNode;
-  console.log(focusNode);
+
   // If empty line in codeblock or lists, replace with unstyled empty line
   if (focusNode.textContent === "") {
     // Case 1 for lists: focusNode is root ul/ol
