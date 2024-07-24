@@ -17,17 +17,14 @@ export function createCheckboxList(text) {
   checkboxLi.appendChild(div);
   checkboxUl.appendChild(checkboxLi);
 
-  // Apply checkbox toggle listener
-  addCheckboxListener(checkboxUl);
-
   return checkboxUl;
 }
 
 /**
- * Applies a checkbox toggle listener to checkbox div row
+ * Applies a checkbox toggle listener UL element
  * @param {HTMLElement} checkboxRow
  */
-function addCheckboxListener(checkboxUl) {
+export function addCheckboxListener(checkboxUl) {
   // Apply checkbox toggle listener
   checkboxUl.addEventListener("click", (event) => {
     const target = event.target;
@@ -35,6 +32,9 @@ function addCheckboxListener(checkboxUl) {
     // Only targets <li> ::marker, not <div> text, or after thanks to css for li.checkbox width = fit-content
     if (target.tagName === "LI") {
       target.classList.toggle("checked");
+
+      // Trigger INPUT event
+      checkboxUl.dispatchEvent(new Event("input", { bubbles: true }));
     }
   });
 }
@@ -43,7 +43,7 @@ function addCheckboxListener(checkboxUl) {
  * Applies checkbox toggle listeners to all checkbox <ul> elements
  */
 export function addAllCheckboxListeners() {
-  const checkboxes = document.querySelectorAll("ul.checkbox");
+  const checkboxes = document.querySelectorAll("#note-page > ul.checkbox");
   checkboxes.forEach((ul) => {
     addCheckboxListener(ul);
   });

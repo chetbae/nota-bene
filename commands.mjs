@@ -1,4 +1,4 @@
-import { createCheckboxList } from "./checkboxes.mjs";
+import { createCheckboxList, addCheckboxListener } from "./checkboxes.mjs";
 import { setCursorToOffset } from "./utils.mjs";
 
 export const commandMap = {
@@ -57,6 +57,9 @@ function transformList(element, type, text) {
 function transformCheckboxList(element, text) {
   const checkboxList = createCheckboxList(text);
   element.replaceWith(checkboxList);
+
+  // Apply checkbox toggle listener to root ul
+  addCheckboxListener(checkboxList);
 
   // Set cursor to end of element
   setCursorToOffset(checkboxList, 1);

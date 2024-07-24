@@ -42,8 +42,7 @@ export async function updateAndPersistNotePage(noteId) {
  * @listens input
  */
 function saveOnActivity(event) {
-  const notePage = event.target;
-  if (notePage.id !== "note-page") return;
+  const notePage = document.getElementById("note-page");
 
   clearTimeout(notePage.timeoutId);
 

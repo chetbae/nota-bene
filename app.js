@@ -1,4 +1,5 @@
 import { commandMap } from "./commands.mjs";
+import { createCheckboxList } from "./checkboxes.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
 import { nodeToMarkdown } from "./markdown.mjs";
@@ -180,7 +181,9 @@ function onTab(event) {
     if (focusNode.tagName === "UL") return;
     // indent if li is not only child of ul
     const li = focusNode.closest("li.checkbox");
-    if (li) commandMap["[]"](li, "");
+    if (li) {
+      li.replaceWith(createCheckboxList(li.innerHTML));
+    }
   }
   // Bullet List
   else if (focusNode.closest("ul")) {
