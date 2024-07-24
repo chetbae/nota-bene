@@ -3,7 +3,7 @@ import { createCheckboxList } from "./checkboxes.mjs";
 import { setCursorToOffset, createLink } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
 import { nodeToMarkdown } from "./markdown.mjs";
-import ContextMenuManager from "/ContextMenuManager.mjs";
+import ContextMenuManager from "./ContextMenuManager.mjs";
 import NoteTabManager from "./NoteTabManager.mjs";
 
 const appBody = document.getElementById("app-body");

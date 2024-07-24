@@ -10,10 +10,10 @@
     "128": "assets/icon128.png"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "src/popup/popup.html"
   },
   "chrome_url_overrides": {
-    "newtab": "app.html"
+    "newtab": "src/app.html"
   },
   "permissions": ["storage"]
 }
