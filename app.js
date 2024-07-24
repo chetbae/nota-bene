@@ -93,7 +93,7 @@ notePage.addEventListener("keyup", (event) => {
   else if (event.key === " ") onSpacebar();
 });
 
-//
+// Apply correct behaviour on enter/newline for checkboxes and styled tags
 function onEnter() {
   const focusNode = document.getSelection().focusNode;
   const parentElement = focusNode.parentElement;
@@ -123,15 +123,40 @@ function onEnter() {
 }
 
 function onBackspace(event) {
-  // Deletes code block pre wrapper if empty
-  const codeBlock = document.querySelector("pre.code");
-  if (codeBlock && codeBlock.textContent === "") {
-    event.preventDefault();
+  const focusNode = document.getSelection().focusNode;
+  console.log(focusNode);
+  // If empty line in codeblock or lists, replace with unstyled empty line
+  if (focusNode.textContent === "") {
+    // Case 1 for lists: focusNode is root ul/ol
+    if (focusNode.matches("pre.code, ul, ol")) {
+      event.preventDefault();
+      const div = document.createElement("div");
+      div.innerHTML = "<br>";
 
-    const div = document.createElement("div");
-    div.innerHTML = "<br>";
-    codeBlock.replaceWith(div);
-    setCursorToOffset(div, 0);
+      focusNode.replaceWith(div);
+      setCursorToOffset(div, 0);
+    }
+    // Case 2 for lists: focusNode is li and is first child
+    else if (focusNode.matches("li") && !focusNode.previousSibling) {
+      event.preventDefault();
+      const div = document.createElement("div");
+      div.innerHTML = "<br>";
+
+      focusNode.closest("ul, ol").replaceWith(div);
+      setCursorToOffset(div, 0);
+    }
+    // Case 3 for lists: checkbox
+    else if (
+      focusNode.matches("div.checkbox") &&
+      focusNode.closest("ul.checkbox").childNodes.length === 1
+    ) {
+      event.preventDefault();
+      const div = document.createElement("div");
+      div.innerHTML = "<br>";
+
+      focusNode.closest("ul.checkbox").replaceWith(div);
+      setCursorToOffset(div, 0);
+    }
   }
 }
 
@@ -141,9 +166,6 @@ function onSpacebar() {
   // Markdown commands are at most 6 characters long, so we only need to check the first 6 characters
   const cursorIndex = selection.focusOffset;
   if (cursorIndex > 7) return;
-
-  // PUTTING THIS HERE FOR TESTING
-  if (!selection.focusNode) window.alert("No Focus Node", console.trace());
 
   const focusNode = selection.focusNode;
   const textContent = focusNode.textContent;
