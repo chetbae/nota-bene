@@ -4,8 +4,8 @@ import { displaySnackbar } from "./utils.mjs";
 const themeButton = document.getElementById("app-theme-button");
 const appBody = document.getElementById("app-body");
 
-const themes = ["light", "dark", "british-columbia"];
-const symbols = ["🌞", "🌚", "🏔️"];
+const themes = ["light", "dark", "norsk"];
+const symbols = ["🌞", "🌚", "🇳🇴"];
 
 export const loadPreviousTheme = async () =>
   loadTheme().then((theme) => {

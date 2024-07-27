@@ -4,6 +4,7 @@
 @import "footer.css";
 @import "ui-elements.css";
 @import "styles.css";
+@import "themes.css";
 
 body {
   margin: 0;
