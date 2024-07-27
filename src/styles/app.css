@@ -1,3 +1,10 @@
+@import "checkbox.css";
+@import "sidebar.css";
+@import "main-content.css";
+@import "footer.css";
+@import "ui-elements.css";
+@import "styles.css";
+
 body {
   margin: 0;
   padding: 0;
