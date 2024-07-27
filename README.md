@@ -6,6 +6,8 @@ Note well. WYSIWYG note taking just a tab away.
 
 The Nota Bene is an extension designed to enhance your browsing experience and productivity by allowing you to take notes in-browser. Jot down notes, use github-flavoured markdown style shortcuts with a WYSIWYG experience to organize your notes in a simple and intuitive way. Rest assured, all your notes are saved locally in your browser, so you can access them at any time.
 
+![Screenshot](/assets/screenshot.png)
+
 ## Features
 
 Uses chrome local storage to save notes.
