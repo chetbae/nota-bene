@@ -79,3 +79,22 @@ export function previewToTitle(data) {
   const title = data ? (data.preview === "" ? "(Untitled)" : data.preview) : "New Note";
   return title;
 }
+
+/**
+ * Displays snackbar with message for 3 seconds
+ * @param {string} rich text message
+ */
+export function displaySnackbar(message) {
+  const snackbarContainer = document.getElementById("snackbar-container");
+  const snackbar = document.getElementById("snackbar");
+
+  clearTimeout(snackbarContainer.timeoutId);
+
+  snackbar.innerHTML = message;
+  snackbarContainer.classList.add("show");
+
+  snackbarContainer.timeoutId = setTimeout(() => {
+    snackbarContainer.classList.add("fadeout");
+    setTimeout(() => snackbarContainer.classList.remove("fadeout", "show"), 990);
+  }, 3000);
+}

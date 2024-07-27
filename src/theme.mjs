@@ -1,4 +1,5 @@
 import { loadTheme, saveTheme } from "./persistance.mjs";
+import { displaySnackbar } from "./utils.mjs";
 
 const themeButton = document.getElementById("app-theme-button");
 const appBody = document.getElementById("app-body");
@@ -21,6 +22,7 @@ export function onThemeToggle(event) {
   setTheme(newTheme);
   setThemeButton(newTheme);
   saveTheme(newTheme);
+  displaySnackbar(`Theme changed to <b>${themes[newTheme]}</b> mode.`);
 }
 
 function setTheme(index) {

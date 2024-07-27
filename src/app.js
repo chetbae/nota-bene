@@ -1,6 +1,6 @@
 import { commandMap } from "./commands.mjs";
 import { createCheckboxList } from "./checkboxes.mjs";
-import { setCursorToOffset, createLink } from "./utils.mjs";
+import { setCursorToOffset, createLink, displaySnackbar } from "./utils.mjs";
 import { toggleStrikethrough } from "./strikethrough.mjs";
 import { nodeToMarkdown } from "./markdown.mjs";
 import ContextMenuManager from "./ContextMenuManager.mjs";
@@ -40,13 +40,7 @@ markdownButton.addEventListener("click", async () => {
   await navigator.clipboard
     .writeText(markdown)
     .then(() => {
-      snackbar.innerHTML = "Copied to clipboard.";
-      snackbarContainer.classList.add("show");
-      snackbar.classList.add("show");
-      setTimeout(() => {
-        snackbarContainer.classList.remove("show");
-        snackbar.classList.remove("show");
-      }, 3000);
+      displaySnackbar("Copied to clipboard.");
     })
     .catch((error) => {
       console.error("Failed to copy markdown to clipboard: ", error);
