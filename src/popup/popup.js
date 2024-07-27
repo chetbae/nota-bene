@@ -2,7 +2,7 @@ import { loadNotePageData, loadData } from "../persistance.mjs";
 import storageKeys from "../chrome_keys.mjs";
 
 const notePage = document.getElementById("note-page-popup");
-const noContentHtml = "<h1>Nota Bene</h1><i>No notes yet.</i><br><br><b>Open a new tab +++</b>";
+const noContentHtml = "<i>No notes yet.</i><br><br><b>Open a new tab +++</b>";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const currentNoteId = await loadData(storageKeys.CURRENT_NOTE_KEY);
