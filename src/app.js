@@ -5,11 +5,13 @@ import { toggleStrikethrough } from "./strikethrough.mjs";
 import { nodeToMarkdown } from "./markdown.mjs";
 import ContextMenuManager from "./ContextMenuManager.mjs";
 import NoteTabManager from "./NoteTabManager.mjs";
+import { onThemeToggle, loadPreviousTheme } from "./theme.mjs";
 
 const appBody = document.getElementById("app-body");
 const appContentContainer = document.getElementById("app-content-container");
 const infoButton = document.getElementById("info-button");
 const markdownButton = document.getElementById("copy-md-button");
+const themeButton = document.getElementById("app-theme-button");
 const snackbarContainer = document.getElementById("snackbar-container");
 const snackbar = document.getElementById("snackbar");
 const footer = document.getElementById("app-footer");
@@ -19,6 +21,10 @@ const notePage = document.getElementById("note-page");
 // Context menu manager
 const { deleteNoteTab } = NoteTabManager();
 ContextMenuManager(appBody, deleteNoteTab);
+
+// Theme Toggle
+loadPreviousTheme();
+themeButton.addEventListener("click", onThemeToggle);
 
 // Apply listener to info button to toggle footer
 infoButton.addEventListener("click", () => {

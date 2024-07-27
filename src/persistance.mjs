@@ -148,3 +148,12 @@ export async function deleteData(CHROME_KEY) {
     console.error(error);
   });
 }
+
+export const loadTheme = async () =>
+  loadData(storageKeys.THEME_KEY)
+    .then((theme) => (theme ? JSON.parse(theme) : 0))
+    .catch(() => 0);
+
+export function saveTheme(index) {
+  saveData(storageKeys.THEME_KEY, JSON.stringify(index));
+}
