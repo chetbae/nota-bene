@@ -26,30 +26,3 @@
     color: black;
   }
 }
-
-/* norsk */
-#app-body[theme="2"] {
-  background-image: url("../assets/modalen.png");
-  background-size: cover;
-  background-position: center;
-
-  color: white;
-
-  #app-title {
-    color: white;
-  }
-
-  #new-note-button {
-    color: white;
-  }
-
-  #app-divider {
-    background-color: transparent;
-  }
-
-  pre.code {
-    background-color: darkblue;
-    color: white;
-    border: 2px solid red;
-  }
-}
