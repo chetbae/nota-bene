@@ -1,12 +1,13 @@
 #app-main-content {
-    position: absolute;
-    top: 0;
-    right: 0;
+    flex: 1;
     height: 100%;
+    position: relative;
 }
 
 #right-header {
+    position: relative;
     height: 50px;
+    width: 100%;
 }
 
 /* COPY MARKDOWN BUTTON */

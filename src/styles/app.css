@@ -37,31 +37,30 @@ body {
 }
 
 .responsive-left {
-    width: 20vw;
     min-width: 150px;
-    max-width: 300px;
+    max-width: 400px;
 }
 
 .responsive-right {
-    width: 80vw;
-    min-width: calc(100vw - 300px);
-    max-width: calc(100vw - 150px);
+    flex: 1; /* This will make it take up remaining space */
 }
 
 #app-divider {
     width: 4px;
-    cursor: col-resize;
-    background-color: transparent;
+    height: calc(100% - 60px);
+    margin: 30px 0;
+    background-color: rgba(0, 0, 0, 0.1);
     transition: background-color 0.2s ease;
+    z-index: 2;
+    cursor: col-resize;
+    border-radius: 2px; /* Added to round the edges */
 
-    /* Add a hover effect */
     &:hover {
-        background-color: rgba(128, 128, 128, 0.3);
+        background-color: rgba(128, 128, 128, 0.5);
     }
 
-    /* Add a visual indicator when being dragged */
     &:active {
-        background-color: rgba(128, 128, 128, 0.5);
+        background-color: rgba(128, 128, 128, 0.7);
     }
 }
 
