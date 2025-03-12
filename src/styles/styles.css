@@ -1,21 +1,21 @@
 /* Code */
 pre.code {
-  color: #ffd173;
-  background-color: rgb(31, 36, 48);
-  font-family: "Courier New" monospace;
-  font-size: 12px;
-  line-height: 18px;
-  border-radius: 5px;
-  padding: 2px 6px;
+    color: #ffd173;
+    background-color: rgb(31, 36, 48);
+    font-family: "Courier New" monospace;
+    font-size: 12px;
+    line-height: 18px;
+    border-radius: 5px;
+    padding: 2px 6px;
 }
 
 /* Link */
 a {
-  color: grey;
-  text-decoration: 1px solid underline darkgrey;
+    color: grey;
+    text-decoration: 1px solid underline darkgrey;
 }
 
 /* ghost text */
 .ghost {
-  color: #e0e0e0;
+    color: #e0e0e0;
 }

@@ -1,142 +1,142 @@
 #app-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100vw;
-  height: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: 0;
 
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 
-  transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 
-  overflow: scroll;
-  background-color: black;
-  color: white;
+    overflow: scroll;
+    background-color: black;
+    color: white;
 }
 
 #app-footer.info-open {
-  height: 20vh;
+    height: 20vh;
 }
 
 /* Subsections */
 
 #footer-left,
 #footer-right {
-  margin: 20px 15px;
+    margin: 20px 15px;
 }
 
 #footer-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 70px;
 
-  text-align: right;
+    text-align: right;
 }
 
 #footer-right {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  flex-direction: row;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
 
-  font-size: 12px;
-  font-weight: 200;
+    font-size: 12px;
+    font-weight: 200;
 }
 
 /* Footer Left Content */
 
 #footer-title {
-  font-size: 15px;
-  font-weight: 200;
+    font-size: 15px;
+    font-weight: 200;
 }
 
 #footer-credits {
-  color: rgb(90, 90, 90);
-  font-size: 12px;
-  font-weight: 100;
+    color: rgb(90, 90, 90);
+    font-size: 12px;
+    font-weight: 100;
 }
 
 #github-link {
-  color: rgb(90, 90, 90);
-  font-weight: 800;
-  text-decoration: none;
+    color: rgb(90, 90, 90);
+    font-weight: 800;
+    text-decoration: none;
 
-  transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
-  &:hover {
-    color: white;
-    text-decoration: underline;
-  }
+    &:hover {
+        color: white;
+        text-decoration: underline;
+    }
 }
 
 /* Footer Right Content */
 
 #footer-right > .column {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 25%;
-
-  & > .row {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px;
+    width: 25%;
 
-    & > .name {
-      color: rgb(200, 200, 200);
-    }
+    & > .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
 
-    & > .description {
-      display: flex;
-      flex-direction: row;
-      color: rgb(200, 200, 200);
+        & > .name {
+            color: rgb(200, 200, 200);
+        }
+
+        & > .description {
+            display: flex;
+            flex-direction: row;
+            color: rgb(200, 200, 200);
+        }
     }
-  }
 }
 
 /* Keyboard key styling */
 
 key {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
 
-  color: white;
-  border: 0.8px solid rgb(200, 200, 200);
-  border-radius: 2px;
+    color: white;
+    border: 0.8px solid rgb(200, 200, 200);
+    border-radius: 2px;
 }
 
 /* Typewriter-esque styling */
 
 typewriter {
-  position: relative;
-  border: none;
-  text-align: center;
+    position: relative;
+    border: none;
+    text-align: center;
 
-  padding: 0 3px 3px;
-  border-bottom: 0.8px solid rgb(200, 200, 200);
-  color: white;
+    padding: 0 3px 3px;
+    border-bottom: 0.8px solid rgb(200, 200, 200);
+    color: white;
 }
 
 typewriter::before,
 typewriter::after {
-  position: absolute;
-  content: "";
-  height: 2.5px;
+    position: absolute;
+    content: "";
+    height: 2.5px;
 }
 
 typewriter::before {
-  left: 0;
-  bottom: 0;
-  border-left: 0.8px solid rgb(200, 200, 200);
+    left: 0;
+    bottom: 0;
+    border-left: 0.8px solid rgb(200, 200, 200);
 }
 
 typewriter::after {
-  right: 0;
-  bottom: 0;
-  border-right: 0.8px solid rgb(200, 200, 200);
+    right: 0;
+    bottom: 0;
+    border-right: 0.8px solid rgb(200, 200, 200);
 }

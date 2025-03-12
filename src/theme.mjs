@@ -8,27 +8,27 @@ const themes = ["light", "dark"];
 const symbols = ["🌞", "🌚"];
 
 export const loadPreviousTheme = async () =>
-  loadTheme().then((theme) => {
-    appBody.setAttribute("theme", theme);
-    themeButton.innerHTML = symbols[theme];
-  });
+    loadTheme().then((theme) => {
+        appBody.setAttribute("theme", theme);
+        themeButton.innerHTML = symbols[theme];
+    });
 
 // Sets next theme in theme list
 export function onThemeToggle(event) {
-  const att = appBody.getAttribute("theme");
-  const currentTheme = att ? Number(att) : 0;
-  const newTheme = (currentTheme + 1) % themes.length;
+    const att = appBody.getAttribute("theme");
+    const currentTheme = att ? Number(att) : 0;
+    const newTheme = (currentTheme + 1) % themes.length;
 
-  setTheme(newTheme);
-  setThemeButton(newTheme);
-  saveTheme(newTheme);
-  displaySnackbar(`Theme changed to <b>${themes[newTheme]}</b> mode.`);
+    setTheme(newTheme);
+    setThemeButton(newTheme);
+    saveTheme(newTheme);
+    displaySnackbar(`Theme changed to <b>${themes[newTheme]}</b> mode.`);
 }
 
 function setTheme(index) {
-  appBody.setAttribute("theme", index);
+    appBody.setAttribute("theme", index);
 }
 
 function setThemeButton(index) {
-  themeButton.innerHTML = symbols[index];
+    themeButton.innerHTML = symbols[index];
 }

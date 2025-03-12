@@ -7,85 +7,89 @@
 @import "themes.css";
 
 body {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .disable-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #app-body {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
 
-  display: flex;
-  flex-direction: row;
-  transition-property: height;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
+    display: flex;
+    flex-direction: row;
+    transition-property: height;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
 
-  &.info-open {
-    height: 80vh;
-  }
+    &.info-open {
+        height: 80vh;
+    }
 }
 
 .responsive-left {
-  width: 20vw;
-  min-width: 150px;
-  max-width: 300px;
+    width: 20vw;
+    min-width: 150px;
+    max-width: 300px;
 }
 
 .responsive-right {
-  width: 80vw;
-  min-width: calc(100vw - 300px);
-  max-width: calc(100vw - 150px);
+    width: 80vw;
+    min-width: calc(100vw - 300px);
+    max-width: calc(100vw - 150px);
 }
 
 #app-divider {
-  width: 2px;
-  height: calc(100% - 40px);
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: #eeeeee;
+    width: 4px;
+    cursor: col-resize;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
 
-  position: absolute;
-  top: 0;
-  right: 0;
+    /* Add a hover effect */
+    &:hover {
+        background-color: rgba(128, 128, 128, 0.3);
+    }
+
+    /* Add a visual indicator when being dragged */
+    &:active {
+        background-color: rgba(128, 128, 128, 0.5);
+    }
 }
 
 /* Context menu */
 #context-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: none;
-  flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
 
-  padding: 5px;
-  background-color: black;
-  color: white;
-  border-radius: 5px;
+    padding: 5px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
 
-  &.show {
-    display: flex;
-  }
+    &.show {
+        display: flex;
+    }
 }
 
 .context-menu-button {
-  cursor: pointer;
-  border-radius: 5px;
-  padding: 5px;
-  width: caloc(100% - 10px);
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+    width: caloc(100% - 10px);
 
-  &:hover {
-    background-color: rgb(87, 87, 87);
-  }
+    &:hover {
+        background-color: rgb(87, 87, 87);
+    }
 }

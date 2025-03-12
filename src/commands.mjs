@@ -2,14 +2,14 @@ import { createCheckboxList, addCheckboxListener } from "./checkboxes.mjs";
 import { setCursorToOffset } from "./utils.mjs";
 
 export const commandMap = {
-  "#": (parent, text) => transformElement(parent, "h1", text),
-  "##": (parent, text) => transformElement(parent, "h2", text),
-  "###": (parent, text) => transformElement(parent, "h3", text),
-  "-": (parent, text) => transformList(parent, "ul", text),
-  "1.": (parent, text) => transformList(parent, "ol", text),
-  "*": (parent, text) => transformList(parent, "ul", text),
-  "[]": (parent, text) => transformCheckboxList(parent, text),
-  "```": (parent, text) => transformCodeBlock(parent),
+    "#": (parent, text) => transformElement(parent, "h1", text),
+    "##": (parent, text) => transformElement(parent, "h2", text),
+    "###": (parent, text) => transformElement(parent, "h3", text),
+    "-": (parent, text) => transformList(parent, "ul", text),
+    "1.": (parent, text) => transformList(parent, "ol", text),
+    "*": (parent, text) => transformList(parent, "ul", text),
+    "[]": (parent, text) => transformCheckboxList(parent, text),
+    "```": (parent, text) => transformCodeBlock(parent),
 };
 
 /**
@@ -20,13 +20,13 @@ export const commandMap = {
  * @returns New element
  */
 function transformElement(element, newType, text) {
-  const newElement = document.createElement(newType);
-  newElement.innerHTML = text ? text : "<br>";
-  element.replaceWith(newElement);
+    const newElement = document.createElement(newType);
+    newElement.innerHTML = text ? text : "<br>";
+    element.replaceWith(newElement);
 
-  // Set cursor to end of element
-  setCursorToOffset(newElement, 0);
-  return newElement;
+    // Set cursor to end of element
+    setCursorToOffset(newElement, 0);
+    return newElement;
 }
 
 /**
@@ -37,15 +37,15 @@ function transformElement(element, newType, text) {
  * @returns New list element
  */
 function transformList(element, type, text) {
-  const list = document.createElement(type);
-  const li = document.createElement("li");
-  li.innerHTML = text ? text : "<br>";
-  list.appendChild(li);
-  element.replaceWith(list);
+    const list = document.createElement(type);
+    const li = document.createElement("li");
+    li.innerHTML = text ? text : "<br>";
+    list.appendChild(li);
+    element.replaceWith(list);
 
-  // Set cursor to end of element
-  setCursorToOffset(list, 0);
-  return list;
+    // Set cursor to end of element
+    setCursorToOffset(list, 0);
+    return list;
 }
 
 /**
@@ -55,15 +55,15 @@ function transformList(element, type, text) {
  * @returns New checkbox list element
  */
 function transformCheckboxList(element, text) {
-  const checkboxList = createCheckboxList(text);
-  element.replaceWith(checkboxList);
+    const checkboxList = createCheckboxList(text);
+    element.replaceWith(checkboxList);
 
-  // Apply checkbox toggle listener to root ul
-  addCheckboxListener(checkboxList);
+    // Apply checkbox toggle listener to root ul
+    addCheckboxListener(checkboxList);
 
-  // Set cursor to end of element
-  setCursorToOffset(checkboxList, 1);
-  return checkboxList;
+    // Set cursor to end of element
+    setCursorToOffset(checkboxList, 1);
+    return checkboxList;
 }
 
 /**
@@ -72,15 +72,15 @@ function transformCheckboxList(element, text) {
  * @returns New code block element
  */
 function transformCodeBlock(element) {
-  const container = document.createElement("pre");
-  container.spellcheck = false;
-  container.classList.add("code");
-  const div = document.createElement("div");
-  div.innerHTML = "<br>";
-  container.appendChild(div);
-  element.replaceWith(container);
+    const container = document.createElement("pre");
+    container.spellcheck = false;
+    container.classList.add("code");
+    const div = document.createElement("div");
+    div.innerHTML = "<br>";
+    container.appendChild(div);
+    element.replaceWith(container);
 
-  // Set cursor to end of element
-  setCursorToOffset(div, 0);
-  return container;
+    // Set cursor to end of element
+    setCursorToOffset(div, 0);
+    return container;
 }

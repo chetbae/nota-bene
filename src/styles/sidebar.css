@@ -1,143 +1,143 @@
 #app-sidebar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 #left-header {
-  height: 50px;
+    height: 50px;
 }
 
 #app-title {
-  position: absolute;
-  left: 20px;
-  top: 22px;
+    position: absolute;
+    left: 20px;
+    top: 22px;
 
-  font-size: 20px;
-  font-weight: 800;
+    font-size: 20px;
+    font-weight: 800;
 }
 
 #new-note-button-container {
-  position: absolute;
-  top: 22px;
-  right: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: 22px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #new-note-button {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 
-  height: 20px;
-  width: 15px;
-  padding: 0px 5px 5px 5px;
-  border-radius: 3px;
+    height: 20px;
+    width: 15px;
+    padding: 0px 5px 5px 5px;
+    border-radius: 3px;
 
-  color: darkgrey;
-  font-size: 30px;
-  font-weight: 300;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
+    color: darkgrey;
+    font-size: 30px;
+    font-weight: 300;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
 
-  &:hover {
-    background-color: lightgrey;
-    color: white;
-  }
+    &:hover {
+        background-color: lightgrey;
+        color: white;
+    }
 }
 
 #new-note-tooltip {
-  display: none;
-  position: absolute;
-  width: 60px;
-  bottom: -35px;
+    display: none;
+    position: absolute;
+    width: 60px;
+    bottom: -35px;
 }
 
 #new-note-button:hover + #new-note-tooltip {
-  display: block;
+    display: block;
 }
 
 #note-tab-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 
-  margin-top: 15px;
-  margin-right: 5px;
-  padding-left: 20px;
-  padding-right: 15px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    margin-top: 15px;
+    margin-right: 5px;
+    padding-left: 20px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
-  overflow-y: scroll;
+    overflow-y: scroll;
 
-  --mask: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0,
-      rgba(0, 0, 0, 1) 2%,
-      rgba(0, 0, 0, 1) 98%,
-      rgba(0, 0, 0, 0) 100%
-    )
-    100% 50% / 100% 100% repeat-x;
+    --mask: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0,
+            rgba(0, 0, 0, 1) 2%,
+            rgba(0, 0, 0, 1) 98%,
+            rgba(0, 0, 0, 0) 100%
+        )
+        100% 50% / 100% 100% repeat-x;
 
-  -webkit-mask: var(--mask);
-  mask: var(--mask);
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
 }
 
 .note-tab {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  padding: 0 10px;
-  height: 40px;
+    padding: 0 10px;
+    height: 40px;
 
-  font-size: 15px;
-  font-weight: 500;
-  color: lightgray;
-  border-radius: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    color: lightgray;
+    border-radius: 3px;
 
-  cursor: pointer;
-  transition: all 0.1s linear;
+    cursor: pointer;
+    transition: all 0.1s linear;
 
-  white-space: nowrap;
-  overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
 
-  &:hover {
-    background-color: #f9f9f9;
-  }
+    &:hover {
+        background-color: #f9f9f9;
+    }
 }
 
 .note-tab.active {
-  color: grey;
-  font-weight: 650;
+    color: grey;
+    font-weight: 650;
 }
 
 /* Theme Switcher */
 
 #app-theme-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 150px;
-  width: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 150px;
+    width: 50px;
 }
 
 #app-theme-button {
-  position: absolute;
-  bottom: 15px;
-  left: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  height: 30px;
-  width: 30px;
-  cursor: pointer;
-  font-size: 30px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    font-size: 30px;
 }

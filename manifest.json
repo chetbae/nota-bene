@@ -1,19 +1,19 @@
 {
-  "manifest_version": 3,
-  "name": "Nota Bene",
-  "description": "Note well. WYSIWYG note-taking just a tab away.",
-  "version": "1.9",
-  "incognito": "not_allowed",
-  "icons": {
-    "16": "assets/icon16.png",
-    "48": "assets/icon48.png",
-    "128": "assets/icon128.png"
-  },
-  "action": {
-    "default_popup": "src/popup/popup.html"
-  },
-  "chrome_url_overrides": {
-    "newtab": "src/app.html"
-  },
-  "permissions": ["storage"]
+    "manifest_version": 3,
+    "name": "Nota Bene",
+    "description": "Note well. WYSIWYG note-taking just a tab away.",
+    "version": "1.9",
+    "incognito": "not_allowed",
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    },
+    "action": {
+        "default_popup": "src/popup/popup.html"
+    },
+    "chrome_url_overrides": {
+        "newtab": "src/app.html"
+    },
+    "permissions": ["storage"]
 }

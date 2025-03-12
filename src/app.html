@@ -1,143 +1,180 @@
 <!DOCTYPE html>
 <html>
-  <meta charset="UTF-8" />
-  <head>
-    <title>Nota Bene</title>
-    <link rel="stylesheet" href="styles/app.css" />
-  </head>
-  <body>
-    <div id="app-body" theme="0">
-      <!-- left side -->
-      <div id="app-sidebar" class="responsive-left">
-        <!-- header -->
-        <div id="left-header">
-          <div id="app-title" class="disable-select">Nota Bene</div>
-          <div id="new-note-button-container">
-            <div id="new-note-button">+</div>
-            <div id="new-note-tooltip" class="tooltip">New Note</div>
-          </div>
+    <meta charset="UTF-8" />
+    <head>
+        <title>Nota Bene</title>
+        <link rel="stylesheet" href="styles/app.css" />
+    </head>
+    <body>
+        <div id="app-body" theme="0">
+            <!-- left side -->
+            <div id="app-sidebar" class="responsive-left">
+                <!-- header -->
+                <div id="left-header">
+                    <div id="app-title" class="disable-select">Nota Bene</div>
+                    <div id="new-note-button-container">
+                        <div id="new-note-button">+</div>
+                        <div id="new-note-tooltip" class="tooltip">
+                            New Note
+                        </div>
+                    </div>
+                </div>
+                <!-- content -->
+                <div id="note-tab-container"></div>
+
+                <!-- dark mode toggle -->
+                <div id="app-theme-container" class="disable-select">
+                    <div id="app-theme-button">🌞</div>
+                </div>
+            </div>
+
+            <div id="app-divider"></div>
+
+            <!-- right side -->
+            <div id="app-main-content" class="responsive-right">
+                <!-- header -->
+                <div id="right-header">
+                    <div id="copy-md-container">
+                        <img
+                            id="copy-md-button"
+                            class="disable-select"
+                            src="assets/clipboard.png"
+                        />
+                        <div id="copy-md-tooltip" class="tooltip">
+                            Copy Markdown
+                        </div>
+                    </div>
+                </div>
+
+                <!-- content container -->
+                <div id="app-content-container">
+                    <div id="empty-prompt" class="ghost" hidden>
+                        Start Writing
+                    </div>
+                    <div id="note-page" contenteditable="true">
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- snackbar -->
+            <div id="snackbar-container" class="disable-select">
+                <div id="snackbar">#</div>
+            </div>
+
+            <!-- info button -->
+            <div id="info-button-container">
+                <div id="info-button">?</div>
+                <div id="info-button-tooltip" class="tooltip">
+                    Help and information
+                </div>
+            </div>
         </div>
-        <!-- content -->
-        <div id="note-tab-container"></div>
 
-        <!-- dark mode toggle -->
-        <div id="app-theme-container" class="disable-select">
-          <div id="app-theme-button">🌞</div>
+        <!-- footer -->
+        <div id="app-footer">
+            <!-- left section -->
+            <div class="responsive-left">
+                <div id="footer-left">
+                    <div id="footer-title">Shortcuts + Commands</div>
+                    <div id="footer-credits">
+                        Nota Bene is made with ♥ by
+                        <a id="github-link" href="https://github.com/chetbae"
+                            >Max Zhang</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- right section -->
+            <div class="responsive-right">
+                <div id="footer-right">
+                    <div class="column">
+                        <div class="row">
+                            <div class="name">Large Heading</div>
+                            <div class="description">
+                                <typewriter>#</typewriter>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Medium Heading</div>
+                            <div class="description">
+                                <typewriter>##</typewriter>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Small Heading</div>
+                            <div class="description">
+                                <typewriter>###</typewriter>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="row">
+                            <div class="name">Bold/Italic</div>
+                            <div class="description">
+                                <key>⌘</key>&nbsp; <key>B</key>&nbsp;/&nbsp;<key
+                                    >I</key
+                                >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Underline</div>
+                            <div class="description">
+                                <key>⌘</key>&nbsp;<key>U</key>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Add Link</div>
+                            <div class="description">
+                                <key>⌘</key>&nbsp;<key>⇧</key>&nbsp;<key>U</key>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Strikethrough</div>
+                            <div class="description">
+                                <key>⌘</key>&nbsp;<key>S</key>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="row">
+                            <div class="name">Bullet List</div>
+                            <div class="description">
+                                <typewriter>-</typewriter
+                                >&nbsp;or&nbsp;<typewriter>*</typewriter>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Number List</div>
+                            <div class="description">
+                                <typewriter>1.</typewriter>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Checkboxes</div>
+                            <div class="description">
+                                <typewriter>[]</typewriter>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="name">Code</div>
+                            <div class="description">
+                                <typewriter>```</typewriter>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="app-divider"></div>
-      </div>
-
-      <!-- right side -->
-      <div id="app-main-content" class="responsive-right">
-        <!-- header -->
-        <div id="right-header">
-          <div id="copy-md-container">
-            <img id="copy-md-button" class="disable-select" src="assets/clipboard.png" />
-            <div id="copy-md-tooltip" class="tooltip">Copy Markdown</div>
-          </div>
+        <!-- context menu -->
+        <div id="context-menu" class="disable-select">
+            <div id="context-menu-delete" class="context-menu-button">
+                Delete
+            </div>
         </div>
 
-        <!-- content container -->
-        <div id="app-content-container">
-          <div id="empty-prompt" class="ghost" hidden>Start Writing</div>
-          <div id="note-page" contenteditable="true">
-            <div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- snackbar -->
-      <div id="snackbar-container" class="disable-select">
-        <div id="snackbar">#</div>
-      </div>
-
-      <!-- info button -->
-      <div id="info-button-container">
-        <div id="info-button">?</div>
-        <div id="info-button-tooltip" class="tooltip">Help and information</div>
-      </div>
-    </div>
-
-    <!-- footer -->
-    <div id="app-footer">
-      <!-- left section -->
-      <div class="responsive-left">
-        <div id="footer-left">
-          <div id="footer-title">Shortcuts + Commands</div>
-          <div id="footer-credits">
-            Nota Bene is made with ♥ by
-            <a id="github-link" href="https://github.com/chetbae">Max Zhang</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- right section -->
-      <div class="responsive-right">
-        <div id="footer-right">
-          <div class="column">
-            <div class="row">
-              <div class="name">Large Heading</div>
-              <div class="description"><typewriter>#</typewriter></div>
-            </div>
-            <div class="row">
-              <div class="name">Medium Heading</div>
-              <div class="description"><typewriter>##</typewriter></div>
-            </div>
-            <div class="row">
-              <div class="name">Small Heading</div>
-              <div class="description"><typewriter>###</typewriter></div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="row">
-              <div class="name">Bold/Italic</div>
-              <div class="description">
-                <key>⌘</key>&nbsp; <key>B</key>&nbsp;/&nbsp;<key>I</key>
-              </div>
-            </div>
-            <div class="row">
-              <div class="name">Underline</div>
-              <div class="description"><key>⌘</key>&nbsp;<key>U</key></div>
-            </div>
-            <div class="row">
-              <div class="name">Add Link</div>
-              <div class="description"><key>⌘</key>&nbsp;<key>⇧</key>&nbsp;<key>U</key></div>
-            </div>
-            <div class="row">
-              <div class="name">Strikethrough</div>
-              <div class="description"><key>⌘</key>&nbsp;<key>S</key></div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="row">
-              <div class="name">Bullet List</div>
-              <div class="description">
-                <typewriter>-</typewriter>&nbsp;or&nbsp;<typewriter>*</typewriter>
-              </div>
-            </div>
-            <div class="row">
-              <div class="name">Number List</div>
-              <div class="description"><typewriter>1.</typewriter></div>
-            </div>
-            <div class="row">
-              <div class="name">Checkboxes</div>
-              <div class="description"><typewriter>[]</typewriter></div>
-            </div>
-            <div class="row">
-              <div class="name">Code</div>
-              <div class="description"><typewriter>```</typewriter></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- context menu -->
-    <div id="context-menu" class="disable-select">
-      <div id="context-menu-delete" class="context-menu-button">Delete</div>
-    </div>
-
-    <script type="module" src="app.js"></script>
-  </body>
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

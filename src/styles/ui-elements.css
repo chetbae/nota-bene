@@ -1,148 +1,148 @@
 /* Snackbar */
 
 #snackbar-container {
-  position: absolute;
-  bottom: 20px;
-  left: calc(100vw / 2 - 150px);
-  width: 300px;
-  height: 50px;
+    position: absolute;
+    bottom: 20px;
+    left: calc(100vw / 2 - 150px);
+    width: 300px;
+    height: 50px;
 
-  display: none;
-  align-items: center;
-  justify-content: center;
+    display: none;
+    align-items: center;
+    justify-content: center;
 
-  background-color: none;
+    background-color: none;
 
-  &.show {
-    display: flex;
-  }
+    &.show {
+        display: flex;
+    }
 }
 
 #snackbar {
-  visibility: hidden;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 200;
-  padding: 10px;
-  border-radius: 5px;
+    visibility: hidden;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 200;
+    padding: 10px;
+    border-radius: 5px;
 
-  background-color: black;
-  color: white;
-  transition: all 0.5s ease-in-out;
-  transition-delay: 2s;
+    background-color: black;
+    color: white;
+    transition: all 0.5s ease-in-out;
+    transition-delay: 2s;
 }
 
 #snackbar-container.show > #snackbar {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s;
-  animation: fadein 0.5s;
+    visibility: visible;
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
 }
 
 #snackbar-container.fadeout > #snackbar {
-  -webkit-animation: fadeout 1s;
-  animation: fadeout 1s;
+    -webkit-animation: fadeout 1s;
+    animation: fadeout 1s;
 }
 
 /* INFO BUTTON */
 
 #info-button-container {
-  position: absolute;
-  width: 150px;
-  height: 75px;
-  right: 0;
-  bottom: 0;
+    position: absolute;
+    width: 150px;
+    height: 75px;
+    right: 0;
+    bottom: 0;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 #info-button {
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  right: 25px;
-  bottom: 20px;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: 25px;
+    bottom: 20px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  font-size: 18px;
-  border-radius: 100px;
-  background-color: black;
-  color: white;
+    font-size: 18px;
+    border-radius: 100px;
+    background-color: black;
+    color: white;
 
-  cursor: pointer;
+    cursor: pointer;
 }
 
 #info-button-tooltip {
-  display: none;
-  position: absolute;
-  width: 120px;
-  left: 0;
-  top: 0;
+    display: none;
+    position: absolute;
+    width: 120px;
+    left: 0;
+    top: 0;
 }
 
 #info-button:hover + #info-button-tooltip {
-  display: block;
+    display: block;
 }
 
 .tooltip {
-  font-size: 11px;
-  text-align: center;
-  padding: 5px;
-  border-radius: 5px;
+    font-size: 11px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
 
-  background-color: black;
-  color: white;
+    background-color: black;
+    color: white;
 
-  z-index: 3;
+    z-index: 3;
 }
 
 /* ANIMATIONS */
 
 @-webkit-keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
 }
 
 @keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
 }
 
 @-webkit-keyframes fadeout {
-  from {
-    bottom: 30px;
-    opacity: 1;
-  }
-  to {
-    bottom: 0;
-    opacity: 0;
-  }
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }
 
 @keyframes fadeout {
-  from {
-    bottom: 30px;
-    opacity: 1;
-  }
-  to {
-    bottom: 0;
-    opacity: 0;
-  }
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }

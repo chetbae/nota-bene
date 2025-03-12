@@ -12,9 +12,9 @@ The Nota Bene is an extension designed to enhance your browsing experience and p
 
 Uses chrome local storage to save notes.
 
-- **Note Taking**: Take notes directly within your browser while browsing the web.
-- **Organize and Categorize**: Organize your notes into categories for easy retrieval.
-- **Sync Across Sessions**: Access your notes from at any time on your browser thanks to [chrome storage](https://developer.chrome.com/docs/extensions/reference/api/storage).
+-   **Note Taking**: Take notes directly within your browser while browsing the web.
+-   **Organize and Categorize**: Organize your notes into categories for easy retrieval.
+-   **Sync Across Sessions**: Access your notes from at any time on your browser thanks to [chrome storage](https://developer.chrome.com/docs/extensions/reference/api/storage).
 
 ## Installation
 
