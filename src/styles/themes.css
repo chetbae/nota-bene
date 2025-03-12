@@ -11,6 +11,14 @@
         background-color: #444444;
     }
 
+    .note-tab {
+        color: lightgray;
+
+        &:hover {
+            background-color: #444444;
+        }
+    }
+
     #info-button {
         background-color: #444444;
         color: #ffffff;
