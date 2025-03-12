@@ -3,19 +3,25 @@
     background-color: #2c2c2c;
     color: white;
 
-    #app-title {
-        color: lightgrey;
-    }
-
     #app-divider {
         background-color: #444444;
     }
 
-    .note-tab {
-        color: lightgray;
-
+    #new-note-button {
         &:hover {
             background-color: #444444;
+        }
+    }
+
+    .note-tab {
+        color: #444444;
+
+        &.active {
+            color: #555555;
+        }
+
+        &:hover {
+            background-color: #303030;
         }
     }
 

@@ -12,18 +12,10 @@
     width: 100%;
 }
 
-#app-title {
-    position: relative; /* Update positioning */
-    margin-left: 20px;
-    margin-top: 22px;
-    font-size: 20px;
-    font-weight: 800;
-}
-
 #new-note-button-container {
     position: absolute;
-    top: 22px;
-    right: 15px;
+    top: 15px;
+    left: 15px;
 }
 
 #new-note-button {
@@ -63,13 +55,11 @@
 #note-tab-container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
 
-    margin-top: 15px;
+    gap: 8px;
     margin-right: 5px;
     padding-left: 20px;
     padding-right: 15px;
-    padding-top: 10px;
     padding-bottom: 10px;
 
     overflow-y: scroll;
@@ -97,7 +87,7 @@
     font-size: 15px;
     font-weight: 500;
     color: lightgray;
-    border-radius: 3px;
+    border-radius: 5px;
 
     cursor: pointer;
     transition: all 0.1s linear;
@@ -105,14 +95,14 @@
     white-space: nowrap;
     overflow: hidden;
 
-    &:hover {
-        background-color: #f9f9f9;
+    &.active {
+        color: grey;
+        font-weight: 650;
     }
-}
 
-.note-tab.active {
-    color: grey;
-    font-weight: 650;
+    &:hover {
+        background-color: #f1f1f1;
+    }
 }
 
 /* Theme Switcher */
