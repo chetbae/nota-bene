@@ -96,3 +96,8 @@ body {
         background-color: rgb(87, 87, 87);
     }
 }
+
+.resizing #app-sidebar,
+.resizing #app-main-content {
+    transition: none !important;
+}

@@ -6,6 +6,7 @@ class DividerHandler {
         this.isDragging = false;
         this.startX = 0;
         this.startWidth = 0;
+        this.appBody = document.getElementById("app-body");
 
         // Load saved width
         this.loadSavedWidth();
@@ -40,6 +41,7 @@ class DividerHandler {
         this.startX = e.clientX;
         this.startWidth = this.sidebar.offsetWidth;
         document.body.style.cursor = "col-resize";
+        this.appBody.classList.add("resizing");
 
         // Add a class to the divider for visual feedback
         this.divider.classList.add("dragging");
@@ -65,6 +67,7 @@ class DividerHandler {
         this.isDragging = false;
         document.body.style.cursor = "";
         this.divider.classList.remove("dragging");
+        this.appBody.classList.remove("resizing");
 
         // Save the final width
         this.saveWidth(this.sidebar.offsetWidth);
