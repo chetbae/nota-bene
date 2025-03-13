@@ -7,6 +7,7 @@ import ContextMenuManager from "./ContextMenuManager.mjs";
 import NoteTabManager from "./NoteTabManager.mjs";
 import { onThemeToggle, loadPreviousTheme } from "./theme.mjs";
 import DividerHandler from "./DividerHandler.mjs";
+import SidebarManager from "./SidebarManager.mjs";
 
 const appBody = document.getElementById("app-body");
 const appContentContainer = document.getElementById("app-content-container");
@@ -91,6 +92,9 @@ notePage.addEventListener("keyup", (event) => {
     if (event.key === "Enter") onEnter();
     else if (event.key === " ") onSpacebar();
 });
+
+// Initialize Sidebar Manager
+SidebarManager();
 
 // Initialize the divider handler when the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {

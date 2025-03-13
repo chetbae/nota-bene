@@ -31,6 +31,10 @@ body {
     transition-duration: 0.5s;
     transition-timing-function: ease-in-out;
 
+    &.sidebar-collapsed #app-divider {
+        display: none;
+    }
+
     &.info-open {
         height: 80vh;
     }
